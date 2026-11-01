@@ -17,7 +17,7 @@ class Sfx {
   static void forEvent(GameEvent e) {
     final file = switch (e) {
       GameEvent.pick => tick,
-      GameEvent.drop => clink,
+      GameEvent.land => clink,
       GameEvent.tubeComplete => complete,
       _ => null,
     };
