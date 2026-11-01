@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 
 import '../logic/board.dart';
 import 'bean_painter.dart';
+import 'spring.dart';
 
 /// `land` fires once per bean as it settles in its new tube.
 enum GameEvent { pick, drop, land, invalid, reveal, tubeComplete, won, stuck, undo }
@@ -315,7 +316,8 @@ class TubeComponent extends PositionComponent
   final int index;
   int incoming = 0;
   // Spring-driven lift of the selected group (overshoots, then settles).
-  double lift = 0, _liftV = 0;
+  final _lift = Spring();
+  double get lift => _lift.value;
   double _time = 0;
   double _reveal = 0;
   double _done = 1; // 0 → 1 after completion: cap bounce + tube pop.
@@ -347,12 +349,9 @@ class TubeComponent extends PositionComponent
     ]));
   }
 
-  void pickUp() => _liftV = 900; // kick upward; spring overshoots
+  void pickUp() => _lift.velocity = 900; // kick upward; spring overshoots
   void putDown() {}
-  void resetLift() {
-    lift = 0;
-    _liftV = 0;
-  }
+  void resetLift() => _lift.reset();
 
   void landed(int slot) {
     // The landing bean squashes hardest; beans under it jiggle in sympathy.
@@ -383,13 +382,9 @@ class TubeComponent extends PositionComponent
   void update(double dt) {
     _time += dt;
     final target = game.selected == index ? 18.0 * k : 0.0;
-    // Critically under-damped spring for a jelly pick-up.
-    const stiffness = 520.0, damping = 16.0;
-    _liftV += ((target - lift) * stiffness - _liftV * damping) * dt;
-    lift += _liftV * dt;
-    if (game.selected != index && lift.abs() < .1 && _liftV.abs() < 1) {
-      lift = 0;
-      _liftV = 0;
+    _lift.update(dt, target);
+    if (game.selected != index && lift.abs() < .1 && _lift.velocity.abs() < 1) {
+      _lift.reset();
     }
     _reveal = max(0, _reveal - dt * 4); // 250 ms tear
     _done = min(1, _done + dt * 1.8);
