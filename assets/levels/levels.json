@@ -4,22 +4,22 @@
   "capacity": 4,
   "par": 5,
   "seed": 1000,
-  "hint": "Tap a plate to lift its top piece, then tap another plate to drop it.",
-  "plates": [
+  "hint": "Tap a tube to lift its top bean, then tap another tube to drop it.",
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "tomato",
-     "tomato",
-     "patty"
+     "berry",
+     "lime",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "patty",
-     "tomato"
+     "lime",
+     "berry",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -35,21 +35,21 @@
   "capacity": 4,
   "par": 3,
   "seed": 2000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "patty",
-     "patty"
+     "grape",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "lettuce",
-     "lettuce"
+     "berry",
+     "grape",
+     "grape",
+     "grape"
     ]
    },
    {
@@ -65,29 +65,29 @@
   "capacity": 4,
   "par": 10,
   "seed": 3000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "tomato",
-     "onion",
-     "onion"
+     "lemon",
+     "lime",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "tomato",
-     "lettuce"
+     "lime",
+     "grape",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "lime",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -103,38 +103,38 @@
   "capacity": 4,
   "par": 13,
   "seed": 4000,
-  "hint": "Matching pieces on top lift together as one group.",
-  "plates": [
+  "hint": "Matching beans on top lift together as one group.",
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "tomato",
-     "onion",
-     "patty"
+     "berry",
+     "lime",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "cheese",
-     "cheese"
+     "lemon",
+     "lime",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "onion",
-     "patty",
-     "tomato"
+     "peach",
+     "lemon",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "patty",
-     "onion"
+     "peach",
+     "lime",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -150,37 +150,37 @@
   "capacity": 4,
   "par": 11,
   "seed": 5000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "cheese",
-     "cheese"
+     "grape",
+     "grape",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "onion",
-     "lettuce"
+     "berry",
+     "peach",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "lettuce",
-     "onion"
+     "berry",
+     "berry",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "onion",
-     "patty"
+     "lemon",
+     "peach",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -196,37 +196,37 @@
   "capacity": 4,
   "par": 10,
   "seed": 6000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "patty",
-     "patty"
+     "peach",
+     "lime",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "tomato",
-     "lettuce"
+     "grape",
+     "grape",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "lettuce",
-     "patty"
+     "lime",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "patty",
-     "tomato"
+     "peach",
+     "peach",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -242,37 +242,37 @@
   "capacity": 4,
   "par": 12,
   "seed": 7000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "cola",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "patty",
-     "onion"
+     "berry",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "pickle",
-     "lettuce"
+     "cola",
+     "berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "patty",
-     "lettuce"
+     "lemon",
+     "lemon",
+     "berry",
+     "grape"
     ]
    },
    {
@@ -288,37 +288,37 @@
   "capacity": 4,
   "par": 11,
   "seed": 8000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "pickle",
-     "pickle",
-     "lettuce"
+     "lemon",
+     "cola",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "tomato",
-     "lettuce"
+     "cola",
+     "lime",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "onion",
-     "pickle"
+     "grape",
+     "lime",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "onion",
-     "onion"
+     "grape",
+     "lime",
+     "lemon",
+     "lemon"
     ]
    },
    {
@@ -334,29 +334,29 @@
   "capacity": 4,
   "par": 10,
   "seed": 9000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "patty",
-     "cheese",
-     "patty"
+     "peach",
+     "berry",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "patty",
-     "lettuce"
+     "grape",
+     "peach",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "lettuce",
-     "patty"
+     "grape",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
@@ -372,29 +372,29 @@
   "capacity": 4,
   "par": 8,
   "seed": 10000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "patty",
-     "pickle",
-     "pickle"
+     "lime",
+     "berry",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "tomato",
-     "patty"
+     "berry",
+     "lime",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "tomato",
-     "pickle"
+     "berry",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -410,38 +410,38 @@
   "capacity": 4,
   "par": 12,
   "seed": 11000,
-  "hint": "Cloches hide a piece until it reaches the top.",
-  "plates": [
+  "hint": "Paper pouches hide a bean until it reaches the top.",
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "onion",
-     "onion"
+     "grape",
+     "berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "pickle",
-     "patty"
+     "berry",
+     "lemon",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "patty",
-     "pickle"
+     "?cola",
+     "grape",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "pickle",
-     "onion"
+     "?grape",
+     "grape",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -457,37 +457,37 @@
   "capacity": 4,
   "par": 12,
   "seed": 12000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "patty",
-     "tomato",
-     "patty"
+     "lemon",
+     "berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "tomato",
-     "patty"
+     "?peach",
+     "lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "cheese",
-     "patty"
+     "lime",
+     "peach",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "onion",
-     "onion",
-     "tomato"
+     "peach",
+     "lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
@@ -503,37 +503,37 @@
   "capacity": 4,
   "par": 13,
   "seed": 13000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "patty",
-     "lettuce"
+     "?peach",
+     "grape",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?patty",
-     "lettuce",
-     "onion"
+     "lemon",
+     "?berry",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "cheese",
-     "onion"
+     "?grape",
+     "peach",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "cheese",
-     "patty"
+     "berry",
+     "lemon",
+     "peach",
+     "berry"
     ]
    },
    {
@@ -549,37 +549,37 @@
   "capacity": 4,
   "par": 9,
   "seed": 14000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "pickle",
-     "cheese"
+     "?cola",
+     "lime",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "pickle",
-     "tomato"
+     "?lime",
+     "cola",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "lettuce",
-     "lettuce"
+     "peach",
+     "lime",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "peach",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
@@ -595,37 +595,37 @@
   "capacity": 4,
   "par": 13,
   "seed": 15000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "pickle",
-     "lettuce"
+     "lime",
+     "grape",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "onion",
-     "tomato"
+     "?lime",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "pickle",
-     "lettuce"
+     "lime",
+     "lemon",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "onion",
-     "lettuce"
+     "?cola",
+     "lemon",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -641,37 +641,37 @@
   "capacity": 4,
   "par": 8,
   "seed": 16000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "tomato",
-     "patty"
+     "?lime",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "patty",
-     "patty"
+     "cola",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "tomato",
-     "pickle"
+     "grape",
+     "lime",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "lettuce",
-     "pickle"
+     "grape",
+     "grape",
+     "grape",
+     "cola"
     ]
    },
    {
@@ -687,37 +687,37 @@
   "capacity": 4,
   "par": 11,
   "seed": 17000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "onion",
-     "patty"
+     "lemon",
+     "grape",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "cheese",
-     "cheese"
+     "?berry",
+     "peach",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "patty",
-     "lettuce"
+     "?berry",
+     "peach",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "onion",
-     "onion",
-     "lettuce"
+     "grape",
+     "lemon",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -733,37 +733,37 @@
   "capacity": 4,
   "par": 10,
   "seed": 18000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "cheese",
-     "onion",
-     "cheese"
+     "lemon",
+     "peach",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "tomato",
-     "tomato"
+     "?peach",
+     "lime",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "patty",
-     "onion"
+     "?peach",
+     "lemon",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "tomato",
-     "patty"
+     "berry",
+     "berry",
+     "lime",
+     "berry"
     ]
    },
    {
@@ -779,37 +779,37 @@
   "capacity": 4,
   "par": 11,
   "seed": 19000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?patty",
-     "cheese",
-     "onion"
+     "lemon",
+     "?berry",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?onion",
-     "cheese",
-     "cheese"
+     "berry",
+     "?lemon",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "pickle",
-     "pickle"
+     "?cola",
+     "berry",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "patty",
-     "cheese"
+     "cola",
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -825,37 +825,37 @@
   "capacity": 4,
   "par": 10,
   "seed": 20000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "tomato",
-     "tomato"
+     "?grape",
+     "cola",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "lettuce",
-     "onion"
+     "cola",
+     "lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "onion",
-     "lettuce"
+     "lime",
+     "lemon",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "pickle",
-     "pickle"
+     "grape",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -871,46 +871,46 @@
   "capacity": 4,
   "par": 14,
   "seed": 21005,
-  "hint": "A locked plate opens once you finish a burger.",
-  "plates": [
+  "hint": "A locked tube opens once you fill one tube.",
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "lettuce",
-     "tomato"
+     "lemon",
+     "?cola",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "pickle",
-     "pickle"
+     "?lime",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "onion",
-     "cheese"
+     "?grape",
+     "?cola",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "lemon",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "cheese",
-     "onion"
+     "grape",
+     "peach",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -929,45 +929,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 22000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "cheese",
-     "tomato"
+     "?peach",
+     "berry",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "lettuce",
-     "patty"
+     "?peach",
+     "berry",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "tomato",
-     "lettuce"
+     "lemon",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "patty",
-     "tomato"
+     "grape",
+     "grape",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "onion",
-     "onion"
+     "peach",
+     "lime",
+     "lemon",
+     "lemon"
     ]
    },
    {
@@ -986,37 +986,37 @@
   "capacity": 4,
   "par": 12,
   "seed": 23000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "patty",
-     "patty",
-     "onion"
+     "cola",
+     "berry",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "patty",
-     "tomato",
-     "pickle"
+     "lemon",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "tomato",
-     "pickle"
+     "?lemon",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "tomato",
-     "tomato"
+     "?berry",
+     "lemon",
+     "lime",
+     "lime"
     ]
    },
    {
@@ -1035,37 +1035,37 @@
   "capacity": 4,
   "par": 13,
   "seed": 24001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "?cheese",
-     "patty",
-     "onion"
+     "grape",
+     "?peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "lettuce",
-     "lettuce"
+     "?lemon",
+     "?berry",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "lettuce",
-     "patty"
+     "berry",
+     "?peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "onion",
-     "cheese"
+     "lemon",
+     "peach",
+     "lemon",
+     "peach"
     ]
    },
    {
@@ -1084,45 +1084,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 25000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "onion",
-     "pickle"
+     "?berry",
+     "peach",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "pickle",
-     "patty"
+     "?lemon",
+     "lemon",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "grape",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "lettuce",
-     "onion"
+     "peach",
+     "berry",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "patty",
-     "lettuce"
+     "cola",
+     "cola",
+     "berry",
+     "grape"
     ]
    },
    {
@@ -1141,45 +1141,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 26000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "pickle",
-     "pickle"
+     "cola",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?patty",
-     "onion",
-     "onion"
+     "?grape",
+     "?berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "patty",
-     "onion"
+     "?grape",
+     "?lime",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "pickle",
-     "lettuce"
+     "berry",
+     "lime",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "onion",
-     "lettuce"
+     "berry",
+     "lime",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -1198,37 +1198,37 @@
   "capacity": 4,
   "par": 10,
   "seed": 27000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "pickle",
-     "tomato"
+     "?lime",
+     "berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "tomato",
-     "onion"
+     "?cola",
+     "lime",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "patty",
-     "patty"
+     "lemon",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "patty",
-     "pickle"
+     "lemon",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -1247,37 +1247,37 @@
   "capacity": 4,
   "par": 13,
   "seed": 28016,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "onion",
-     "lettuce"
+     "?lime",
+     "peach",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?onion",
-     "tomato",
-     "onion"
+     "peach",
+     "?lemon",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "lettuce",
-     "tomato"
+     "peach",
+     "grape",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "cheese",
-     "onion"
+     "?lime",
+     "grape",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -1296,45 +1296,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 29007,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "tomato",
-     "pickle",
-     "lettuce"
+     "lime",
+     "lime",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "patty",
-     "cheese"
+     "?berry",
+     "peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "lettuce",
-     "pickle"
+     "?berry",
+     "cola",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?berry",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "pickle",
-     "lettuce"
+     "peach",
+     "lime",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -1353,45 +1353,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 30004,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "pickle",
-     "cheese"
+     "?grape",
+     "lemon",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "lettuce",
-     "pickle"
+     "berry",
+     "?peach",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?lettuce",
-     "onion",
-     "pickle"
+     "?lemon",
+     "?grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "lettuce",
-     "cheese"
+     "berry",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "patty",
-     "patty"
+     "cola",
+     "peach",
+     "berry",
+     "berry"
     ]
    },
    {
@@ -1410,53 +1410,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 31001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "onion",
-     "onion",
-     "onion"
+     "berry",
+     "lemon",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "pickle",
-     "cheese"
+     "grape",
+     "grape",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "tomato",
-     "patty"
+     "lime",
+     "peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?cola",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "onion",
-     "pickle"
+     "?cola",
+     "peach",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "tomato",
-     "patty"
+     "?berry",
+     "grape",
+     "lime",
+     "berry"
     ]
    },
    {
@@ -1472,53 +1472,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 32003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "pickle",
-     "patty"
+     "?peach",
+     "?grape",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "onion",
-     "tomato"
+     "?lime",
+     "lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "cheese",
-     "pickle"
+     "?grape",
+     "berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "tomato",
-     "pickle"
+     "peach",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "lettuce",
-     "onion"
+     "grape",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "patty",
-     "cheese",
-     "pickle"
+     "lemon",
+     "berry",
+     "peach",
+     "cola"
     ]
    },
    {
@@ -1537,53 +1537,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 33000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "pickle",
-     "cheese"
+     "?lime",
+     "lemon",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "tomato",
-     "cheese"
+     "?berry",
+     "cola",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "patty",
-     "onion"
+     "cola",
+     "berry",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "tomato",
-     "cheese",
-     "lettuce"
+     "lime",
+     "lime",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "patty",
-     "onion"
+     "?grape",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "lettuce",
-     "onion"
+     "peach",
+     "grape",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -1599,45 +1599,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 34001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "onion",
-     "patty"
+     "lemon",
+     "?cola",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?lettuce",
-     "patty",
-     "cheese"
+     "?grape",
+     "?grape",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "lettuce",
-     "patty"
+     "?cola",
+     "berry",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "onion",
-     "cheese",
-     "cheese"
+     "peach",
+     "lemon",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "onion",
-     "pickle",
-     "pickle"
+     "grape",
+     "lemon",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -1653,45 +1653,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 35000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "tomato",
-     "patty"
+     "peach",
+     "?berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "onion",
-     "tomato"
+     "cola",
+     "?lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "onion",
-     "cheese"
+     "lemon",
+     "?lime",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "patty",
-     "patty"
+     "?cola",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "cheese",
-     "tomato"
+     "peach",
+     "cola",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -1707,45 +1707,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 36000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "patty",
-     "?onion",
-     "onion"
+     "cola",
+     "berry",
+     "?lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?cheese",
-     "pickle",
-     "patty"
+     "?lemon",
+     "?peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "cheese",
-     "tomato"
+     "?peach",
+     "cola",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "pickle",
-     "tomato"
+     "lime",
+     "?lemon",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "patty",
-     "tomato",
-     "cheese"
+     "?berry",
+     "berry",
+     "lime",
+     "peach"
     ]
    },
    {
@@ -1764,45 +1764,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 37000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "patty",
-     "patty"
+     "?cola",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "?grape",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "tomato",
-     "cheese"
+     "grape",
+     "berry",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "?berry",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "tomato",
-     "pickle"
+     "peach",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -1821,53 +1821,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 38000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "cheese",
-     "lettuce"
+     "?peach",
+     "berry",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?cheese",
-     "tomato",
-     "tomato"
+     "?lime",
+     "?peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "patty",
-     "cheese"
+     "lemon",
+     "cola",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "onion",
-     "patty"
+     "?grape",
+     "lemon",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?lettuce",
-     "onion",
-     "pickle"
+     "?berry",
+     "?grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "tomato",
-     "lettuce"
+     "cola",
+     "cola",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -1883,53 +1883,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 39000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "tomato",
-     "patty"
+     "lemon",
+     "?peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "onion",
-     "patty"
+     "peach",
+     "?lime",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "lettuce",
-     "patty"
+     "?lemon",
+     "lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "tomato",
-     "pickle"
+     "?peach",
+     "lime",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "pickle",
-     "pickle"
+     "?peach",
+     "berry",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?lettuce",
-     "lettuce",
-     "lettuce"
+     "cola",
+     "?grape",
+     "grape",
+     "grape"
     ]
    },
    {
@@ -1948,53 +1948,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 40005,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "lettuce",
-     "pickle"
+     "?peach",
+     "cola",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "patty",
-     "tomato"
+     "?lemon",
+     "?berry",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "lettuce",
-     "patty"
+     "lime",
+     "lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "cheese",
-     "cheese"
+     "lemon",
+     "cola",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "tomato",
-     "lettuce"
+     "berry",
+     "lime",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "pickle",
-     "lettuce"
+     "?peach",
+     "lemon",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -2007,45 +2007,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 41000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "?tomato",
-     "lettuce"
+     "lime",
+     "?peach",
+     "?lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "?pickle",
-     "tomato"
+     "cola",
+     "lemon",
+     "?cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "tomato",
-     "onion"
+     "cola",
+     "grape",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?cheese",
-     "lettuce",
-     "onion"
+     "?peach",
+     "?peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "lettuce",
-     "onion"
+     "cola",
+     "?peach",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -2061,53 +2061,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 42000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "onion",
-     "pickle",
-     "tomato"
+     "lemon",
+     "lemon",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "patty",
-     "lettuce"
+     "?peach",
+     "grape",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "pickle",
-     "onion"
+     "?lime",
+     "cola",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "cheese",
-     "cheese"
+     "grape",
+     "lime",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "lettuce",
-     "pickle"
+     "berry",
+     "berry",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "cheese"
+     "?lime",
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -2123,53 +2123,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 43000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "pickle",
-     "lettuce"
+     "?cola",
+     "?berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?patty",
-     "onion",
-     "tomato"
+     "berry",
+     "?berry",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "cheese",
-     "onion"
+     "lemon",
+     "?grape",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "lettuce",
-     "cheese"
+     "peach",
+     "?peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "onion",
-     "tomato"
+     "grape",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "pickle",
-     "tomato"
+     "lime",
+     "berry",
+     "cola",
+     "lime"
     ]
    },
    {
@@ -2185,45 +2185,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 44000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "tomato",
-     "pickle"
+     "?peach",
+     "grape",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "cheese",
-     "patty"
+     "?grape",
+     "grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "cheese",
-     "pickle"
+     "grape",
+     "berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "cheese",
-     "tomato"
+     "?cola",
+     "?berry",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "pickle",
-     "tomato"
+     "?berry",
+     "lime",
+     "cola",
+     "lime"
     ]
    },
    {
@@ -2239,45 +2239,45 @@
   "capacity": 4,
   "par": 17,
   "seed": 45000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "?onion",
-     "cheese"
+     "peach",
+     "?cola",
+     "?lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "tomato",
-     "cheese"
+     "berry",
+     "?peach",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "patty",
-     "tomato"
+     "?berry",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "tomato",
-     "pickle"
+     "lemon",
+     "lime",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?pickle",
-     "onion",
-     "patty"
+     "?lemon",
+     "?cola",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -2293,45 +2293,45 @@
   "capacity": 4,
   "par": 17,
   "seed": 46000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "?onion",
-     "patty"
+     "?lemon",
+     "grape",
+     "?lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "patty",
-     "cheese"
+     "lemon",
+     "lime",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "cheese",
-     "lettuce"
+     "?lime",
+     "berry",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "cheese",
-     "tomato"
+     "?grape",
+     "?lime",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "patty",
-     "cheese"
+     "grape",
+     "?lemon",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -2350,53 +2350,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 47000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "patty",
-     "pickle"
+     "peach",
+     "?peach",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "patty",
-     "onion"
+     "lime",
+     "?lime",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "tomato",
-     "cheese"
+     "lemon",
+     "cola",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "cheese",
-     "pickle"
+     "lime",
+     "?lemon",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "lettuce",
-     "patty"
+     "?grape",
+     "grape",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "patty",
-     "pickle"
+     "?grape",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -2412,45 +2412,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 48001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "patty",
-     "lettuce"
+     "lime",
+     "?cola",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "lettuce",
-     "onion"
+     "lime",
+     "?lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "tomato",
-     "patty"
+     "lime",
+     "lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "lettuce",
-     "patty"
+     "?cola",
+     "cola",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "pickle",
-     "lettuce"
+     "?berry",
+     "lemon",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -2469,53 +2469,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 49001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "tomato",
-     "cheese"
+     "peach",
+     "lime",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "tomato",
-     "lettuce"
+     "?berry",
+     "cola",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "patty",
-     "cheese",
-     "onion"
+     "?berry",
+     "berry",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "pickle",
-     "cheese"
+     "grape",
+     "cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "onion",
-     "lettuce"
+     "lemon",
+     "lime",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "pickle",
-     "onion"
+     "?berry",
+     "grape",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -2534,53 +2534,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 50006,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?patty",
-     "tomato",
-     "patty"
+     "lemon",
+     "?berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "pickle",
-     "tomato"
+     "?lemon",
+     "grape",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "pickle",
-     "lettuce"
+     "?berry",
+     "lemon",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "peach",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "cheese",
-     "onion"
+     "?peach",
+     "berry",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?tomato",
-     "pickle",
-     "pickle"
+     "?lime",
+     "?lime",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -2593,45 +2593,45 @@
   "capacity": 4,
   "par": 12,
   "seed": 51000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "lettuce",
-     "lettuce"
+     "?lemon",
+     "grape",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "onion",
-     "pickle"
+     "?lemon",
+     "berry",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "cheese",
-     "cheese"
+     "cola",
+     "?peach",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "patty",
-     "lettuce"
+     "berry",
+     "peach",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "pickle",
-     "pickle"
+     "?lemon",
+     "berry",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -2650,45 +2650,45 @@
   "capacity": 4,
   "par": 13,
   "seed": 52001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "onion",
-     "onion",
-     "tomato"
+     "?berry",
+     "lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "lettuce",
-     "pickle"
+     "berry",
+     "lemon",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "patty",
-     "tomato",
-     "lettuce"
+     "?berry",
+     "berry",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "tomato",
-     "lettuce"
+     "lime",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "pickle",
-     "lettuce"
+     "?cola",
+     "cola",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -2707,45 +2707,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 53001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "?patty",
-     "cheese"
+     "grape",
+     "?cola",
+     "?berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "patty",
-     "tomato"
+     "berry",
+     "?peach",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "cheese",
-     "tomato"
+     "peach",
+     "lime",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?tomato",
-     "lettuce",
-     "pickle"
+     "cola",
+     "?lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "patty",
-     "lettuce"
+     "?cola",
+     "?grape",
+     "berry",
+     "grape"
     ]
    },
    {
@@ -2764,53 +2764,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 54001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "pickle",
-     "tomato"
+     "?berry",
+     "?cola",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "lettuce",
-     "cheese"
+     "grape",
+     "berry",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "onion",
-     "pickle"
+     "?berry",
+     "lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "tomato",
-     "patty"
+     "lime",
+     "grape",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "onion",
-     "lettuce"
+     "lime",
+     "cola",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "cheese",
-     "cheese",
-     "onion"
+     "?peach",
+     "peach",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -2829,53 +2829,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 55000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "patty",
-     "lettuce",
-     "lettuce"
+     "lemon",
+     "berry",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "pickle",
-     "cheese"
+     "?lime",
+     "cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "pickle",
-     "onion"
+     "?berry",
+     "lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "patty",
-     "tomato"
+     "?peach",
+     "lime",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "cheese",
-     "lettuce"
+     "grape",
+     "peach",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "onion",
-     "tomato"
+     "cola",
+     "berry",
+     "lemon",
+     "lime"
     ]
    },
    {
@@ -2891,53 +2891,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 56000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "patty",
-     "pickle"
+     "?cola",
+     "peach",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "grape",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "onion",
-     "lettuce"
+     "peach",
+     "cola",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "tomato",
-     "cheese"
+     "grape",
+     "berry",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "onion"
+     "?lime",
+     "lemon",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "patty",
-     "onion"
+     "?peach",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -2953,45 +2953,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 57000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "onion",
-     "tomato",
-     "lettuce"
+     "lemon",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "lettuce",
-     "cheese"
+     "berry",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "patty",
-     "onion"
+     "?berry",
+     "peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "?lime",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "tomato",
-     "patty"
+     "?peach",
+     "lime",
+     "lime",
+     "berry"
     ]
    },
    {
@@ -3010,45 +3010,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 58000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?onion",
-     "pickle",
-     "lettuce"
+     "?berry",
+     "?lemon",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "lettuce",
-     "lettuce"
+     "lime",
+     "?cola",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "tomato",
-     "tomato"
+     "?berry",
+     "cola",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "onion",
-     "patty"
+     "lemon",
+     "cola",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?patty",
-     "tomato",
-     "onion"
+     "grape",
+     "?berry",
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -3064,45 +3064,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 59000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?patty",
-     "lettuce",
-     "tomato"
+     "berry",
+     "?berry",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "tomato",
-     "patty"
+     "?lime",
+     "?grape",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "lettuce",
-     "onion"
+     "lemon",
+     "?peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "cheese",
-     "onion"
+     "lime",
+     "?berry",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -3118,53 +3118,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 60003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "patty",
-     "onion",
-     "patty"
+     "cola",
+     "berry",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "tomato",
-     "onion"
+     "?lime",
+     "grape",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "pickle",
-     "onion"
+     "cola",
+     "?berry",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "onion",
-     "patty"
+     "?peach",
+     "?grape",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "peach",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "?cola",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -3177,45 +3177,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 61000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "cheese",
-     "patty"
+     "?lemon",
+     "cola",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "tomato",
-     "cheese"
+     "peach",
+     "peach",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "onion",
-     "patty"
+     "berry",
+     "?cola",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "tomato",
-     "pickle"
+     "?cola",
+     "lemon",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "tomato"
+     "?lime",
+     "lemon",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -3234,45 +3234,45 @@
   "capacity": 4,
   "par": 12,
   "seed": 62000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "onion",
-     "onion"
+     "?cola",
+     "cola",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?onion",
-     "?tomato",
-     "tomato"
+     "?cola",
+     "?lemon",
+     "?lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "pickle",
-     "lettuce"
+     "?lime",
+     "peach",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "onion",
-     "lettuce"
+     "peach",
+     "lime",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "cheese",
-     "cheese"
+     "?grape",
+     "grape",
+     "peach",
+     "peach"
     ]
    },
    {
@@ -3291,53 +3291,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 63000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "tomato",
-     "cheese",
-     "tomato"
+     "?grape",
+     "lime",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?onion",
-     "pickle",
-     "onion"
+     "?berry",
+     "?lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "pickle",
-     "pickle"
+     "?peach",
+     "lemon",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "patty",
-     "pickle"
+     "berry",
+     "?grape",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "berry",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "lemon",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -3356,45 +3356,45 @@
   "capacity": 4,
   "par": 17,
   "seed": 64000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "pickle",
-     "tomato",
-     "onion"
+     "lemon",
+     "cola",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "tomato",
-     "pickle"
+     "?grape",
+     "lemon",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "lettuce",
-     "pickle"
+     "?lemon",
+     "lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "cheese",
-     "lettuce"
+     "?peach",
+     "cola",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "peach",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -3410,53 +3410,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 65000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "cheese",
-     "pickle"
+     "?lime",
+     "grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "onion",
-     "tomato",
-     "lettuce"
+     "peach",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "cheese",
-     "lettuce"
+     "berry",
+     "berry",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "onion",
-     "tomato"
+     "?lemon",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "cheese",
-     "pickle"
+     "?lemon",
+     "grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "patty",
-     "patty"
+     "?lime",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
@@ -3472,53 +3472,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 66001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "patty",
-     "cheese"
+     "?grape",
+     "?lime",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?patty",
-     "pickle",
-     "patty"
+     "?berry",
+     "?berry",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "?lime",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "onion",
-     "pickle"
+     "?peach",
+     "cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "tomato",
-     "tomato"
+     "cola",
+     "peach",
+     "lime",
+     "lime"
     ]
    },
    {
@@ -3537,53 +3537,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 67000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "onion",
-     "tomato"
+     "lemon",
+     "?lime",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "patty",
-     "cheese"
+     "berry",
+     "peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "cheese",
-     "pickle"
+     "?cola",
+     "grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?cheese",
-     "onion",
-     "pickle"
+     "grape",
+     "?peach",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "tomato",
-     "onion"
+     "?grape",
+     "grape",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "pickle",
-     "patty"
+     "?berry",
+     "lime",
+     "cola",
+     "berry"
     ]
    },
    {
@@ -3599,45 +3599,45 @@
   "capacity": 4,
   "par": 12,
   "seed": 68000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "?cola",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "cheese",
-     "patty"
+     "berry",
+     "berry",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "onion",
-     "cheese"
+     "?grape",
+     "lemon",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "lettuce",
-     "cheese"
+     "?berry",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "pickle",
-     "pickle"
+     "lemon",
+     "cola",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -3656,45 +3656,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 69002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "cheese",
-     "onion"
+     "?lime",
+     "cola",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "patty",
-     "patty"
+     "?lime",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "onion",
-     "cheese"
+     "?peach",
+     "lemon",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?pickle",
-     "onion",
-     "pickle"
+     "?lime",
+     "?cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "tomato",
-     "cheese"
+     "berry",
+     "cola",
+     "lime",
+     "peach"
     ]
    },
    {
@@ -3713,53 +3713,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 70008,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "tomato",
-     "lettuce"
+     "?peach",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "pickle",
-     "onion"
+     "?grape",
+     "cola",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "tomato",
-     "lettuce"
+     "berry",
+     "lime",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "patty",
-     "pickle"
+     "?cola",
+     "berry",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "onion",
-     "lettuce"
+     "peach",
+     "berry",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "cheese",
-     "onion"
+     "lime",
+     "peach",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -3772,53 +3772,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 71000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "lettuce",
-     "tomato"
+     "cola",
+     "?peach",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "patty",
-     "patty"
+     "?peach",
+     "lemon",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "cheese",
-     "tomato"
+     "lemon",
+     "?lemon",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "lettuce",
-     "cheese"
+     "grape",
+     "cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?patty",
-     "pickle",
-     "tomato"
+     "?lime",
+     "?berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?patty",
-     "onion",
-     "pickle"
+     "grape",
+     "?berry",
+     "lemon",
+     "cola"
     ]
    },
    {
@@ -3837,45 +3837,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 72000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "tomato",
-     "patty"
+     "?berry",
+     "?peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "?pickle",
-     "pickle"
+     "?lime",
+     "peach",
+     "?cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "cheese",
-     "onion"
+     "cola",
+     "lime",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?onion",
-     "cheese",
-     "patty"
+     "berry",
+     "?lemon",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "pickle",
-     "tomato"
+     "lemon",
+     "?lemon",
+     "cola",
+     "lime"
     ]
    },
    {
@@ -3891,45 +3891,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 73000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "cheese",
-     "patty"
+     "?peach",
+     "?grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "pickle",
-     "lettuce"
+     "cola",
+     "?berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "cheese",
-     "tomato"
+     "?cola",
+     "?grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "tomato",
-     "pickle"
+     "berry",
+     "?peach",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "patty",
-     "tomato"
+     "grape",
+     "lime",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -3948,45 +3948,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 74001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "lettuce",
-     "pickle"
+     "?grape",
+     "?cola",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "peach",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "onion",
-     "cheese"
+     "cola",
+     "lime",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "cheese",
-     "tomato"
+     "peach",
+     "lime",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "onion",
-     "pickle"
+     "?lime",
+     "lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
@@ -4002,45 +4002,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 75000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?onion",
-     "patty",
-     "tomato"
+     "berry",
+     "?lemon",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?lettuce",
-     "cheese",
-     "patty"
+     "lime",
+     "?grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "lettuce",
-     "cheese"
+     "lime",
+     "peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "tomato",
-     "lettuce"
+     "berry",
+     "?grape",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?onion",
-     "onion",
-     "cheese"
+     "?lemon",
+     "?lemon",
+     "lemon",
+     "peach"
     ]
    },
    {
@@ -4059,45 +4059,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 76000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "?pickle",
-     "onion"
+     "?peach",
+     "cola",
+     "?cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "?lettuce",
-     "cheese"
+     "?cola",
+     "peach",
+     "?grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "lettuce",
-     "onion"
+     "?lime",
+     "lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "lime",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "tomato",
-     "tomato"
+     "?peach",
+     "cola",
+     "lime",
+     "lime"
     ]
    },
    {
@@ -4113,53 +4113,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 77000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "pickle",
-     "pickle"
+     "peach",
+     "?berry",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?patty",
-     "onion",
-     "lettuce"
+     "lemon",
+     "?berry",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "cheese",
-     "patty"
+     "?lime",
+     "lime",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "tomato",
-     "pickle"
+     "?lemon",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "cheese",
-     "lettuce"
+     "?lemon",
+     "peach",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "lettuce",
-     "tomato"
+     "grape",
+     "berry",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -4175,45 +4175,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 78000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "lettuce",
-     "lettuce"
+     "lemon",
+     "?lime",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "onion",
-     "patty"
+     "?grape",
+     "berry",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "pickle",
-     "pickle"
+     "lemon",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "patty",
-     "tomato"
+     "?lime",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "pickle",
-     "onion"
+     "?berry",
+     "grape",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -4229,53 +4229,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 79001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?patty",
-     "tomato",
-     "pickle"
+     "berry",
+     "?berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?onion",
-     "cheese",
-     "lettuce"
+     "berry",
+     "?lemon",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "lettuce",
-     "tomato"
+     "?grape",
+     "lemon",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "cheese",
-     "tomato"
+     "?lemon",
+     "peach",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "cola",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "pickle",
-     "patty"
+     "?cola",
+     "lemon",
+     "cola",
+     "berry"
     ]
    },
    {
@@ -4291,53 +4291,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 80005,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "onion",
-     "pickle"
+     "berry",
+     "?cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "lettuce",
-     "pickle"
+     "?grape",
+     "?lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "cheese",
-     "onion"
+     "peach",
+     "lime",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?patty",
-     "patty",
-     "lettuce"
+     "?berry",
+     "?berry",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "tomato",
-     "pickle"
+     "?lemon",
+     "peach",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "lettuce",
-     "cheese"
+     "lime",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
@@ -4350,45 +4350,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 81000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "patty",
-     "onion"
+     "?grape",
+     "?peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "?cheese",
-     "cheese"
+     "cola",
+     "?lemon",
+     "?peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "?cola",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "pickle",
-     "onion"
+     "cola",
+     "?berry",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "lettuce",
-     "patty"
+     "berry",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
@@ -4404,45 +4404,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 82000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "lettuce",
-     "patty"
+     "lime",
+     "?lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "pickle",
-     "patty"
+     "cola",
+     "?berry",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "tomato",
-     "patty"
+     "?grape",
+     "lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "onion",
-     "pickle"
+     "lemon",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "pickle",
-     "tomato"
+     "?lime",
+     "?grape",
+     "cola",
+     "lime"
     ]
    },
    {
@@ -4458,53 +4458,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 83000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "lettuce",
-     "onion"
+     "?cola",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?onion",
-     "cheese",
-     "patty"
+     "?cola",
+     "?lemon",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "lettuce",
-     "lettuce"
+     "berry",
+     "berry",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "tomato",
-     "onion"
+     "lime",
+     "cola",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "cheese",
-     "patty"
+     "?peach",
+     "lime",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "cheese",
-     "pickle"
+     "lemon",
+     "grape",
+     "peach",
+     "cola"
     ]
    },
    {
@@ -4523,53 +4523,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 84000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "tomato",
-     "pickle"
+     "grape",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "patty",
-     "patty"
+     "berry",
+     "lemon",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?cheese",
-     "lettuce",
-     "pickle"
+     "?lime",
+     "?peach",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "lettuce",
-     "lettuce"
+     "?peach",
+     "cola",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?onion",
-     "tomato",
-     "onion"
+     "?lemon",
+     "?lemon",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "cheese",
-     "tomato"
+     "?berry",
+     "peach",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -4585,45 +4585,45 @@
   "capacity": 4,
   "par": 11,
   "seed": 85001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "cheese",
-     "cheese"
+     "?lime",
+     "lime",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?grape",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?pickle",
-     "pickle",
-     "lettuce"
+     "cola",
+     "?cola",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "pickle",
-     "patty"
+     "berry",
+     "berry",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "?berry",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -4639,53 +4639,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 86000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?patty",
-     "lettuce",
-     "onion"
+     "?berry",
+     "?berry",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?lettuce",
-     "patty",
-     "onion"
+     "cola",
+     "?grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "grape",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "pickle",
-     "patty"
+     "?lime",
+     "peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "cheese",
-     "tomato"
+     "lemon",
+     "peach",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "pickle",
-     "pickle"
+     "lemon",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -4701,45 +4701,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 87000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "tomato",
-     "onion"
+     "?lemon",
+     "grape",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "cheese",
-     "cheese"
+     "?lime",
+     "?grape",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "patty",
-     "onion"
+     "berry",
+     "lime",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "tomato",
-     "cheese"
+     "berry",
+     "?grape",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?onion",
-     "cheese",
-     "patty"
+     "?grape",
+     "?lemon",
+     "peach",
+     "berry"
     ]
    },
    {
@@ -4755,53 +4755,53 @@
   "capacity": 4,
   "par": 14,
   "seed": 88000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "lettuce",
-     "pickle"
+     "lime",
+     "grape",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?onion",
-     "onion",
-     "tomato"
+     "?berry",
+     "?lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "patty",
-     "pickle"
+     "?cola",
+     "peach",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "patty",
-     "tomato"
+     "?lemon",
+     "berry",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "cheese",
-     "cheese"
+     "lemon",
+     "lime",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "pickle",
-     "cheese"
+     "grape",
+     "grape",
+     "cola",
+     "peach"
     ]
    },
    {
@@ -4820,45 +4820,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 89000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "?tomato",
-     "tomato",
-     "pickle"
+     "cola",
+     "?lime",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "tomato",
-     "tomato"
+     "berry",
+     "peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "?berry",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "patty",
-     "lettuce"
+     "?grape",
+     "cola",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "pickle",
-     "cheese"
+     "berry",
+     "peach",
+     "cola",
+     "peach"
     ]
    },
    {
@@ -4877,53 +4877,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 90002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?lettuce",
-     "patty",
-     "cheese"
+     "peach",
+     "?grape",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "patty",
-     "tomato"
+     "berry",
+     "?cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "tomato",
-     "onion"
+     "?berry",
+     "grape",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "tomato",
-     "onion"
+     "lemon",
+     "?lemon",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "cheese",
-     "pickle"
+     "grape",
+     "cola",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?cola",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -4936,53 +4936,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 91001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "tomato",
-     "patty"
+     "grape",
+     "grape",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?tomato",
-     "tomato",
-     "cheese"
+     "?berry",
+     "?lime",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?cheese",
-     "onion",
-     "cheese"
+     "grape",
+     "?peach",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "onion",
-     "pickle"
+     "?cola",
+     "peach",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "lettuce",
-     "patty"
+     "lime",
+     "?cola",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "onion",
-     "onion"
+     "cola",
+     "?berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
@@ -4998,45 +4998,45 @@
   "capacity": 4,
   "par": 15,
   "seed": 92000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "pickle",
-     "lettuce"
+     "lime",
+     "?lemon",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "?berry",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "patty",
-     "lettuce"
+     "lemon",
+     "lemon",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "tomato",
-     "patty"
+     "?cola",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "patty",
-     "pickle"
+     "lemon",
+     "grape",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -5052,45 +5052,45 @@
   "capacity": 4,
   "par": 13,
   "seed": 93000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "tomato",
-     "onion"
+     "?lemon",
+     "peach",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "grape",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?onion",
-     "lettuce",
-     "pickle"
+     "?cola",
+     "?lemon",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "cheese",
-     "cheese"
+     "cola",
+     "cola",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?tomato",
-     "onion",
-     "tomato"
+     "?lime",
+     "?lime",
+     "lemon",
+     "lime"
     ]
    },
    {
@@ -5106,53 +5106,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 94000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "lettuce",
-     "patty"
+     "?grape",
+     "?cola",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "cheese",
-     "tomato"
+     "cola",
+     "?peach",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "tomato",
-     "onion"
+     "grape",
+     "lime",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "patty",
-     "cheese"
+     "berry",
+     "peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "patty",
-     "lettuce"
+     "lemon",
+     "cola",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "onion",
-     "tomato"
+     "?cola",
+     "lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
@@ -5168,53 +5168,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 95000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "onion",
-     "cheese"
+     "berry",
+     "grape",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "tomato",
-     "onion"
+     "peach",
+     "?peach",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "lettuce",
-     "patty"
+     "?cola",
+     "?peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "pickle",
-     "patty"
+     "?cola",
+     "lemon",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "pickle",
-     "lettuce"
+     "?lemon",
+     "berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "tomato",
-     "tomato"
+     "lime",
+     "grape",
+     "lime",
+     "lime"
     ]
    },
    {
@@ -5233,45 +5233,45 @@
   "capacity": 4,
   "par": 14,
   "seed": 96000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "?pickle",
-     "lettuce",
-     "onion"
+     "?cola",
+     "?cola",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "cheese",
-     "patty"
+     "berry",
+     "grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "grape",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "cheese",
-     "pickle"
+     "?peach",
+     "lemon",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "patty",
-     "pickle"
+     "?lemon",
+     "?berry",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -5287,45 +5287,45 @@
   "capacity": 4,
   "par": 17,
   "seed": 97000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "tomato",
-     "lettuce"
+     "lime",
+     "?peach",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "patty",
-     "tomato"
+     "berry",
+     "?peach",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?onion",
-     "lettuce",
-     "tomato"
+     "peach",
+     "?lemon",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "patty",
-     "lettuce"
+     "lemon",
+     "peach",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "lettuce",
-     "onion"
+     "?berry",
+     "lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -5341,45 +5341,45 @@
   "capacity": 4,
   "par": 16,
   "seed": 98000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "tomato",
-     "patty"
+     "?lime",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "lettuce",
-     "pickle"
+     "?cola",
+     "lemon",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "patty",
-     "lettuce"
+     "?cola",
+     "grape",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "onion",
-     "onion"
+     "lime",
+     "berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "tomato",
-     "onion"
+     "grape",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -5395,53 +5395,53 @@
   "capacity": 4,
   "par": 14,
   "seed": 99002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "patty",
-     "onion"
+     "lemon",
+     "?grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "tomato",
-     "tomato"
+     "lemon",
+     "?lemon",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "tomato",
-     "pickle"
+     "?grape",
+     "?cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "pickle",
-     "lettuce"
+     "grape",
+     "cola",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?patty",
-     "cheese",
-     "tomato"
+     "?berry",
+     "?berry",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "cheese",
-     "patty"
+     "peach",
+     "peach",
+     "peach",
+     "berry"
     ]
    },
    {
@@ -5460,53 +5460,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 100004,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "patty",
-     "cheese"
+     "peach",
+     "?peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "patty",
-     "onion"
+     "?cola",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "onion",
-     "tomato"
+     "?grape",
+     "?lime",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "onion",
-     "patty"
+     "lime",
+     "?peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "cola",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "patty",
-     "tomato"
+     "grape",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -5519,53 +5519,53 @@
   "capacity": 4,
   "par": 14,
   "seed": 171002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "cheese",
-     "lettuce"
+     "lime",
+     "?lime",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "tomato",
-     "tomato"
+     "?lemon",
+     "lemon",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?patty",
-     "lettuce",
-     "pickle"
+     "?grape",
+     "?berry",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "onion",
-     "pickle"
+     "lemon",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "patty",
-     "cheese",
-     "cheese"
+     "?berry",
+     "berry",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "pickle",
-     "pickle"
+     "berry",
+     "peach",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -5584,53 +5584,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 178000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "onion",
-     "onion"
+     "?cola",
+     "berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "cheese",
-     "pickle"
+     "lemon",
+     "lime",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "lettuce",
-     "tomato"
+     "?grape",
+     "grape",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "lettuce",
-     "tomato"
+     "lime",
+     "berry",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "pickle",
-     "cheese"
+     "?lemon",
+     "cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "patty",
-     "cheese"
+     "?peach",
+     "berry",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -5649,53 +5649,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 107002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "lettuce",
-     "pickle"
+     "berry",
+     "?grape",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "pickle",
-     "cheese"
+     "peach",
+     "?cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "patty",
-     "tomato"
+     "peach",
+     "peach",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "pickle",
-     "tomato"
+     "?lime",
+     "berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "onion",
-     "onion"
+     "?grape",
+     "lemon",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "lettuce",
-     "onion"
+     "berry",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -5714,53 +5714,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 116002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "cheese",
-     "patty"
+     "lemon",
+     "?lime",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "?pickle",
-     "pickle"
+     "?lime",
+     "lemon",
+     "?cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "tomato",
-     "tomato"
+     "?peach",
+     "grape",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "lettuce",
-     "cheese"
+     "?cola",
+     "grape",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?patty",
-     "patty",
-     "patty"
+     "lemon",
+     "?berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "onion",
-     "cheese"
+     "?grape",
+     "cola",
+     "lemon",
+     "peach"
     ]
    },
    {
@@ -5779,53 +5779,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 128000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "onion",
-     "lettuce"
+     "cola",
+     "cola",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "patty",
-     "patty"
+     "?lemon",
+     "peach",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "onion",
-     "pickle"
+     "?cola",
+     "peach",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "patty",
-     "cheese"
+     "peach",
+     "berry",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "tomato",
-     "lettuce"
+     "?grape",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "tomato",
-     "lettuce"
+     "?lime",
+     "lime",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -5844,53 +5844,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 148001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?cheese",
-     "pickle",
-     "pickle"
+     "?peach",
+     "?peach",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "patty",
-     "onion"
+     "cola",
+     "?lemon",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "lettuce",
-     "onion"
+     "berry",
+     "peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "patty",
-     "pickle"
+     "lime",
+     "?lime",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "grape",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "onion",
-     "patty"
+     "?lime",
+     "lime",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -5909,53 +5909,53 @@
   "capacity": 4,
   "par": 15,
   "seed": 158000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?lettuce",
-     "patty",
-     "patty"
+     "lime",
+     "?grape",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "onion",
-     "tomato"
+     "cola",
+     "?peach",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "tomato",
-     "onion"
+     "peach",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "cheese",
-     "onion"
+     "?grape",
+     "?lime",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "pickle",
-     "pickle"
+     "?peach",
+     "cola",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "lettuce",
-     "onion"
+     "berry",
+     "?grape",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -5974,53 +5974,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 184000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "pickle",
-     "patty"
+     "peach",
+     "peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "lettuce",
-     "pickle"
+     "cola",
+     "grape",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "onion",
-     "tomato"
+     "berry",
+     "grape",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "tomato",
-     "patty"
+     "?lemon",
+     "?berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "cheese",
-     "onion"
+     "?cola",
+     "?peach",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?tomato",
-     "onion",
-     "lettuce"
+     "?lime",
+     "?lime",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -6039,53 +6039,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 186001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?patty",
-     "?patty",
-     "lettuce"
+     "lemon",
+     "?berry",
+     "?berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "?patty",
-     "lettuce"
+     "?lemon",
+     "lime",
+     "?berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?patty",
-     "tomato",
-     "onion"
+     "?peach",
+     "?berry",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "?cheese",
-     "lettuce"
+     "lime",
+     "?lime",
+     "?peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "onion",
-     "cheese"
+     "peach",
+     "cola",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "pickle",
-     "pickle"
+     "grape",
+     "cola",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -6104,53 +6104,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 110000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "?onion",
-     "pickle",
-     "tomato"
+     "?lemon",
+     "?lemon",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?patty",
-     "pickle",
-     "lettuce"
+     "berry",
+     "?berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "onion",
-     "tomato"
+     "cola",
+     "peach",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "tomato",
-     "patty"
+     "?lime",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "cheese",
-     "cheese"
+     "?grape",
+     "peach",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "lettuce",
-     "onion"
+     "grape",
+     "berry",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -6169,53 +6169,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 166001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "pickle",
-     "?pickle",
-     "cheese"
+     "berry",
+     "cola",
+     "?cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "?lettuce",
-     "cheese"
+     "?lemon",
+     "lime",
+     "?grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "?cheese",
-     "tomato"
+     "?berry",
+     "?peach",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "tomato",
-     "pickle"
+     "?grape",
+     "grape",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "onion",
-     "patty"
+     "cola",
+     "lemon",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?tomato",
-     "lettuce",
-     "onion"
+     "berry",
+     "?lime",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -6234,53 +6234,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 133000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "onion",
-     "tomato",
-     "cheese"
+     "lemon",
+     "lemon",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "onion",
-     "onion"
+     "?cola",
+     "berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "cheese",
-     "tomato"
+     "?grape",
+     "cola",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "tomato",
-     "patty"
+     "?peach",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "lettuce",
-     "patty"
+     "?grape",
+     "grape",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "tomato",
-     "patty"
+     "cola",
+     "peach",
+     "lime",
+     "berry"
     ]
    },
    {
@@ -6299,53 +6299,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 172000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "tomato",
-     "pickle",
-     "pickle"
+     "berry",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "?cheese",
-     "tomato"
+     "grape",
+     "?lemon",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "?tomato",
-     "cheese"
+     "?peach",
+     "cola",
+     "?lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?patty",
-     "lettuce",
-     "lettuce"
+     "?grape",
+     "?berry",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?patty",
-     "onion",
-     "cheese"
+     "?berry",
+     "?berry",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "onion",
-     "pickle"
+     "lime",
+     "lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
@@ -6364,53 +6364,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 195000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "onion",
-     "onion"
+     "?berry",
+     "grape",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?tomato",
-     "?lettuce",
-     "lettuce"
+     "?lime",
+     "?lime",
+     "?grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "cheese",
-     "cheese"
+     "?cola",
+     "berry",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "cheese",
-     "pickle"
+     "?cola",
+     "?peach",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "patty",
-     "pickle"
+     "berry",
+     "lime",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "lettuce",
-     "onion"
+     "lime",
+     "?lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -6429,53 +6429,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 138001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "onion",
-     "onion",
-     "lettuce"
+     "peach",
+     "lemon",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?patty",
-     "?onion",
-     "pickle"
+     "lemon",
+     "?berry",
+     "?lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "?cheese",
-     "tomato"
+     "?peach",
+     "berry",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "cheese",
-     "patty"
+     "?lime",
+     "berry",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "lettuce",
-     "lettuce"
+     "?cola",
+     "?grape",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "pickle",
-     "tomato"
+     "?lime",
+     "cola",
+     "cola",
+     "lime"
     ]
    },
    {
@@ -6494,53 +6494,53 @@
   "capacity": 4,
   "par": 16,
   "seed": 200000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?lettuce",
-     "patty",
-     "patty"
+     "lime",
+     "?grape",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "tomato",
-     "lettuce"
+     "?lemon",
+     "grape",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "patty",
-     "cheese"
+     "lime",
+     "?peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?cheese",
-     "pickle",
-     "pickle"
+     "?peach",
+     "?peach",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "onion",
-     "patty"
+     "cola",
+     "lemon",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "lettuce",
-     "onion"
+     "lime",
+     "cola",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -6559,53 +6559,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 190000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "pickle",
-     "tomato"
+     "?berry",
+     "?peach",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "lettuce",
-     "cheese"
+     "?lemon",
+     "cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "onion",
-     "onion"
+     "lime",
+     "?cola",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?patty",
-     "pickle",
-     "tomato"
+     "?grape",
+     "?berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "cheese",
-     "tomato",
-     "patty"
+     "?peach",
+     "peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "patty",
-     "onion"
+     "grape",
+     "grape",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -6624,53 +6624,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 182000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "onion",
-     "pickle"
+     "peach",
+     "lime",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?patty",
-     "pickle",
-     "lettuce"
+     "?lime",
+     "?berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "patty",
-     "pickle"
+     "?grape",
+     "grape",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "cheese",
-     "pickle"
+     "?lemon",
+     "peach",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "patty",
-     "tomato"
+     "?lemon",
+     "berry",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?onion",
-     "lettuce",
-     "cheese"
+     "?lime",
+     "?lemon",
+     "grape",
+     "peach"
     ]
    },
    {
@@ -6689,53 +6689,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 177001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "?pickle",
-     "cheese"
+     "lime",
+     "?berry",
+     "?cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "?pickle",
-     "onion"
+     "?lime",
+     "lemon",
+     "?cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "cheese",
-     "patty",
-     "onion"
+     "?peach",
+     "peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "tomato",
-     "lettuce"
+     "lime",
+     "peach",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "lettuce",
-     "lettuce"
+     "?berry",
+     "lemon",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?pickle",
-     "lettuce",
-     "patty"
+     "cola",
+     "?cola",
+     "grape",
+     "berry"
     ]
    },
    {
@@ -6754,53 +6754,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 112001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?tomato",
-     "tomato",
-     "cheese"
+     "?peach",
+     "?lime",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "pickle",
-     "pickle"
+     "?grape",
+     "peach",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "patty",
-     "onion"
+     "berry",
+     "grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "tomato",
-     "lettuce"
+     "grape",
+     "?lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "tomato",
-     "pickle"
+     "peach",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "onion",
-     "patty"
+     "?cola",
+     "lemon",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -6819,53 +6819,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 123001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "?lettuce",
-     "onion"
+     "berry",
+     "?grape",
+     "?grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?patty",
-     "?tomato",
-     "cheese"
+     "grape",
+     "?berry",
+     "?lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "tomato",
-     "tomato"
+     "peach",
+     "?peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?onion",
-     "lettuce",
-     "pickle"
+     "?lime",
+     "?lemon",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "patty",
-     "pickle"
+     "cola",
+     "peach",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "pickle",
-     "onion"
+     "berry",
+     "lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -6884,53 +6884,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 194000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "tomato",
-     "onion"
+     "?peach",
+     "lemon",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "pickle",
-     "lettuce"
+     "grape",
+     "grape",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "patty",
-     "cheese",
-     "tomato"
+     "?berry",
+     "berry",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "pickle",
-     "tomato"
+     "?lemon",
+     "berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "tomato",
-     "patty"
+     "peach",
+     "peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "lettuce",
-     "pickle"
+     "?lemon",
+     "cola",
+     "grape",
+     "cola"
     ]
    },
    {
@@ -6949,53 +6949,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 126000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "onion",
-     "onion"
+     "?grape",
+     "peach",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "patty",
-     "cheese"
+     "lime",
+     "?lime",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "tomato",
-     "patty"
+     "?grape",
+     "peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "pickle",
-     "pickle"
+     "lime",
+     "grape",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "patty",
-     "cheese"
+     "lemon",
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "patty",
-     "pickle"
+     "?grape",
+     "cola",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -7014,53 +7014,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 180000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "?pickle",
-     "cheese",
-     "patty"
+     "?cola",
+     "?cola",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "?lettuce",
-     "patty"
+     "lemon",
+     "cola",
+     "?grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "?lime",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?lettuce",
-     "cheese",
-     "tomato"
+     "cola",
+     "?grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "onion",
-     "onion"
+     "peach",
+     "?berry",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "patty",
-     "cheese"
+     "?grape",
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -7079,53 +7079,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 135000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?onion",
-     "patty",
-     "lettuce"
+     "?peach",
+     "?lemon",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "onion",
-     "pickle"
+     "lime",
+     "?cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "onion",
-     "pickle"
+     "lime",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "patty",
-     "patty"
+     "?cola",
+     "?berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "cheese",
-     "onion"
+     "lime",
+     "?peach",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?cheese",
-     "lettuce",
-     "tomato"
+     "grape",
+     "?peach",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -7144,53 +7144,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 136002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "?patty",
-     "pickle"
+     "?peach",
+     "berry",
+     "?berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "?peach",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "lettuce",
-     "lettuce"
+     "lime",
+     "?lime",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "onion",
-     "tomato"
+     "peach",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "pickle",
-     "patty"
+     "lemon",
+     "?lime",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "onion",
-     "lettuce"
+     "?berry",
+     "?cola",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -7209,53 +7209,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 193003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?tomato",
-     "patty",
-     "patty"
+     "berry",
+     "?lime",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "lettuce",
-     "onion"
+     "?lime",
+     "cola",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "onion",
-     "onion"
+     "peach",
+     "grape",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "lettuce",
-     "pickle"
+     "?berry",
+     "?peach",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "onion",
-     "tomato"
+     "?cola",
+     "peach",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "tomato",
-     "pickle"
+     "?grape",
+     "?peach",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -7274,53 +7274,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 179001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "cheese",
-     "tomato"
+     "?grape",
+     "?peach",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?tomato",
-     "patty",
-     "pickle"
+     "grape",
+     "?lime",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "onion",
-     "onion"
+     "?cola",
+     "?grape",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?lettuce",
-     "patty",
-     "cheese"
+     "peach",
+     "?grape",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "pickle",
-     "onion"
+     "?lime",
+     "cola",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "patty",
-     "onion"
+     "berry",
+     "lime",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -7339,53 +7339,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 150003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "cheese",
-     "patty"
+     "?berry",
+     "?cola",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "onion",
-     "tomato"
+     "?berry",
+     "lime",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "lettuce",
-     "tomato"
+     "lemon",
+     "?lemon",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "pickle",
-     "lettuce"
+     "grape",
+     "?cola",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "onion",
-     "cheese"
+     "peach",
+     "?peach",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "patty",
-     "pickle"
+     "lime",
+     "grape",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -7404,53 +7404,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 149000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "lettuce",
-     "patty"
+     "grape",
+     "?lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?lettuce",
-     "onion",
-     "cheese"
+     "lime",
+     "?grape",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "patty",
-     "patty"
+     "?grape",
+     "?lime",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "cheese",
-     "cheese",
-     "pickle"
+     "peach",
+     "peach",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "pickle"
+     "?lime",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "pickle",
-     "onion"
+     "lime",
+     "cola",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -7469,53 +7469,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 164002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "?lettuce",
-     "patty",
-     "onion"
+     "?lemon",
+     "?grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "lettuce",
-     "pickle"
+     "peach",
+     "?berry",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "?cheese",
-     "tomato"
+     "lemon",
+     "?grape",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "?pickle",
-     "onion"
+     "berry",
+     "?peach",
+     "?cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "pickle",
-     "cheese"
+     "berry",
+     "cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?tomato",
-     "tomato",
-     "tomato"
+     "grape",
+     "?lime",
+     "lime",
+     "lime"
     ]
    },
    {
@@ -7534,53 +7534,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 181000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "?onion",
-     "onion",
-     "pickle"
+     "?lemon",
+     "?lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "lettuce",
-     "cheese"
+     "?peach",
+     "grape",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "pickle",
-     "patty"
+     "lime",
+     "?peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "cheese",
-     "pickle"
+     "?grape",
+     "berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "tomato",
-     "patty"
+     "lime",
+     "?lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "lettuce",
-     "tomato"
+     "berry",
+     "cola",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -7599,53 +7599,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 146000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "?cheese",
-     "tomato"
+     "grape",
+     "lime",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?onion",
-     "lettuce",
-     "patty"
+     "?lemon",
+     "?lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "cheese",
-     "cheese"
+     "?cola",
+     "?berry",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "tomato",
-     "pickle"
+     "berry",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "tomato",
-     "onion"
+     "?cola",
+     "?peach",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "onion",
-     "pickle",
-     "lettuce"
+     "grape",
+     "lemon",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -7664,53 +7664,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 144000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "patty",
-     "patty",
-     "patty"
+     "?lemon",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?lettuce",
-     "pickle",
-     "onion"
+     "?lemon",
+     "?grape",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?cola",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "patty",
-     "cheese"
+     "grape",
+     "lime",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "tomato",
-     "pickle"
+     "?peach",
+     "lime",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "pickle",
-     "onion"
+     "grape",
+     "peach",
+     "cola",
+     "lemon"
     ]
    },
    {
@@ -7729,53 +7729,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 160000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "?onion",
-     "lettuce"
+     "?lime",
+     "cola",
+     "?lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?patty",
-     "patty",
-     "onion"
+     "?peach",
+     "?berry",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "cola",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "?cheese",
-     "patty"
+     "?lime",
+     "cola",
+     "?peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "pickle",
-     "cheese"
+     "lemon",
+     "?grape",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "onion",
-     "patty"
+     "?lime",
+     "lime",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -7794,53 +7794,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 163000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "onion",
-     "?tomato",
-     "tomato"
+     "?berry",
+     "lemon",
+     "?lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "?onion",
-     "tomato"
+     "?lemon",
+     "cola",
+     "?lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "?tomato",
-     "lettuce"
+     "berry",
+     "peach",
+     "?lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "?lettuce",
-     "patty"
+     "?cola",
+     "cola",
+     "?grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "cheese",
-     "cheese"
+     "berry",
+     "cola",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "cheese",
-     "onion"
+     "?grape",
+     "grape",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -7859,53 +7859,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 155000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "patty",
-     "?lettuce",
-     "patty"
+     "berry",
+     "berry",
+     "?grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "?patty",
-     "lettuce"
+     "?lime",
+     "cola",
+     "?berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "onion",
-     "onion"
+     "lime",
+     "?peach",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "onion",
-     "pickle"
+     "cola",
+     "?lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "tomato",
-     "cheese"
+     "?grape",
+     "peach",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "lettuce",
-     "pickle"
+     "?peach",
+     "lime",
+     "grape",
+     "cola"
     ]
    },
    {
@@ -7924,53 +7924,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 153000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "?cheese",
-     "onion"
+     "?lime",
+     "lime",
+     "?peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "?pickle",
-     "pickle"
+     "?grape",
+     "grape",
+     "?cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "tomato",
-     "patty"
+     "?peach",
+     "berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "onion",
-     "pickle"
+     "?lime",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "onion",
-     "patty"
+     "grape",
+     "peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?onion",
-     "patty",
-     "cheese"
+     "?cola",
+     "?lemon",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -7989,53 +7989,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 142002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "?pickle",
-     "pickle"
+     "grape",
+     "grape",
+     "?cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "patty",
-     "onion"
+     "lime",
+     "grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?cheese",
-     "onion",
-     "patty"
+     "?lemon",
+     "?peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "tomato",
-     "patty"
+     "cola",
+     "?lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "cheese",
-     "pickle"
+     "?peach",
+     "?grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "cheese",
-     "patty"
+     "?lime",
+     "lime",
+     "peach",
+     "berry"
     ]
    },
    {
@@ -8054,53 +8054,53 @@
   "capacity": 4,
   "par": 17,
   "seed": 199000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "?onion",
-     "onion"
+     "grape",
+     "cola",
+     "?lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "?cheese",
-     "lettuce"
+     "lime",
+     "?peach",
+     "?peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?patty",
-     "?cheese",
-     "cheese"
+     "grape",
+     "?berry",
+     "?peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "?patty",
-     "tomato"
+     "?lemon",
+     "lemon",
+     "?berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "patty",
-     "pickle"
+     "grape",
+     "?cola",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "tomato",
-     "patty"
+     "lime",
+     "cola",
+     "lime",
+     "berry"
     ]
    },
    {
@@ -8119,53 +8119,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 140000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "tomato",
-     "?pickle",
-     "pickle"
+     "berry",
+     "lime",
+     "?cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "onion",
-     "cheese"
+     "cola",
+     "lemon",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "?tomato",
-     "cheese"
+     "peach",
+     "?cola",
+     "?lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?tomato",
-     "?tomato",
-     "patty"
+     "berry",
+     "?lime",
+     "?lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "onion",
-     "lettuce"
+     "?berry",
+     "grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "onion",
-     "lettuce"
+     "?grape",
+     "?peach",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -8184,53 +8184,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 139001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "onion",
-     "cheese"
+     "?lime",
+     "peach",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "tomato",
-     "lettuce"
+     "?berry",
+     "?cola",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "?onion",
-     "patty"
+     "?cola",
+     "peach",
+     "?lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "tomato",
-     "lettuce",
-     "pickle"
+     "lime",
+     "lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?onion",
-     "pickle",
-     "patty"
+     "?peach",
+     "?lemon",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?lettuce",
-     "onion",
-     "patty"
+     "grape",
+     "?grape",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -8249,53 +8249,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 143000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "cheese",
-     "pickle"
+     "?lemon",
+     "lime",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "tomato",
-     "lettuce"
+     "lemon",
+     "grape",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?tomato",
-     "tomato",
-     "cheese"
+     "?cola",
+     "?lime",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?patty",
-     "patty",
-     "pickle"
+     "?peach",
+     "?berry",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "lettuce",
-     "patty"
+     "?lemon",
+     "lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "cheese",
-     "lettuce"
+     "berry",
+     "cola",
+     "peach",
+     "grape"
     ]
    },
    {
@@ -8314,53 +8314,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 108001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "lettuce",
-     "patty"
+     "?berry",
+     "lime",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?onion",
-     "tomato",
-     "tomato"
+     "?peach",
+     "?lemon",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "cheese",
-     "pickle"
+     "cola",
+     "?berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "patty",
-     "tomato"
+     "?lemon",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "cheese",
-     "onion"
+     "lemon",
+     "cola",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "grape",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
@@ -8379,53 +8379,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 121000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?onion",
-     "?tomato",
-     "cheese"
+     "lemon",
+     "?lemon",
+     "?lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "patty",
-     "cheese"
+     "lemon",
+     "cola",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "lettuce",
-     "pickle"
+     "?cola",
+     "?grape",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "tomato",
-     "onion"
+     "?berry",
+     "?cola",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "patty",
-     "cheese"
+     "grape",
+     "peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "lettuce",
-     "tomato"
+     "lime",
+     "?berry",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -8444,53 +8444,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 109000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "patty",
-     "?lettuce",
-     "tomato"
+     "cola",
+     "berry",
+     "?grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "?onion",
-     "tomato"
+     "?cola",
+     "lemon",
+     "?lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "?cheese",
-     "patty"
+     "?cola",
+     "?berry",
+     "?peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "?lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "cheese",
-     "tomato",
-     "tomato"
+     "?grape",
+     "peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "patty",
-     "pickle"
+     "grape",
+     "peach",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -8509,53 +8509,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 147000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "?tomato",
-     "lettuce"
+     "?cola",
+     "peach",
+     "?lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "?tomato",
-     "onion"
+     "?cola",
+     "?peach",
+     "?lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "cheese",
-     "onion"
+     "peach",
+     "?lime",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "patty",
-     "pickle"
+     "?grape",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "lettuce",
-     "pickle",
-     "patty"
+     "grape",
+     "grape",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "tomato",
-     "onion"
+     "berry",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -8574,53 +8574,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 196000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "lettuce",
-     "pickle"
+     "grape",
+     "lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "tomato",
-     "?onion",
-     "tomato"
+     "?grape",
+     "lime",
+     "?lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "patty",
-     "lettuce"
+     "cola",
+     "?berry",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "onion",
-     "pickle"
+     "peach",
+     "?cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?cheese",
-     "patty",
-     "onion"
+     "?lime",
+     "?peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "cheese",
-     "cheese"
+     "?berry",
+     "lemon",
+     "peach",
+     "peach"
     ]
    },
    {
@@ -8639,53 +8639,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 130003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?onion",
-     "patty",
-     "tomato"
+     "?berry",
+     "?lemon",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "pickle",
-     "cheese"
+     "lime",
+     "grape",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "lettuce",
-     "tomato"
+     "lemon",
+     "cola",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?cheese",
-     "onion",
-     "patty"
+     "?peach",
+     "?peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "lettuce",
-     "cheese"
+     "cola",
+     "cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "tomato",
-     "lettuce"
+     "?berry",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -8704,53 +8704,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 113000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "pickle",
-     "?pickle",
-     "cheese"
+     "lemon",
+     "cola",
+     "?cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?tomato",
-     "patty",
-     "lettuce"
+     "lemon",
+     "?lime",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "?onion",
-     "patty"
+     "?grape",
+     "?peach",
+     "?lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "?onion",
-     "patty"
+     "?grape",
+     "berry",
+     "?lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "cheese",
-     "pickle"
+     "cola",
+     "lime",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "tomato",
-     "lettuce"
+     "?peach",
+     "lime",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -8769,53 +8769,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 102000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "patty",
-     "lettuce"
+     "peach",
+     "cola",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "?lettuce",
-     "patty"
+     "berry",
+     "?cola",
+     "?grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "?cheese",
-     "tomato"
+     "?lemon",
+     "cola",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?tomato",
-     "patty",
-     "onion"
+     "?peach",
+     "?lime",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?tomato",
-     "tomato",
-     "onion"
+     "?cola",
+     "?lime",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "onion",
-     "lettuce",
-     "lettuce"
+     "peach",
+     "lemon",
+     "grape",
+     "grape"
     ]
    },
    {
@@ -8834,53 +8834,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 169003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "?tomato",
-     "patty"
+     "peach",
+     "?berry",
+     "?lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "onion",
-     "patty",
-     "pickle"
+     "lemon",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?lettuce",
-     "pickle",
-     "onion"
+     "peach",
+     "?grape",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "onion",
-     "lettuce"
+     "?berry",
+     "lime",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "tomato",
-     "cheese"
+     "?grape",
+     "grape",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?pickle",
-     "tomato",
-     "pickle"
+     "?peach",
+     "?cola",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -8899,53 +8899,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 174000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "patty",
-     "cheese"
+     "peach",
+     "cola",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "lettuce",
-     "cheese"
+     "berry",
+     "?cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "onion",
-     "tomato"
+     "lemon",
+     "?lemon",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?patty",
-     "lettuce",
-     "tomato"
+     "?lime",
+     "?berry",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "tomato",
-     "onion"
+     "?grape",
+     "?peach",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "patty",
-     "pickle"
+     "grape",
+     "cola",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -8964,53 +8964,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 189002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "pickle",
-     "onion"
+     "?lime",
+     "lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "cheese",
-     "cheese"
+     "?lime",
+     "grape",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "patty",
-     "patty"
+     "?grape",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "tomato",
-     "patty"
+     "cola",
+     "?lemon",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "lettuce",
-     "cheese"
+     "cola",
+     "lime",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "lettuce",
-     "patty"
+     "?lemon",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
@@ -9029,53 +9029,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 127001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "?lettuce",
-     "lettuce"
+     "lemon",
+     "?grape",
+     "?grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "pickle",
-     "tomato"
+     "?cola",
+     "?berry",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "onion",
-     "tomato"
+     "lime",
+     "?berry",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "cheese",
-     "lettuce",
-     "onion"
+     "berry",
+     "peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "patty",
-     "pickle"
+     "lemon",
+     "?peach",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "cheese",
-     "tomato"
+     "peach",
+     "?cola",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -9094,53 +9094,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 103000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "tomato",
-     "patty"
+     "?cola",
+     "berry",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "lettuce",
-     "cheese"
+     "?cola",
+     "?berry",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "onion",
-     "cheese",
-     "pickle"
+     "?lemon",
+     "lemon",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "pickle",
-     "tomato"
+     "?peach",
+     "lemon",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "lettuce",
-     "lettuce"
+     "?lime",
+     "peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?lettuce",
-     "patty",
-     "onion"
+     "lime",
+     "?grape",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -9159,53 +9159,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 125000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "pickle",
-     "?cheese",
-     "tomato"
+     "?grape",
+     "cola",
+     "?peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "?pickle",
-     "cheese"
+     "cola",
+     "lemon",
+     "?cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "tomato",
-     "patty"
+     "peach",
+     "?lime",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "patty",
-     "lettuce"
+     "?peach",
+     "?grape",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "patty",
-     "tomato"
+     "berry",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?onion",
-     "lettuce",
-     "onion"
+     "lemon",
+     "?lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -9224,53 +9224,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 198000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "patty",
-     "tomato"
+     "?grape",
+     "berry",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "onion",
-     "onion"
+     "peach",
+     "cola",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "patty",
-     "onion"
+     "?peach",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "?grape",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "lettuce",
-     "onion"
+     "?peach",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?tomato",
-     "patty",
-     "pickle"
+     "?cola",
+     "?lime",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -9289,53 +9289,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 124001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "patty",
-     "onion",
-     "patty"
+     "berry",
+     "berry",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "onion",
-     "pickle"
+     "?peach",
+     "lime",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "patty",
-     "tomato"
+     "?peach",
+     "?grape",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "onion",
-     "cheese"
+     "peach",
+     "?lime",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "pickle",
-     "lettuce"
+     "?grape",
+     "grape",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "tomato",
-     "pickle"
+     "lemon",
+     "?cola",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -9354,53 +9354,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 176000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "onion",
-     "?tomato",
-     "pickle"
+     "berry",
+     "lemon",
+     "?lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?tomato",
-     "?lettuce",
-     "pickle"
+     "grape",
+     "?lime",
+     "?grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "?lettuce",
-     "patty"
+     "lime",
+     "berry",
+     "?grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "?cheese",
-     "onion"
+     "?lime",
+     "lemon",
+     "?peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "cheese",
-     "lettuce",
-     "onion"
+     "?peach",
+     "peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "pickle",
-     "pickle"
+     "?peach",
+     "berry",
+     "cola",
+     "cola"
     ]
    },
    {
@@ -9419,53 +9419,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 161000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "tomato",
-     "patty"
+     "?grape",
+     "?peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "patty",
-     "tomato"
+     "lemon",
+     "grape",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "lettuce",
-     "onion"
+     "cola",
+     "grape",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?onion",
-     "tomato",
-     "cheese"
+     "?peach",
+     "?lemon",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "pickle",
-     "cheese"
+     "?lemon",
+     "berry",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "tomato",
-     "pickle"
+     "berry",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -9484,53 +9484,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 165000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "pickle",
-     "pickle"
+     "?lime",
+     "grape",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "tomato",
-     "pickle"
+     "?berry",
+     "grape",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "onion",
-     "cheese"
+     "?grape",
+     "?peach",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "patty",
-     "onion"
+     "cola",
+     "peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?patty",
-     "lettuce",
-     "tomato"
+     "berry",
+     "?berry",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "cheese",
-     "onion"
+     "lime",
+     "?lemon",
+     "peach",
+     "lemon"
     ]
    },
    {
@@ -9549,53 +9549,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 120000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "tomato",
-     "tomato"
+     "?grape",
+     "?peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "pickle",
-     "onion"
+     "berry",
+     "?peach",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "lettuce",
-     "onion"
+     "lemon",
+     "cola",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "lettuce",
-     "onion"
+     "?peach",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "pickle",
-     "tomato",
-     "pickle"
+     "peach",
+     "cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "patty",
-     "patty"
+     "grape",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
@@ -9614,53 +9614,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 192002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "lettuce",
-     "patty"
+     "lime",
+     "?berry",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "cheese",
-     "patty"
+     "lime",
+     "?peach",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?pickle",
-     "?onion",
-     "cheese"
+     "cola",
+     "?cola",
+     "?lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "lettuce",
-     "cheese"
+     "?lemon",
+     "cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "tomato",
-     "patty"
+     "grape",
+     "?cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "onion",
-     "onion"
+     "?grape",
+     "?lime",
+     "lemon",
+     "lemon"
     ]
    },
    {
@@ -9679,53 +9679,53 @@
   "capacity": 4,
   "par": 18,
   "seed": 170000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "?cheese",
-     "patty",
-     "cheese"
+     "?lemon",
+     "?peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?pickle",
-     "?cheese",
-     "lettuce"
+     "?berry",
+     "?cola",
+     "?peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "lettuce",
-     "lettuce"
+     "cola",
+     "lemon",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?onion",
-     "patty",
-     "onion"
+     "?lime",
+     "?lemon",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "pickle",
-     "lettuce"
+     "lime",
+     "berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "cheese",
-     "pickle"
+     "lime",
+     "?lime",
+     "peach",
+     "cola"
     ]
    },
    {
@@ -9744,53 +9744,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 156000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?onion",
-     "lettuce",
-     "lettuce"
+     "berry",
+     "?lemon",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "pickle",
-     "patty"
+     "?lemon",
+     "peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?patty",
-     "tomato",
-     "onion"
+     "peach",
+     "?berry",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "onion",
-     "tomato"
+     "?peach",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "tomato",
-     "pickle"
+     "lime",
+     "grape",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "pickle",
-     "lettuce"
+     "?berry",
+     "?peach",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -9809,53 +9809,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 167000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?cheese",
-     "lettuce",
-     "lettuce"
+     "peach",
+     "?peach",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "tomato",
-     "onion"
+     "?lime",
+     "cola",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "pickle",
-     "patty"
+     "peach",
+     "berry",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?onion",
-     "lettuce",
-     "tomato"
+     "?berry",
+     "?lemon",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "lettuce",
-     "onion"
+     "?lemon",
+     "peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "tomato",
-     "pickle"
+     "?cola",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -9874,53 +9874,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 183000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "?tomato",
-     "pickle",
-     "patty"
+     "lime",
+     "?lime",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "onion",
-     "pickle",
-     "cheese"
+     "grape",
+     "lemon",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "onion",
-     "patty"
+     "?grape",
+     "?peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "cheese",
-     "pickle"
+     "?lime",
+     "?grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "cheese",
-     "patty"
+     "?cola",
+     "lime",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "onion",
-     "lettuce"
+     "?lemon",
+     "?berry",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -9939,53 +9939,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 152001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "patty",
-     "cheese"
+     "?peach",
+     "grape",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?pickle",
-     "cheese",
-     "pickle"
+     "?lime",
+     "?cola",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "lettuce",
-     "onion",
-     "onion"
+     "?cola",
+     "grape",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "onion",
-     "patty"
+     "grape",
+     "peach",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "pickle",
-     "tomato"
+     "lime",
+     "grape",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "tomato",
-     "patty",
-     "onion"
+     "berry",
+     "lime",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -10004,53 +10004,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 187000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "patty",
-     "patty"
+     "?lime",
+     "?grape",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "tomato",
-     "pickle"
+     "cola",
+     "?lemon",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "?onion",
-     "patty"
+     "cola",
+     "lime",
+     "?lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "lettuce",
-     "?cheese",
-     "onion"
+     "?lemon",
+     "grape",
+     "?peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?cheese",
-     "cheese",
-     "lettuce"
+     "?cola",
+     "?peach",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "patty",
-     "cheese"
+     "lime",
+     "grape",
+     "berry",
+     "peach"
     ]
    },
    {
@@ -10069,53 +10069,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 151001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "?patty",
-     "onion",
-     "lettuce"
+     "?lime",
+     "?berry",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "lettuce",
-     "patty"
+     "peach",
+     "lime",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?tomato",
-     "pickle",
-     "patty"
+     "?lemon",
+     "?lime",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?cheese",
-     "patty",
-     "cheese"
+     "cola",
+     "?peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "onion",
-     "pickle"
+     "cola",
+     "?lemon",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "lettuce",
-     "lettuce"
+     "peach",
+     "lime",
+     "grape",
+     "grape"
     ]
    },
    {
@@ -10134,53 +10134,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 129002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "onion",
-     "cheese"
+     "lemon",
+     "?cola",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?tomato",
-     "tomato",
-     "onion"
+     "?berry",
+     "?lime",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "cheese",
-     "tomato"
+     "lemon",
+     "?cola",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?lettuce",
-     "cheese",
-     "tomato"
+     "peach",
+     "?grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?patty",
-     "pickle",
-     "lettuce"
+     "grape",
+     "?berry",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "patty",
-     "patty"
+     "grape",
+     "cola",
+     "berry",
+     "berry"
     ]
    },
    {
@@ -10199,53 +10199,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 173000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "onion",
-     "lettuce",
-     "cheese"
+     "?berry",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "patty",
-     "patty"
+     "?cola",
+     "lemon",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?lettuce",
-     "pickle",
-     "lettuce"
+     "peach",
+     "?grape",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "cheese",
-     "onion"
+     "lime",
+     "?cola",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "lettuce",
-     "cheese"
+     "?lime",
+     "berry",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "tomato",
-     "onion",
-     "pickle"
+     "lime",
+     "lime",
+     "lemon",
+     "cola"
     ]
    },
    {
@@ -10264,53 +10264,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 104000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "?cheese",
-     "patty"
+     "grape",
+     "?cola",
+     "?peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "lettuce",
-     "onion"
+     "grape",
+     "?lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "cheese",
-     "patty"
+     "lemon",
+     "?peach",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "tomato",
-     "pickle"
+     "?berry",
+     "lemon",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "pickle",
-     "pickle"
+     "?berry",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "tomato",
-     "cheese",
-     "tomato"
+     "?grape",
+     "lime",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -10329,53 +10329,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 175000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "cheese",
-     "patty"
+     "cola",
+     "lime",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "?tomato",
-     "tomato"
+     "?cola",
+     "?grape",
+     "?lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?onion",
-     "pickle",
-     "onion"
+     "?cola",
+     "?lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "patty",
-     "tomato"
+     "lemon",
+     "grape",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "patty",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "berry",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?cheese",
-     "lettuce",
-     "patty"
+     "?peach",
+     "?peach",
+     "grape",
+     "berry"
     ]
    },
    {
@@ -10394,53 +10394,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 197000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "patty",
-     "onion"
+     "?peach",
+     "?grape",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "lettuce",
-     "pickle"
+     "lime",
+     "peach",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "onion",
-     "pickle"
+     "lime",
+     "cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?onion",
-     "patty",
-     "patty"
+     "berry",
+     "?lemon",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "lettuce",
-     "lettuce"
+     "?peach",
+     "lemon",
+     "grape",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "tomato",
-     "pickle",
-     "cheese"
+     "?lime",
+     "lime",
+     "cola",
+     "peach"
     ]
    },
    {
@@ -10459,53 +10459,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 119000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "onion",
-     "patty",
-     "lettuce"
+     "cola",
+     "lemon",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "lettuce",
-     "patty"
+     "lemon",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "tomato",
-     "tomato"
+     "lime",
+     "?peach",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?pickle",
-     "pickle",
-     "cheese"
+     "?lemon",
+     "?cola",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?cheese",
-     "tomato",
-     "patty"
+     "?grape",
+     "?peach",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "patty",
-     "lettuce",
-     "pickle"
+     "?lemon",
+     "berry",
+     "grape",
+     "cola"
     ]
    },
    {
@@ -10524,53 +10524,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 118001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "cheese",
-     "onion"
+     "?peach",
+     "berry",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?pickle",
-     "lettuce",
-     "cheese"
+     "grape",
+     "?cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?lettuce",
-     "pickle",
-     "tomato"
+     "lemon",
+     "?grape",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?patty",
-     "pickle",
-     "onion"
+     "?cola",
+     "?berry",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?lettuce",
-     "tomato",
-     "tomato"
+     "berry",
+     "?grape",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?cheese",
-     "patty",
-     "tomato"
+     "?lemon",
+     "?peach",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -10589,53 +10589,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 115006,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "?cheese",
-     "patty",
-     "cheese"
+     "?berry",
+     "?peach",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?pickle",
-     "onion",
-     "onion"
+     "?peach",
+     "?cola",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "tomato",
-     "patty"
+     "lemon",
+     "?cola",
+     "lime",
+     "berry"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "tomato",
-     "pickle"
+     "lime",
+     "berry",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "lemon",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "pickle",
-     "lettuce"
+     "grape",
+     "lime",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -10654,53 +10654,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 114002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "?patty",
-     "lettuce"
+     "?grape",
+     "lemon",
+     "?berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "tomato",
-     "cheese"
+     "peach",
+     "?cola",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "patty",
-     "pickle",
-     "patty"
+     "grape",
+     "berry",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "pickle",
-     "onion",
-     "onion"
+     "?lemon",
+     "cola",
+     "lemon",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?patty",
-     "cheese",
-     "pickle"
+     "?lime",
+     "?berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?tomato",
-     "tomato",
-     "cheese"
+     "grape",
+     "?lime",
+     "lime",
+     "peach"
     ]
    },
    {
@@ -10719,53 +10719,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 111000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "cheese",
-     "?pickle",
-     "cheese",
-     "tomato"
+     "peach",
+     "?cola",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "pickle",
-     "tomato"
+     "lime",
+     "?cola",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?patty",
-     "?onion",
-     "lettuce"
+     "berry",
+     "?berry",
+     "?lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?lettuce",
-     "onion",
-     "lettuce"
+     "?peach",
+     "?grape",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?pickle",
-     "cheese",
-     "patty"
+     "?lime",
+     "?cola",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "lettuce",
-     "onion"
+     "berry",
+     "lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -10784,53 +10784,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 162001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "lettuce",
-     "tomato"
+     "?lemon",
+     "lime",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "onion",
-     "patty"
+     "berry",
+     "?cola",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "onion",
-     "patty"
+     "?peach",
+     "lemon",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "cheese",
-     "pickle"
+     "?lime",
+     "cola",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "peach",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "tomato",
-     "pickle",
-     "lettuce"
+     "?berry",
+     "lime",
+     "cola",
+     "grape"
     ]
    },
    {
@@ -10849,53 +10849,53 @@
   "capacity": 4,
   "par": 19,
   "seed": 117000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "?onion",
-     "lettuce",
-     "pickle"
+     "?peach",
+     "?lemon",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "?onion",
-     "patty",
-     "onion"
+     "?lime",
+     "?lemon",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "lettuce",
-     "cheese",
-     "patty"
+     "lime",
+     "grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "pickle",
-     "patty",
-     "cheese"
+     "cola",
+     "cola",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "lettuce",
-     "cheese",
-     "tomato"
+     "?grape",
+     "grape",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "onion",
-     "pickle"
+     "lime",
+     "berry",
+     "lemon",
+     "cola"
     ]
    },
    {
@@ -10914,53 +10914,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 134003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "tomato",
-     "cheese",
-     "lettuce",
-     "patty"
+     "lime",
+     "peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "pickle"
+     "?lime",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "pickle",
-     "cheese"
+     "peach",
+     "berry",
+     "cola",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "patty",
-     "lettuce"
+     "?lemon",
+     "lime",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "lettuce",
-     "onion"
+     "?lime",
+     "cola",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "onion",
-     "lettuce"
+     "?cola",
+     "peach",
+     "lemon",
+     "grape"
     ]
    },
    {
@@ -10979,53 +10979,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 185003,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "cheese",
-     "tomato"
+     "?cola",
+     "cola",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?lettuce",
-     "onion",
-     "cheese"
+     "cola",
+     "?grape",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "patty",
-     "onion",
-     "pickle"
+     "lime",
+     "berry",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "patty",
-     "cheese"
+     "?lime",
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "cheese",
-     "lettuce"
+     "?lemon",
+     "lime",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "patty",
-     "lettuce"
+     "berry",
+     "grape",
+     "berry",
+     "grape"
     ]
    },
    {
@@ -11044,53 +11044,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 157000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "tomato",
-     "cheese"
+     "?berry",
+     "cola",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "onion",
-     "lettuce"
+     "?lime",
+     "peach",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "tomato",
-     "pickle",
-     "patty"
+     "grape",
+     "lime",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?lettuce",
-     "patty",
-     "cheese"
+     "?berry",
+     "?grape",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "onion",
-     "pickle",
-     "onion"
+     "?grape",
+     "lemon",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "onion",
-     "tomato",
-     "cheese"
+     "cola",
+     "lemon",
+     "lime",
+     "peach"
     ]
    },
    {
@@ -11109,53 +11109,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 154000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "pickle",
-     "onion",
-     "tomato"
+     "?peach",
+     "cola",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "lettuce",
-     "onion"
+     "berry",
+     "?cola",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?lettuce",
-     "cheese",
-     "patty"
+     "?cola",
+     "?grape",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "lettuce",
-     "cheese"
+     "lemon",
+     "lime",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "lettuce",
-     "tomato"
+     "berry",
+     "cola",
+     "grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?patty",
-     "onion",
-     "tomato"
+     "?peach",
+     "?berry",
+     "lemon",
+     "lime"
     ]
    },
    {
@@ -11174,53 +11174,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 137001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "cheese",
-     "onion"
+     "?cola",
+     "lime",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "lettuce",
-     "onion"
+     "grape",
+     "?lemon",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "pickle",
-     "patty"
+     "?lime",
+     "peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?cheese",
-     "lettuce",
-     "patty"
+     "berry",
+     "?peach",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "onion",
-     "lettuce",
-     "cheese"
+     "?cola",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?patty",
-     "tomato",
-     "pickle"
+     "lime",
+     "?berry",
+     "lime",
+     "cola"
     ]
    },
    {
@@ -11239,53 +11239,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 101005,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "?onion",
-     "patty",
-     "lettuce"
+     "grape",
+     "?lemon",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "onion",
-     "tomato",
-     "lettuce",
-     "pickle"
+     "lemon",
+     "lime",
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "onion",
-     "cheese",
-     "tomato"
+     "?lime",
+     "lemon",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "pickle",
-     "cheese",
-     "patty"
+     "?cola",
+     "cola",
+     "peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "tomato",
-     "cheese",
-     "lettuce"
+     "peach",
+     "lime",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "onion",
-     "patty",
-     "pickle"
+     "?berry",
+     "lemon",
+     "berry",
+     "cola"
     ]
    },
    {
@@ -11304,53 +11304,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 132001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "?lettuce",
-     "?cheese",
-     "patty"
+     "?lime",
+     "?grape",
+     "?peach",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "cheese",
-     "lettuce",
-     "onion"
+     "cola",
+     "peach",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?cheese",
-     "pickle",
-     "tomato"
+     "?lemon",
+     "?peach",
+     "cola",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "patty",
-     "lettuce"
+     "?cola",
+     "berry",
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "onion",
-     "lettuce"
+     "?lime",
+     "peach",
+     "lemon",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "tomato",
-     "onion",
-     "patty"
+     "?cola",
+     "lime",
+     "lemon",
+     "berry"
     ]
    },
    {
@@ -11369,53 +11369,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 131000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "patty",
-     "onion"
+     "?grape",
+     "?cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?cheese",
-     "pickle",
-     "patty"
+     "lime",
+     "?peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?tomato",
-     "patty",
-     "cheese"
+     "?grape",
+     "?lime",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "tomato",
-     "onion",
-     "patty"
+     "cola",
+     "lime",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "onion",
-     "lettuce",
-     "cheese",
-     "pickle"
+     "lemon",
+     "grape",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "cheese",
-     "tomato",
-     "lettuce"
+     "lemon",
+     "peach",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -11434,53 +11434,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 106001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "cheese",
-     "lettuce"
+     "?lime",
+     "grape",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "patty",
-     "cheese"
+     "?lemon",
+     "?berry",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "pickle",
-     "lettuce",
-     "cheese"
+     "lime",
+     "cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?pickle",
-     "cheese",
-     "lettuce"
+     "lemon",
+     "?cola",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?tomato",
-     "onion",
-     "patty"
+     "?cola",
+     "?lime",
+     "lemon",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "tomato",
-     "onion"
+     "cola",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -11499,53 +11499,53 @@
   "capacity": 4,
   "par": 20,
   "seed": 168000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "lettuce",
-     "lettuce",
-     "cheese"
+     "?berry",
+     "grape",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?onion",
-     "cheese",
-     "tomato"
+     "lime",
+     "?lemon",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "onion",
-     "?cheese",
-     "pickle",
-     "patty"
+     "lemon",
+     "?peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?pickle",
-     "tomato",
-     "pickle"
+     "?grape",
+     "?cola",
+     "lime",
+     "cola"
     ]
    },
    {
     "stack": [
-     "onion",
-     "pickle",
-     "onion",
-     "cheese"
+     "lemon",
+     "cola",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "patty",
-     "lettuce",
-     "patty",
-     "tomato"
+     "berry",
+     "grape",
+     "berry",
+     "lime"
     ]
    },
    {
@@ -11564,53 +11564,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 159000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "onion",
-     "pickle",
-     "tomato",
-     "onion"
+     "lemon",
+     "cola",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "?patty",
-     "cheese",
-     "pickle"
+     "?grape",
+     "?berry",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "patty",
-     "tomato",
-     "lettuce"
+     "berry",
+     "berry",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "pickle",
-     "onion",
-     "pickle"
+     "?berry",
+     "cola",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "lettuce",
-     "onion"
+     "peach",
+     "?lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "?tomato",
-     "cheese",
-     "lettuce"
+     "?peach",
+     "?lime",
+     "peach",
+     "grape"
     ]
    },
    {
@@ -11629,53 +11629,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 188002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "lettuce",
-     "cheese",
-     "patty",
-     "onion"
+     "grape",
+     "peach",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "pickle",
-     "patty"
+     "?cola",
+     "peach",
+     "cola",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "cheese",
-     "pickle",
-     "lettuce"
+     "?lime",
+     "peach",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "?tomato",
-     "patty",
-     "pickle"
+     "peach",
+     "?lime",
+     "berry",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "tomato",
-     "lettuce",
-     "onion"
+     "?lemon",
+     "lime",
+     "grape",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?patty",
-     "?lettuce",
-     "tomato",
-     "onion"
+     "?berry",
+     "?grape",
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -11694,53 +11694,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 145000,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?cheese",
-     "lettuce",
-     "onion",
-     "pickle"
+     "?peach",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?lettuce",
-     "onion",
-     "tomato"
+     "cola",
+     "?grape",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "patty",
-     "patty",
-     "patty"
+     "cola",
+     "berry",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "patty",
-     "lettuce",
-     "cheese"
+     "?cola",
+     "berry",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "onion",
-     "tomato",
-     "cheese"
+     "lime",
+     "lemon",
+     "lime",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "cheese",
-     "lettuce",
-     "tomato"
+     "?lemon",
+     "peach",
+     "grape",
+     "lime"
     ]
    },
    {
@@ -11759,53 +11759,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 191001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "onion",
-     "cheese"
+     "cola",
+     "grape",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "?tomato",
-     "onion",
-     "tomato"
+     "?cola",
+     "?lime",
+     "lemon",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?lettuce",
-     "patty",
-     "cheese",
-     "lettuce"
+     "?grape",
+     "berry",
+     "peach",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?pickle",
-     "cheese",
-     "tomato",
-     "onion"
+     "?cola",
+     "peach",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "patty",
-     "pickle",
-     "patty",
-     "tomato"
+     "berry",
+     "cola",
+     "berry",
+     "lime"
     ]
    },
    {
     "stack": [
-     "patty",
-     "onion",
-     "lettuce",
-     "cheese"
+     "berry",
+     "lemon",
+     "grape",
+     "peach"
     ]
    },
    {
@@ -11824,53 +11824,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 141001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "patty",
-     "?tomato",
-     "?lettuce",
-     "tomato"
+     "berry",
+     "?lime",
+     "?grape",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?onion",
-     "?patty",
-     "cheese",
-     "onion"
+     "?lemon",
+     "?berry",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "pickle",
-     "patty",
-     "onion"
+     "grape",
+     "cola",
+     "berry",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lettuce",
-     "?tomato",
-     "cheese",
-     "pickle"
+     "grape",
+     "?lime",
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?pickle",
-     "pickle",
-     "onion"
+     "berry",
+     "?cola",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "tomato",
-     "lettuce",
-     "cheese"
+     "?peach",
+     "lime",
+     "grape",
+     "peach"
     ]
    },
    {
@@ -11889,53 +11889,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 122001,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "pickle",
-     "?patty",
-     "onion",
-     "pickle"
+     "cola",
+     "?berry",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
-     "patty",
-     "?onion",
-     "?cheese",
-     "onion"
+     "berry",
+     "?lemon",
+     "?peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "tomato",
-     "?pickle",
-     "lettuce",
-     "cheese"
+     "lime",
+     "?cola",
+     "grape",
+     "peach"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "patty",
-     "tomato",
-     "onion"
+     "?lime",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "lettuce",
-     "pickle",
-     "lettuce"
+     "?lime",
+     "grape",
+     "cola",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "patty",
-     "cheese",
-     "lettuce"
+     "?peach",
+     "berry",
+     "peach",
+     "grape"
     ]
    },
    {
@@ -11954,53 +11954,53 @@
   "capacity": 4,
   "par": 21,
   "seed": 105002,
-  "plates": [
+  "tubes": [
    {
     "stack": [
-     "?patty",
-     "onion",
-     "lettuce",
-     "patty"
+     "?berry",
+     "lemon",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "?onion",
-     "cheese",
-     "tomato"
+     "cola",
+     "?lemon",
+     "peach",
+     "lime"
     ]
    },
    {
     "stack": [
-     "?cheese",
-     "onion",
-     "tomato",
-     "lettuce"
+     "?peach",
+     "lemon",
+     "lime",
+     "grape"
     ]
    },
    {
     "stack": [
-     "cheese",
-     "patty",
-     "lettuce",
-     "patty"
+     "peach",
+     "berry",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
-     "?tomato",
-     "pickle",
-     "onion",
-     "cheese"
+     "?lime",
+     "cola",
+     "lemon",
+     "peach"
     ]
    },
    {
     "stack": [
-     "pickle",
-     "lettuce",
-     "tomato",
-     "pickle"
+     "cola",
+     "grape",
+     "lime",
+     "cola"
     ]
    },
    {

@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'board.dart';
 
-/// Search over board states with cloches treated as known.
+/// Search over board states with pouchs treated as known.
 /// Returns the solution length or null if none found within [maxStates].
 class Solver {
   final int maxStates;
@@ -33,15 +33,15 @@ class Solver {
       if (node.g >= maxMoves) continue;
       if (++expanded > maxStates) return null;
       final b = node.board;
-      for (var a = 0; a < b.plates.length; a++) {
+      for (var a = 0; a < b.tubes.length; a++) {
         final g = b.groupSize(a);
         if (g == 0) continue;
-        final srcPure = g == b.plates[a].stack.length;
-        for (var c = 0; c < b.plates.length; c++) {
+        final srcPure = g == b.tubes[a].stack.length;
+        for (var c = 0; c < b.tubes.length; c++) {
           final n = b.movable(a, c);
           if (n == 0) continue;
-          // Moving a whole pure stack onto an empty plate is pointless.
-          if (srcPure && b.plates[c].stack.isEmpty) continue;
+          // Moving a whole pure stack onto an empty tube is pointless.
+          if (srcPure && b.tubes[c].stack.isEmpty) continue;
           final nb = b.copy()..drop(a, c);
           final k = _key(nb);
           final prev = seen[k];
@@ -56,7 +56,7 @@ class Solver {
 
   static int _h(Board b) {
     var h = 0;
-    for (final p in b.plates) {
+    for (final p in b.tubes) {
       for (var i = 1; i < p.stack.length; i++) {
         if (p.stack[i].type != p.stack[i - 1].type) h++;
       }
@@ -66,8 +66,8 @@ class Solver {
 
   static String _key(Board b) {
     final parts = <String>[];
-    for (var i = 0; i < b.plates.length; i++) {
-      final p = b.plates[i];
+    for (var i = 0; i < b.tubes.length; i++) {
+      final p = b.tubes[i];
       final s = StringBuffer(b.isLocked(i) ? 'L' : '');
       for (final x in p.stack) {
         s.write(x.type.index);

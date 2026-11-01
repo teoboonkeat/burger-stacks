@@ -1,11 +1,11 @@
 import '../logic/board.dart';
 
-class PlateSpec {
+class TubeSpec {
   final List<String> stack;
   final int? unlockAt;
-  const PlateSpec(this.stack, {this.unlockAt});
+  const TubeSpec(this.stack, {this.unlockAt});
 
-  factory PlateSpec.fromJson(Map<String, dynamic> j) => PlateSpec(
+  factory TubeSpec.fromJson(Map<String, dynamic> j) => TubeSpec(
         (j['stack'] as List).cast<String>(),
         unlockAt: (j['locked'] as Map?)?['completeCount'] as int?,
       );
@@ -22,12 +22,12 @@ class Level {
   final int par;
   final int seed;
   final String? hint;
-  final List<PlateSpec> plates;
+  final List<TubeSpec> tubes;
   const Level({
     required this.id,
     required this.capacity,
     required this.par,
-    required this.plates,
+    required this.tubes,
     this.seed = 0,
     this.hint,
   });
@@ -38,8 +38,8 @@ class Level {
         par: j['par'] as int,
         seed: j['seed'] as int? ?? 0,
         hint: j['hint'] as String?,
-        plates: (j['plates'] as List)
-            .map((p) => PlateSpec.fromJson(p as Map<String, dynamic>))
+        tubes: (j['tubes'] as List)
+            .map((p) => TubeSpec.fromJson(p as Map<String, dynamic>))
             .toList(),
       );
 
@@ -49,12 +49,12 @@ class Level {
         'par': par,
         'seed': seed,
         if (hint != null) 'hint': hint,
-        'plates': plates.map((p) => p.toJson()).toList(),
+        'tubes': tubes.map((p) => p.toJson()).toList(),
       };
 
   Board toBoard() => Board(
-        plates.map((p) {
-          return Plate(
+        tubes.map((p) {
+          return Tube(
             p.stack.map((k) {
               final hidden = k.startsWith('?');
               return Piece(ingredientFromKey(hidden ? k.substring(1) : k),

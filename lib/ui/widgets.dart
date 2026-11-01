@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../app/theme.dart';
+import '../game/bean_painter.dart';
+import '../logic/board.dart';
 
 class BigButton extends StatelessWidget {
   final String label;
@@ -12,9 +16,10 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = reward ? Colors.white : (primary ? C.primary : C.panel);
-    final fg = reward ? C.rewardText : (primary ? Colors.white : C.text);
-    final shadow = reward ? C.reward : (primary ? C.primaryShadow : C.border);
+    final filled = primary && !reward;
+    final bg = filled ? C.primary : C.panel;
+    final fg = filled ? Colors.white : (reward ? C.accent : C.text);
+    final edge = filled ? C.primaryShadow : (reward ? C.accent : C.border);
     return Opacity(
       opacity: onTap == null ? .5 : 1,
       child: GestureDetector(
@@ -25,8 +30,8 @@ class BigButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: bg,
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: reward ? C.reward : shadow, width: 2),
-            boxShadow: [BoxShadow(color: shadow, offset: const Offset(0, 4))],
+            border: Border.all(color: edge, width: 2),
+            boxShadow: [BoxShadow(color: edge, offset: const Offset(0, 4))],
           ),
           alignment: Alignment.center,
           child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -65,7 +70,7 @@ class Stars extends StatelessWidget {
         children: [
           for (var i = 0; i < 3; i++)
             Icon(i < n ? Icons.star_rounded : Icons.star_outline_rounded,
-                size: size, color: i < n ? const Color(0xFFFFB800) : C.border),
+                size: size, color: i < n ? C.star : C.border),
         ],
       );
 }
@@ -79,9 +84,124 @@ class BannerSlot extends StatelessWidget {
       ? const SizedBox.shrink()
       : Container(
           height: 50,
-          color: const Color(0xFFEDE3D3),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: C.border))),
           alignment: Alignment.center,
           child: const Text('Banner ad (test)',
               style: TextStyle(color: C.text2, fontSize: 12)),
         );
+}
+
+/// Background with soft pastel dots.
+class Dotted extends StatelessWidget {
+  final Widget child;
+  const Dotted({super.key, required this.child});
+  @override
+  Widget build(BuildContext context) =>
+      CustomPaint(painter: _DotsPainter(), child: child);
+}
+
+class _DotsPainter extends CustomPainter {
+  @override
+  void paint(Canvas c, Size s) {
+    final rnd = Random(5);
+    final cols = [for (final b in beanColors.values) b.withValues(alpha: .18)];
+    for (var i = 0; i < 46; i++) {
+      c.drawCircle(Offset(rnd.nextDouble() * s.width, rnd.nextDouble() * s.height),
+          3 + rnd.nextDouble() * 5, Paint()..color = cols[i % cols.length]);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DotsPainter o) => false;
+}
+
+/// Glass jar. With [tubes] it shows each finished tube as a mini tube;
+/// without, it is filled with mixed beans (logo).
+class Jar extends StatelessWidget {
+  final List<Ingredient>? tubes;
+  final double width;
+  const Jar({super.key, this.tubes, this.width = 180});
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+      size: Size(width, width * 1.15), painter: JarPainter(tubes));
+}
+
+class JarPainter extends CustomPainter {
+  final List<Ingredient>? tubes;
+  JarPainter(this.tubes);
+
+  @override
+  void paint(Canvas c, Size s) {
+    final w = s.width, h = s.height;
+    final body = RRect.fromRectAndRadius(
+        Rect.fromLTWH(w * .06, h * .2, w * .88, h * .78), Radius.circular(w * .16));
+    c.drawRRect(body.shift(Offset(0, h * .02)), Paint()..color = const Color(0x18000000));
+    c.drawRRect(body, Paint()..color = const Color(0xCCFFFFFF));
+    c.save();
+    c.clipRRect(body.deflate(w * .03));
+    final inner = body.deflate(w * .05).outerRect;
+    if (tubes == null) {
+      final rnd = Random(4);
+      final types = Ingredient.values;
+      final bw = w * .2, bh = bw * beanSize.height / beanSize.width;
+      var i = 0;
+      for (var y = inner.bottom - bh; y > inner.top + h * .08; y -= bh * .78) {
+        for (var x = inner.left - bw * .3 + (i.isEven ? 0 : bw * .45); x < inner.right; x += bw * .9) {
+          c.save();
+          c.translate(x + bw / 2, y + bh / 2);
+          c.rotate((rnd.nextDouble() - .5) * 1.1);
+          paintBean(c, Rect.fromCenter(center: Offset.zero, width: bw, height: bh),
+              types[rnd.nextInt(types.length)]);
+          c.restore();
+        }
+        i++;
+      }
+    } else {
+      final n = tubes!.length;
+      final cols = n <= 4 ? max(n, 1) : (n / 2).ceil();
+      final rows = n <= 4 ? 1 : 2;
+      final tw = min(inner.width / cols * .78, w * .2);
+      final th = min(inner.height / rows * .9, tw * 3.2);
+      for (var i = 0; i < n; i++) {
+        final row = i ~/ cols, col = i % cols;
+        final inRow = row == rows - 1 ? n - cols * (rows - 1) : cols;
+        final gap = (inner.width - inRow * tw) / (inRow + 1);
+        final x = inner.left + gap + col * (tw + gap);
+        final y = inner.bottom - (rows - row) * (th + 6);
+        final tr = RRect.fromRectAndRadius(Rect.fromLTWH(x, y, tw, th), Radius.circular(tw * .3));
+        c.drawRRect(tr, Paint()..color = const Color(0xE6FFFFFF));
+        c.drawRRect(tr, Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.5
+          ..color = const Color(0xFFD7E3EE));
+        final bh = (th - 10) / 4 - 2;
+        final bw = min(tw - 6, bh * beanSize.width / beanSize.height);
+        for (var b = 0; b < 4; b++) {
+          paintBean(c, Rect.fromLTWH(x + (tw - bw) / 2, y + th - 5 - (bh + 2) * (b + 1), bw, bh), tubes![i]);
+        }
+        c.drawRRect(
+            RRect.fromRectAndRadius(Rect.fromLTWH(x - 1, y - 4, tw + 2, 7), const Radius.circular(3)),
+            Paint()..color = const Color(0xFFC9D1D9));
+      }
+    }
+    c.restore();
+    // Glass gloss and outline.
+    c.drawRRect(
+        RRect.fromRectAndRadius(Rect.fromLTWH(w * .13, h * .3, w * .06, h * .5), Radius.circular(w * .03)),
+        Paint()..color = const Color(0x99FFFFFF));
+    c.drawRRect(body, Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..color = const Color(0xFFD7E3EE));
+    // Lid.
+    final lid = RRect.fromRectAndRadius(
+        Rect.fromLTWH(w * .14, h * .08, w * .72, h * .14), Radius.circular(w * .05));
+    c.drawRRect(lid, Paint()..color = C.accent);
+    c.drawRect(Rect.fromLTWH(w * .14, h * .18, w * .72, h * .03), Paint()..color = C.primaryShadow);
+  }
+
+  @override
+  bool shouldRepaint(JarPainter o) => o.tubes != tubes;
 }

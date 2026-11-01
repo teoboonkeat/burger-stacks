@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:burger_stacks/levels/generator.dart';
+import 'package:jelly_beans/levels/generator.dart';
 
 void main(List<String> args) {
   final count = args.isEmpty ? 200 : int.parse(args.first);

@@ -5,8 +5,8 @@ import '../logic/solver.dart';
 import 'level.dart';
 
 class Tier {
-  final int ingredients, spare, minCloche, maxCloche, locked;
-  const Tier(this.ingredients, this.spare, this.minCloche, this.maxCloche,
+  final int ingredients, spare, minPouch, maxPouch, locked;
+  const Tier(this.ingredients, this.spare, this.minPouch, this.maxPouch,
       this.locked);
 }
 
@@ -25,10 +25,10 @@ Tier tierFor(int id, Random r) {
 }
 
 String? hintFor(int id) => switch (id) {
-      1 => 'Tap a plate to lift its top piece, then tap another plate to drop it.',
-      4 => 'Matching pieces on top lift together as one group.',
-      11 => 'Cloches hide a piece until it reaches the top.',
-      21 => 'A locked plate opens once you finish a burger.',
+      1 => 'Tap a tube to lift its top bean, then tap another tube to drop it.',
+      4 => 'Matching beans on top lift together as one group.',
+      11 => 'Paper pouches hide a bean until it reaches the top.',
+      21 => 'A locked tube opens once you fill one tube.',
       _ => null,
     };
 
@@ -43,31 +43,31 @@ Level? generateLevel(int id, int seed, {int capacity = 4}) {
     for (var p = 0; p < t.ingredients; p++)
       pieces.sublist(p * capacity, (p + 1) * capacity)
   ];
-  // Reject boards with a pre-solved plate.
+  // Reject boards with a pre-solved tube.
   if (filled.any((s) => s.every((x) => x == s.first))) return null;
 
-  final cloches = t.maxCloche == 0
+  final pouchs = t.maxPouch == 0
       ? 0
-      : t.minCloche + r.nextInt(t.maxCloche - t.minCloche + 1);
-  // Cloches go in lower slots (never the top).
+      : t.minPouch + r.nextInt(t.maxPouch - t.minPouch + 1);
+  // Pouchs go in lower slots (never the top).
   final slots = [
     for (var p = 0; p < filled.length; p++)
       for (var i = 0; i < capacity - 1; i++) (p, i)
   ]..sort((a, b) => a.$2.compareTo(b.$2));
-  final low = slots.take(max(cloches * 2, cloches)).toList()..shuffle(r);
-  final hidden = low.take(cloches).toSet();
+  final low = slots.take(max(pouchs * 2, pouchs)).toList()..shuffle(r);
+  final hidden = low.take(pouchs).toSet();
 
-  final plates = <PlateSpec>[
+  final tubes = <TubeSpec>[
     for (var p = 0; p < filled.length; p++)
-      PlateSpec([
+      TubeSpec([
         for (var i = 0; i < capacity; i++)
           '${hidden.contains((p, i)) ? '?' : ''}${filled[p][i].name}'
       ]),
     for (var s = 0; s < t.spare; s++)
-      PlateSpec(const [], unlockAt: s < t.locked ? 1 : null),
+      TubeSpec(const [], unlockAt: s < t.locked ? 1 : null),
   ];
   final draft =
-      Level(id: id, capacity: capacity, par: 0, seed: seed, plates: plates);
+      Level(id: id, capacity: capacity, par: 0, seed: seed, tubes: tubes);
   final par = Solver().solve(draft.toBoard());
   if (par == null || par > 60) return null;
   return Level(
@@ -76,7 +76,7 @@ Level? generateLevel(int id, int seed, {int capacity = 4}) {
       par: par,
       seed: seed,
       hint: hintFor(id),
-      plates: plates);
+      tubes: tubes);
 }
 
 List<Level> generateAll(int count) {

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../ads/ad_service.dart';
+import '../app/sfx.dart';
 import '../app/theme.dart';
-import '../game/burger_game.dart';
-import '../game/ingredient_painter.dart';
+import '../game/jelly_game.dart';
 import '../logic/board.dart';
 import 'screens.dart';
 import 'widgets.dart';
@@ -20,7 +20,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   late int level = widget.level;
-  late BurgerGame game;
+  late JellyGame game;
   late AdService ads = AdService(widget.s.state);
   int moves = 0;
   int undosLeft = 1;
@@ -31,7 +31,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    game = BurgerGame(_board(),
+    game = JellyGame(_board(),
         onEvent: _onEvent, haptics: widget.s.state.haptics);
   }
 
@@ -51,13 +51,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _onEvent(GameEvent e) {
-    if (widget.s.state.sound) {
-      switch (e) {
-        case GameEvent.pick || GameEvent.drop:
-          SystemSound.play(SystemSoundType.click);
-        default:
-      }
-    }
+    if (widget.s.state.sound) Sfx.forEvent(e);
     switch (e) {
       case GameEvent.drop:
         setState(() => moves++);
@@ -92,9 +86,9 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Future<void> _extra() async {
-    if (extraUsed || !await ads.showRewarded(context, 'extra plate')) return;
+    if (extraUsed || !await ads.showRewarded(context, 'extra tube')) return;
     setState(() => extraUsed = true);
-    game.addPlate();
+    game.addTube();
   }
 
   Future<void> _stuck() async {
@@ -105,14 +99,14 @@ class _GameScreenState extends State<GameScreen> {
       builder: (c) => Padding(
         padding: const EdgeInsets.all(24),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Text('Kitchen jam!',
+          const Text('Sticky jam!',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
           const Text('No moves left.', style: TextStyle(color: C.text2)),
           const SizedBox(height: 20),
           BigButton('Undo', reward: true, onTap: () => Navigator.pop(c, 'undo')),
           const SizedBox(height: 12),
           if (!extraUsed)
-            BigButton('Extra plate', reward: true, onTap: () => Navigator.pop(c, 'extra')),
+            BigButton('Extra tube', reward: true, onTap: () => Navigator.pop(c, 'extra')),
           if (!extraUsed) const SizedBox(height: 12),
           BigButton('Restart', onTap: () => Navigator.pop(c, 'restart')),
         ]),
@@ -136,8 +130,8 @@ class _GameScreenState extends State<GameScreen> {
     showingResult = true;
     final lv = widget.s.levels[level - 1];
     final stars = starsFor(moves, lv.par);
-    final tips = 10 + stars * 5;
-    widget.s.state.completeLevel(level, stars, tips, widget.s.levels.length);
+    final beans = 10 + stars * 5;
+    widget.s.state.completeLevel(level, stars, beans, widget.s.levels.length);
     game.confetti();
     HapticFeedback.heavyImpact();
     await Future<void>.delayed(const Duration(milliseconds: 700));
@@ -151,14 +145,14 @@ class _GameScreenState extends State<GameScreen> {
           pageBuilder: (_, a, _) => SlideTransition(
             position: Tween(begin: const Offset(0, 1), end: Offset.zero)
                 .animate(CurvedAnimation(parent: a, curve: Curves.easeOut)),
-            child: OrderUpScreen(
+            child: SweetScreen(
                 s: widget.s,
                 level: level,
                 stars: stars,
                 moves: moves,
                 par: lv.par,
-                tips: tips,
-                plates: game.board.plates,
+                beans: beans,
+                tubes: game.board.tubes,
                 ads: ads),
           ),
         ));
@@ -174,7 +168,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     final lv = widget.s.levels[level - 1];
-    final hasCloche = game.board.plates.any((p) => p.stack.any((x) => x.hidden));
+    final hasPouch = game.board.tubes.any((p) => p.stack.any((x) => x.hidden));
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
@@ -186,7 +180,7 @@ class _GameScreenState extends State<GameScreen> {
                   icon: const Icon(Icons.arrow_back_rounded, color: C.text)),
               Expanded(
                 child: Column(children: [
-                  Text('Order $level',
+                  Text('Scoop $level',
                       style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
                   Text('Moves $moves · Par ${lv.par}',
                       style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
@@ -224,10 +218,10 @@ class _GameScreenState extends State<GameScreen> {
                   icon: Icons.visibility_rounded,
                   label: 'Peek',
                   ad: true,
-                  onTap: peekUsed || !hasCloche ? null : _peek),
+                  onTap: peekUsed || !hasPouch ? null : _peek),
               _Booster(
                   icon: Icons.add_box_rounded,
-                  label: 'Extra plate',
+                  label: 'Extra tube',
                   ad: true,
                   onTap: extraUsed ? null : _extra),
             ]),
@@ -271,77 +265,77 @@ class _Booster extends StatelessWidget {
       );
 }
 
-class OrderUpScreen extends StatefulWidget {
+class SweetScreen extends StatefulWidget {
   final Services s;
-  final int level, stars, moves, par, tips;
-  final List<Plate> plates;
+  final int level, stars, moves, par, beans;
+  final List<Tube> tubes;
   final AdService ads;
-  const OrderUpScreen(
+  const SweetScreen(
       {super.key,
       required this.s,
       required this.level,
       required this.stars,
       required this.moves,
       required this.par,
-      required this.tips,
-      required this.plates,
+      required this.beans,
+      required this.tubes,
       required this.ads});
   @override
-  State<OrderUpScreen> createState() => _OrderUpScreenState();
+  State<SweetScreen> createState() => _SweetScreenState();
 }
 
-class _OrderUpScreenState extends State<OrderUpScreen> {
+class _SweetScreenState extends State<SweetScreen> {
   bool doubled = false;
 
   @override
   Widget build(BuildContext context) {
-    final burgers = widget.plates.where((p) => p.sealed).toList();
+    final finished = [
+      for (final t in widget.tubes)
+        if (t.sealed) t.stack.first.type
+    ];
     return Scaffold(
-      backgroundColor: const Color(0xCC3B2A1E),
+      backgroundColor: const Color(0xCC4A2E2A),
       body: SafeArea(
         child: Column(children: [
           Expanded(
             child: Center(
-              child: Container(
-                margin: const EdgeInsets.all(24),
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                    color: C.bg,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: C.border, width: 3)),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Text('Order up!',
-                      style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900)),
-                  Stars(widget.stars, size: 48),
-                  const SizedBox(height: 12),
-                  Wrap(spacing: 8, runSpacing: 8, children: [
-                    for (final p in burgers)
-                      CustomPaint(
-                          size: const Size(48, 56),
-                          painter: _BurgerIcon(p.stack.first.type)),
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                      color: C.bg,
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(color: C.border, width: 3)),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    const Text('Sweet!',
+                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: C.accent)),
+                    Stars(widget.stars, size: 48),
+                    const SizedBox(height: 8),
+                    Jar(tubes: finished, width: 170),
+                    const SizedBox(height: 12),
+                    Text('Scoop #${widget.level} · ${widget.moves} moves (par ${widget.par})',
+                        style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+                    Text('+${widget.beans * (doubled ? 2 : 1)} beans',
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 20),
+                    BigButton('Next scoop', onTap: () => Navigator.pop(context, true)),
+                    const SizedBox(height: 12),
+                    BigButton('2× beans',
+                        reward: true,
+                        onTap: doubled
+                            ? null
+                            : () async {
+                                if (await widget.ads.showRewarded(context, '2x beans')) {
+                                  widget.s.state.addCoins(widget.beans);
+                                  setState(() => doubled = true);
+                                }
+                              }),
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Home', style: TextStyle(color: C.text2))),
                   ]),
-                  const SizedBox(height: 12),
-                  Text('Order #${widget.level} · ${widget.moves} moves (par ${widget.par})',
-                      style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
-                  Text('🪙 +${widget.tips * (doubled ? 2 : 1)} tips',
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
-                  const SizedBox(height: 20),
-                  BigButton('Next order', onTap: () => Navigator.pop(context, true)),
-                  const SizedBox(height: 12),
-                  BigButton('2× tips',
-                      reward: true,
-                      onTap: doubled
-                          ? null
-                          : () async {
-                              if (await widget.ads.showRewarded(context, '2x tips')) {
-                                widget.s.state.addCoins(widget.tips);
-                                setState(() => doubled = true);
-                              }
-                            }),
-                  TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text('Home', style: TextStyle(color: C.text2))),
-                ]),
+                ),
               ),
             ),
           ),
@@ -350,21 +344,4 @@ class _OrderUpScreenState extends State<OrderUpScreen> {
       ),
     );
   }
-}
-
-class _BurgerIcon extends CustomPainter {
-  final Ingredient type;
-  _BurgerIcon(this.type);
-  @override
-  void paint(Canvas c, Size s) {
-    paintBun(c, Rect.fromLTWH(0, 0, s.width, s.height * .4));
-    paintIngredient(c, Rect.fromLTWH(2, s.height * .4, s.width - 4, s.height * .3), type);
-    c.drawRRect(
-        RRect.fromRectAndRadius(Rect.fromLTWH(0, s.height * .72, s.width, s.height * .25),
-            const Radius.circular(6)),
-        Paint()..color = const Color(0xFFE8A04A));
-  }
-
-  @override
-  bool shouldRepaint(_BurgerIcon o) => o.type != type;
 }

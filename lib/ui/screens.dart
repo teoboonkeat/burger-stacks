@@ -27,14 +27,15 @@ class HomeScreen extends StatelessWidget {
           listenable: s.state,
           builder: (context, _) => Center(
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Text('🍔', style: TextStyle(fontSize: 96)),
-              const Text('Burger Stacks',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: C.text)),
+              const Jar(width: 150),
               const SizedBox(height: 8),
-              Text('🪙 ${s.state.coins} tips',
+              const Text('Jelly Beans',
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: C.accent)),
+              const SizedBox(height: 8),
+              Text('${s.state.coins} beans',
                   style: const TextStyle(color: C.text2, fontSize: 16, fontWeight: FontWeight.w700)),
               const SizedBox(height: 40),
-              BigButton('Play · Order ${s.state.currentLevel}',
+              BigButton('Play · Scoop ${s.state.currentLevel}',
                   onTap: () => _play(context, s.state.currentLevel)),
               const SizedBox(height: 16),
               BigButton('Levels',
@@ -82,7 +83,7 @@ class LevelListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Levels'), backgroundColor: C.bg),
+      appBar: AppBar(title: const Text('Levels'), ),
       body: ListenableBuilder(
         listenable: s.state,
         builder: (context, _) => Column(children: [
@@ -102,7 +103,7 @@ class LevelListScreen extends StatelessWidget {
                       : null,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: open ? C.panel : const Color(0xFFE9E2D6),
+                      color: open ? C.panel : const Color(0xFFF4ECE3),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(color: C.border, width: 2),
                     ),
@@ -134,7 +135,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final st = s.state;
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings'), backgroundColor: C.bg),
+      appBar: AppBar(title: const Text('Settings'), ),
       body: ListenableBuilder(
         listenable: st,
         builder: (context, _) => ListView(children: [
@@ -166,8 +167,8 @@ class SettingsScreen extends StatelessWidget {
                     x.removeAds = false;
                   })),
           const AboutListTile(
-              applicationName: 'Burger Stacks',
-              aboutBoxChildren: [Text('Art drawn in code. No third-party sounds yet.')],
+              applicationName: 'Jelly Beans',
+              aboutBoxChildren: [Text('Art drawn in code. Sounds synthesised in-house.')],
               child: Text('Credits')),
         ]),
       ),

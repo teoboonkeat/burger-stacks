@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:burger_stacks/levels/level.dart';
-import 'package:burger_stacks/logic/solver.dart';
+import 'package:jelly_beans/levels/level.dart';
+import 'package:jelly_beans/logic/solver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -14,7 +14,7 @@ void main() {
   test('every ingredient appears exactly capacity times', () {
     for (final l in levels) {
       final counts = <String, int>{};
-      for (final p in l.plates) {
+      for (final p in l.tubes) {
         for (final k in p.stack) {
           final key = k.replaceFirst('?', '');
           counts[key] = (counts[key] ?? 0) + 1;

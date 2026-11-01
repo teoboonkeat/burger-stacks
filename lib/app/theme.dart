@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 
 class C {
-  static const bg = Color(0xFFFFF4E2);
-  static const text = Color(0xFF3B2A1E);
-  static const text2 = Color(0xFF7A6450);
-  static const panel = Color(0xFFF3E2C7);
-  static const border = Color(0xFFE6D2B2);
-  static const primary = Color(0xFFE8483B);
-  static const primaryShadow = Color(0xFFA8301F);
-  static const reward = Color(0xFF3F9A30);
-  static const rewardText = Color(0xFF2F7A23);
-  static const adBadge = Color(0xFFB83224);
+  static const bg = Color(0xFFFFF7EC);
+  static const text = Color(0xFF4A2E2A);
+  static const text2 = Color(0xFF7E625C);
+  static const panel = Color(0xFFFFFFFF);
+  static const border = Color(0xFFF0DCCB);
+  static const accent = Color(0xFFE0306E);
+  static const primary = accent;
+  static const primaryShadow = Color(0xFFB21F54);
+  static const adBadge = accent;
+  static const star = Color(0xFFF2C230);
 }
 
 ThemeData buildTheme() => ThemeData(
-      scaffoldBackgroundColor: C.bg,
-      colorScheme: ColorScheme.fromSeed(seedColor: C.primary, surface: C.bg),
+      // Screens sit on the app-wide dotted backdrop (see main.dart).
+      scaffoldBackgroundColor: Colors.transparent,
+      colorScheme: ColorScheme.fromSeed(seedColor: C.accent, surface: C.bg),
       textTheme: const TextTheme().apply(bodyColor: C.text, displayColor: C.text),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent, foregroundColor: C.text),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? Colors.white : null),
+        trackColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? C.accent : null),
+      ),
       useMaterial3: true,
     );

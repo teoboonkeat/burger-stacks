@@ -1,4 +1,4 @@
-package com.bkteo.burger_stacks
+package com.bkteo.jelly_beans
 
 import io.flutter.embedding.android.FlutterActivity
 

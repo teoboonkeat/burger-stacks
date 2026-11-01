@@ -1,7 +1,7 @@
-/// Pure-Dart puzzle rules for Burger Stacks. No Flutter imports.
+/// Pure-Dart puzzle rules for Jelly Beans. No Flutter imports.
 library;
 
-enum Ingredient { patty, cheese, tomato, lettuce, onion, pickle }
+enum Ingredient { berry, peach, lime, grape, lemon, cola }
 
 Ingredient ingredientFromKey(String k) =>
     Ingredient.values.firstWhere((i) => i.name == k,
@@ -16,13 +16,13 @@ class Piece {
   String toString() => '${hidden ? '?' : ''}${type.name}';
 }
 
-class Plate {
+class Tube {
   final List<Piece> stack;
-  /// Plates needed complete before this one opens; null = never locked.
+  /// Tubes needed complete before this one opens; null = never locked.
   final int? unlockAt;
   bool sealed = false;
-  Plate(this.stack, {this.unlockAt});
-  Plate copy() => Plate(stack.map((p) => p.copy()).toList(), unlockAt: unlockAt)
+  Tube(this.stack, {this.unlockAt});
+  Tube copy() => Tube(stack.map((p) => p.copy()).toList(), unlockAt: unlockAt)
     ..sealed = sealed;
   Piece? get top => stack.isEmpty ? null : stack.last;
 }
@@ -40,31 +40,31 @@ enum DropResult { moved, invalid }
 
 class Board {
   final int capacity;
-  final List<Plate> plates;
+  final List<Tube> tubes;
   final List<Move> _undo = [];
 
-  Board(this.plates, {this.capacity = 4}) {
-    for (final p in plates) {
+  Board(this.tubes, {this.capacity = 4}) {
+    for (final p in tubes) {
       _revealTop(p);
       if (_isComplete(p)) p.sealed = true;
     }
   }
 
-  Board copy() => Board(plates.map((p) => p.copy()).toList(), capacity: capacity);
+  Board copy() => Board(tubes.map((p) => p.copy()).toList(), capacity: capacity);
 
-  int get completeCount => plates.where((p) => p.sealed).length;
+  int get completeCount => tubes.where((p) => p.sealed).length;
   int get undoDepth => _undo.length;
 
   bool isLocked(int i) {
-    final u = plates[i].unlockAt;
+    final u = tubes[i].unlockAt;
     return u != null && completeCount < u;
   }
 
-  bool _isComplete(Plate p) =>
+  bool _isComplete(Tube p) =>
       p.stack.length == capacity &&
       p.stack.every((x) => x.type == p.stack.first.type);
 
-  bool _revealTop(Plate p) {
+  bool _revealTop(Tube p) {
     final t = p.top;
     if (t != null && t.hidden) {
       t.hidden = false;
@@ -73,11 +73,11 @@ class Board {
     return false;
   }
 
-  bool get isWon => plates.every((p) => p.stack.isEmpty || p.sealed);
+  bool get isWon => tubes.every((p) => p.stack.isEmpty || p.sealed);
 
-  /// Size of the group lifted from plate [i] (0 if it can't be picked up).
+  /// Size of the group lifted from tube [i] (0 if it can't be picked up).
   int groupSize(int i) {
-    final p = plates[i];
+    final p = tubes[i];
     if (p.sealed || isLocked(i) || p.stack.isEmpty) return 0;
     final t = p.top!;
     if (t.hidden) return 0;
@@ -97,18 +97,18 @@ class Board {
     if (from == to) return 0;
     final g = groupSize(from);
     if (g == 0) return 0;
-    final t = plates[to];
+    final t = tubes[to];
     if (t.sealed || isLocked(to)) return 0;
     final free = capacity - t.stack.length;
     if (free <= 0) return 0;
-    if (t.stack.isNotEmpty && t.top!.type != plates[from].top!.type) return 0;
+    if (t.stack.isNotEmpty && t.top!.type != tubes[from].top!.type) return 0;
     return g < free ? g : free;
   }
 
   Move? drop(int from, int to) {
     final n = movable(from, to);
     if (n == 0) return null;
-    final src = plates[from], dst = plates[to];
+    final src = tubes[from], dst = tubes[to];
     final moved = src.stack.sublist(src.stack.length - n);
     src.stack.removeRange(src.stack.length - n, src.stack.length);
     dst.stack.addAll(moved);
@@ -128,7 +128,7 @@ class Board {
   Move? undo() {
     if (_undo.isEmpty) return null;
     final m = _undo.removeLast();
-    final src = plates[m.from], dst = plates[m.to];
+    final src = tubes[m.from], dst = tubes[m.to];
     if (m.sealedTarget) dst.sealed = false;
     if (m.revealed) src.top!.hidden = true;
     final moved = dst.stack.sublist(dst.stack.length - m.count);
@@ -138,9 +138,9 @@ class Board {
   }
 
   bool get hasValidMove {
-    for (var a = 0; a < plates.length; a++) {
+    for (var a = 0; a < tubes.length; a++) {
       if (!canPick(a)) continue;
-      for (var b = 0; b < plates.length; b++) {
+      for (var b = 0; b < tubes.length; b++) {
         if (movable(a, b) > 0) return true;
       }
     }
@@ -150,14 +150,14 @@ class Board {
   bool get isStuck => !isWon && !hasValidMove;
 
   void revealAll() {
-    for (final p in plates) {
+    for (final p in tubes) {
       for (final x in p.stack) {
         x.hidden = false;
       }
     }
   }
 
-  void addPlate() => plates.add(Plate([]));
+  void addTube() => tubes.add(Tube([]));
 
   void clearUndo() => _undo.clear();
 }

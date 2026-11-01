@@ -24,12 +24,12 @@ jobs:
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: burger-stacks-apk
+          name: jelly-beans-apk
           path: build/app/outputs/flutter-apk/app-release.apk
       - name: Publish prerelease with APK
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
-          name: Burger Stacks build ${{ github.run_number }}
+          name: Jelly Beans build ${{ github.run_number }}
           prerelease: true
           files: build/app/outputs/flutter-apk/app-release.apk
