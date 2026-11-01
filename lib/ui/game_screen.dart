@@ -138,7 +138,7 @@ class _GameScreenState extends State<GameScreen> {
     if (!mounted) return;
     await ads.maybeInterstitial(context, level, restarted: restarted);
     if (!mounted) return;
-    final next = await Navigator.push<bool>(
+    final next = await Navigator.push<String>(
         context,
         PageRouteBuilder(
           opaque: false,
@@ -157,7 +157,9 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ));
     if (!mounted) return;
-    if (next == true && level < widget.s.levels.length) {
+    if (next == 'retry') {
+      _start(restart: true);
+    } else if (next == 'next' && level < widget.s.levels.length) {
       level++;
       _start();
     } else {
@@ -183,7 +185,9 @@ class _GameScreenState extends State<GameScreen> {
                   Text('Scoop $level',
                       style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
                   Text('Moves $moves · Par ${lv.par}',
-                      style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+                      style: TextStyle(
+                          color: moves > lv.par ? C.accent : C.text2,
+                          fontWeight: FontWeight.w700)),
                 ]),
               ),
               IconButton(
@@ -319,7 +323,13 @@ class _SweetScreenState extends State<SweetScreen> {
                     Text('+${widget.beans * (doubled ? 2 : 1)} beans',
                         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
                     const SizedBox(height: 20),
-                    BigButton('Next scoop', onTap: () => Navigator.pop(context, true)),
+                    BigButton('Next scoop', onTap: () => Navigator.pop(context, 'next')),
+                    if (widget.moves > widget.par) ...[
+                      const SizedBox(height: 12),
+                      BigButton('Retry for ★★★',
+                          primary: false,
+                          onTap: () => Navigator.pop(context, 'retry')),
+                    ],
                     const SizedBox(height: 12),
                     BigButton('2× beans',
                         reward: true,
@@ -332,7 +342,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                 }
                               }),
                     TextButton(
-                        onPressed: () => Navigator.pop(context, false),
+                        onPressed: () => Navigator.pop(context, 'home'),
                         child: const Text('Home', style: TextStyle(color: C.text2))),
                   ]),
                 ),
