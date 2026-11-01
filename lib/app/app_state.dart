@@ -9,6 +9,8 @@ class AppState extends ChangeNotifier {
   int coins = 0;
   bool removeAds = false;
   bool sound = true, music = true, haptics = true;
+  /// Testing aid: every level is playable regardless of progress.
+  bool unlockAll = false;
   int completedSinceAd = 0;
   int lastInterstitialMs = 0;
 
@@ -20,6 +22,7 @@ class AppState extends ChangeNotifier {
     sound = _p.getBool('sound') ?? true;
     music = _p.getBool('music') ?? true;
     haptics = _p.getBool('haptics') ?? true;
+    unlockAll = _p.getBool('unlockAll') ?? false;
     completedSinceAd = _p.getInt('completedSinceAd') ?? 0;
     lastInterstitialMs = _p.getInt('lastInterstitialMs') ?? 0;
     stars = {
@@ -35,13 +38,14 @@ class AppState extends ChangeNotifier {
     await _p.setBool('sound', sound);
     await _p.setBool('music', music);
     await _p.setBool('haptics', haptics);
+    await _p.setBool('unlockAll', unlockAll);
     await _p.setInt('completedSinceAd', completedSinceAd);
     await _p.setInt('lastInterstitialMs', lastInterstitialMs);
     await _p.setStringList(
         'stars', [for (final e in stars.entries) '${e.key}:${e.value}']);
   }
 
-  bool isUnlocked(int level) => level <= currentLevel;
+  bool isUnlocked(int level) => unlockAll || level <= currentLevel;
 
   void completeLevel(int level, int earnedStars, int tips, int total) {
     final prev = stars[level] ?? 0;

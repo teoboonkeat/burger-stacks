@@ -151,6 +151,11 @@ class SettingsScreen extends StatelessWidget {
               title: const Text('Haptics'),
               value: st.haptics,
               onChanged: (v) => st.update((x) => x.haptics = v)),
+          SwitchListTile(
+              title: const Text('Unlock all levels'),
+              subtitle: const Text('Testing only'),
+              value: st.unlockAll,
+              onChanged: (v) => st.update((x) => x.unlockAll = v)),
           ListTile(
               title: const Text('Restore purchases'),
               subtitle: Text(st.removeAds ? 'Remove ads: owned' : 'No purchases found'),
@@ -165,6 +170,7 @@ class SettingsScreen extends StatelessWidget {
                     x.stars = {};
                     x.coins = 0;
                     x.removeAds = false;
+                    x.unlockAll = false;
                   })),
           const AboutListTile(
               applicationName: 'Jelly Beans',
