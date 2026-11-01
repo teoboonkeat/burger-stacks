@@ -184,10 +184,7 @@ class _GameScreenState extends State<GameScreen> {
                 child: Column(children: [
                   Text('Scoop $level',
                       style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
-                  Text('Moves $moves · Par ${lv.par}',
-                      style: TextStyle(
-                          color: moves > lv.par ? C.accent : C.text2,
-                          fontWeight: FontWeight.w700)),
+                  MoveGoal(moves: moves, par: lv.par),
                 ]),
               ),
               IconButton(
@@ -318,7 +315,11 @@ class _SweetScreenState extends State<SweetScreen> {
                     const SizedBox(height: 8),
                     Jar(tubes: finished, width: 170),
                     const SizedBox(height: 12),
-                    Text('Scoop #${widget.level} · ${widget.moves} moves (par ${widget.par})',
+                    Text(
+                        widget.moves > widget.par
+                            ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
+                            : 'Done in ${widget.moves} moves · best possible!',
+                        textAlign: TextAlign.center,
                         style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
                     Text('+${widget.beans * (doubled ? 2 : 1)} beans',
                         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
@@ -353,5 +354,37 @@ class _SweetScreenState extends State<SweetScreen> {
         ]),
       ),
     );
+  }
+}
+
+/// Highest move count that still earns [stars] stars.
+int movesForStars(int stars, int par) {
+  var m = par;
+  while (starsFor(m + 1, par) >= stars) {
+    m++;
+  }
+  return m;
+}
+
+/// HUD line: live stars plus the move target for the best stars still on offer.
+class MoveGoal extends StatelessWidget {
+  final int moves, par;
+  const MoveGoal({super.key, required this.moves, required this.par});
+
+  @override
+  Widget build(BuildContext context) {
+    final stars = starsFor(moves, par);
+    final goal = switch (stars) {
+      3 => '★★★ within $par moves',
+      2 => '★★ within ${movesForStars(2, par)} moves',
+      _ => 'Finish for ★',
+    };
+    return Column(children: [
+      Stars(stars, size: 22),
+      Text('Moves $moves · $goal',
+          style: TextStyle(
+              color: stars == 3 ? C.text2 : C.accent,
+              fontWeight: FontWeight.w700)),
+    ]);
   }
 }
