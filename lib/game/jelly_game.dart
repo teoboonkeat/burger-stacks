@@ -27,12 +27,15 @@ double wobble(double t, {double freq = 20, double decay = 7}) =>
 class JellyGame extends FlameGame {
   Board board;
   final void Function(GameEvent e) onEvent;
+  /// Called with a short, player-facing reason when a tap is refused.
+  final void Function(String reason)? onRefuse;
   bool haptics;
   int? selected;
   double k = 1;
   final List<TubeComponent> tubeComps = [];
 
-  JellyGame(this.board, {required this.onEvent, this.haptics = true});
+  JellyGame(this.board,
+      {required this.onEvent, this.onRefuse, this.haptics = true});
 
   @override
   Color backgroundColor() => const Color(0xFFFFF7EC);
@@ -109,10 +112,43 @@ class JellyGame extends FlameGame {
     heavy ? HapticFeedback.mediumImpact() : HapticFeedback.selectionClick();
   }
 
+  static String _name(Ingredient t) =>
+      t.name[0].toUpperCase() + t.name.substring(1);
+
+  String _lockReason(int i) {
+    final need = board.tubes[i].unlockAt! - board.completeCount;
+    return 'Locked: finish $need more tube${need == 1 ? '' : 's'} to open';
+  }
+
+  String _pickReason(int i) {
+    final t = board.tubes[i];
+    if (t.sealed) return 'This tube is finished';
+    if (board.isLocked(i)) return _lockReason(i);
+    if (t.top?.hidden ?? false) return 'Hidden bean: uncover it first';
+    return "Can't pick that up";
+  }
+
+  String _dropReason(int from, int to) {
+    final t = board.tubes[to];
+    if (t.sealed) return 'This tube is finished';
+    if (board.isLocked(to)) return _lockReason(to);
+    if (t.stack.length >= board.capacity) return 'That tube is full';
+    final top = t.top;
+    if (top != null && top.hidden) return 'Only empty tubes or matching tops';
+    if (top != null) {
+      final mine = board.tubes[from].top!.type;
+      return 'Top must match: ${_name(mine)} can only go on ${_name(mine)}';
+    }
+    return "Can't move there";
+  }
+
   void tapTube(int i) {
     if (board.isWon) return;
     // A tube with beans still dropping into it can't be used yet.
-    if (tubeComps[i].incoming > 0) return;
+    if (tubeComps[i].incoming > 0) {
+      onRefuse?.call('Wait for the beans to land');
+      return;
+    }
     final s = selected;
     if (s == null) {
       if (board.canPick(i)) {
@@ -123,6 +159,7 @@ class JellyGame extends FlameGame {
       } else if (board.tubes[i].stack.isNotEmpty || board.isLocked(i)) {
         tubeComps[i].shake();
         onEvent(GameEvent.invalid);
+        onRefuse?.call(_pickReason(i));
       }
       return;
     }
@@ -137,8 +174,10 @@ class JellyGame extends FlameGame {
     final dstLen = board.tubes[i].stack.length;
     final m = board.drop(s, i);
     if (m == null) {
+      final why = _dropReason(s, i);
       tubeComps[i].shake();
       onEvent(GameEvent.invalid);
+      onRefuse?.call(why);
       return;
     }
     selected = null;

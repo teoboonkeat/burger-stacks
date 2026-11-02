@@ -34,6 +34,7 @@ class _GameScreenState extends State<GameScreen> {
     game = JellyGame(
       _board(),
       onEvent: _onEvent,
+      onRefuse: _onRefuse,
       haptics: widget.s.state.haptics,
     );
   }
@@ -51,6 +52,17 @@ class _GameScreenState extends State<GameScreen> {
       showingResult = false;
     });
     game.reset(_board());
+  }
+
+  String? refusal;
+  int _refusalId = 0;
+
+  void _onRefuse(String reason) {
+    final id = ++_refusalId;
+    setState(() => refusal = reason);
+    Future.delayed(const Duration(milliseconds: 1800), () {
+      if (mounted && id == _refusalId) setState(() => refusal = null);
+    });
   }
 
   void _onEvent(GameEvent e) {
@@ -244,7 +256,39 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                 ),
               ),
-            Expanded(child: GameWidget(game: game)),
+            Expanded(
+              child: Stack(children: [
+                GameWidget(game: game),
+                Positioned(
+                  left: 16,
+                  right: 16,
+                  top: 4,
+                  child: IgnorePointer(
+                    child: AnimatedOpacity(
+                      opacity: refusal == null ? 0 : 1,
+                      duration: const Duration(milliseconds: 180),
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xE6453044),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            refusal ?? '',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
