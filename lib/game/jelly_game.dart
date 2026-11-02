@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/particles.dart';
@@ -153,12 +152,11 @@ class JellyGame extends FlameGame {
     for (var b = 0; b < m.count; b++) {
       add(FlyingBean(
         type: type,
-        start: from.slotPos(srcLen - 1 - b) - Vector2(0, lift),
-        end: to.slotPos(dstLen + b),
-        exitY: from.position.y - beanH - 6 * k,
-        enterY: to.position.y - beanH - 6 * k,
-        width: beanW,
-        height: beanH,
+        from: from,
+        to: to,
+        srcSlot: srcLen - 1 - b,
+        dstSlot: dstLen + b,
+        lift: lift,
         delay: b * .05,
         onLand: () {
           to.incoming--;
@@ -320,6 +318,9 @@ class TubeComponent extends PositionComponent
   double get lift => _lift.value;
   double _time = 0;
   double _reveal = 0;
+  /// Tear clock for pouches opened by completing the tube.
+  double _sealTear = 0;
+  final Set<int> _sealTorn = {};
   double _done = 1; // 0 → 1 after completion: cap bounce + tube pop.
   bool _shownSealed = false;
   /// Per-slot landing wobble clocks (0 → 1).
@@ -341,13 +342,8 @@ class TubeComponent extends PositionComponent
     _shownSealed = tube.sealed;
   }
 
-  void shake() {
-    add(SequenceEffect([
-      MoveByEffect(Vector2(6, 0), EffectController(duration: .04)),
-      MoveByEffect(Vector2(-12, 0), EffectController(duration: .08)),
-      MoveByEffect(Vector2(6, 0), EffectController(duration: .04)),
-    ]));
-  }
+  double _shake = 1;
+  void shake() => _shake = 0;
 
   void pickUp() => _lift.velocity = 900; // kick upward; spring overshoots
   void putDown() {}
@@ -363,6 +359,14 @@ class TubeComponent extends PositionComponent
   void reveal() => _reveal = 1;
   void complete() {
     _done = 0;
+    // A finished tube never keeps a pouch closed: tear them all open.
+    _sealTorn
+      ..clear()
+      ..addAll([
+        for (var s = 0; s < tube.stack.length; s++)
+          if (tube.stack[s].hidden) s
+      ]);
+    if (_sealTorn.isNotEmpty) _sealTear = 1;
     _shownSealed = true;
     for (var s = 0; s < tube.stack.length; s++) {
       _land[s] = -.05 * s;
@@ -387,6 +391,8 @@ class TubeComponent extends PositionComponent
       _lift.reset();
     }
     _reveal = max(0, _reveal - dt * 4); // 250 ms tear
+    _shake = min(1, _shake + dt / .16);
+    _sealTear = max(0, _sealTear - dt * 4);
     _done = min(1, _done + dt * 1.8);
     for (final s in _land.keys.toList()) {
       final v = _land[s]! + dt * 2.2;
@@ -404,6 +410,7 @@ class TubeComponent extends PositionComponent
     // Completion pop: the whole tube springs bigger then settles.
     final pop = sealed ? 1 + .12 * wobble(_done, freq: 16, decay: 5) * (1 - _done) : 1.0;
     c.save();
+    if (_shake < 1) c.translate(sin(_shake * pi * 3) * 6 * k, 0);
     c.translate(size.x / 2, size.y);
     c.scale(pop, pop);
     c.translate(-size.x / 2, -size.y);
@@ -470,9 +477,12 @@ class TubeComponent extends PositionComponent
         r = Rect.fromLTRB(r.center.dx - bw * sx / 2, r.bottom - bh * sy,
             r.center.dx + bw * sx / 2, r.bottom);
       }
-      paintBean(c, r, stack[i].type, hidden: stack[i].hidden);
+      paintBean(c, r, stack[i].type, hidden: stack[i].hidden && !sealed);
       if (_reveal > 0 && i == visible - 1 && !stack[i].hidden) {
         paintPouch(c, r, tear: 1 - _reveal);
+      }
+      if (sealed && _sealTear > 0 && _sealTorn.contains(i)) {
+        paintPouch(c, r, tear: 1 - _sealTear);
       }
     }
 
@@ -499,9 +509,8 @@ class TubeComponent extends PositionComponent
     }
 
     _drawCap(c, sealed, flavour);
-    c.restore();
-
     if (locked) _padlock(c);
+    c.restore();
   }
 
   void _drawCap(Canvas c, bool sealed, Color? flavour) {
@@ -601,10 +610,13 @@ class TubeComponent extends PositionComponent
 
 /// One bean's trip: straight up out of the source tube's mouth, an arc over
 /// the tubes, then a gravity drop in through the target's mouth.
-class FlyingBean extends PositionComponent {
+/// Positions are read from the tubes every frame, so a relayout mid-flight
+/// (extra tube, HUD resize) can't strand the bean.
+class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
   final Ingredient type;
-  final Vector2 start, end;
-  final double exitY, enterY, w, h, delay;
+  final TubeComponent from, to;
+  final int srcSlot, dstSlot;
+  final double lift, delay;
   final VoidCallback onLand;
   double _t = 0;
 
@@ -613,17 +625,14 @@ class FlyingBean extends PositionComponent {
 
   FlyingBean({
     required this.type,
-    required this.start,
-    required this.end,
-    required this.exitY,
-    required this.enterY,
-    required double width,
-    required double height,
+    required this.from,
+    required this.to,
+    required this.srcSlot,
+    required this.dstSlot,
+    required this.lift,
     required this.delay,
     required this.onLand,
-  })  : w = width,
-        h = height,
-        super(priority: 10);
+  }) : super(priority: 10);
 
   @override
   void update(double dt) {
@@ -636,6 +645,11 @@ class FlyingBean extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
+    final w = game.beanW, h = game.beanH, k = game.k;
+    final start = from.slotPos(srcSlot) - Vector2(0, lift);
+    final end = to.slotPos(dstSlot);
+    final exitY = from.position.y - h - 6 * k;
+    final enterY = to.position.y - h - 6 * k;
     final t = max(0.0, _t - delay);
     late Offset p;
     var tilt = 0.0, sx = 1.0, sy = 1.0;
@@ -648,14 +662,14 @@ class FlyingBean extends PositionComponent {
     } else if (t < rise + across) {
       final u = Curves.easeInOut.transform((t - rise) / across);
       final top = min(exitY, enterY) - 26;
-      // Quadratic Bézier hop between the two tube mouths.
+      // Quadratic Bezier hop between the two tube mouths.
       final a = Offset(start.x, exitY), b = Offset(end.x, enterY);
       final ctrl = Offset((a.dx + b.dx) / 2, top);
       p = a * ((1 - u) * (1 - u)) + ctrl * (2 * u * (1 - u)) + b * (u * u);
       tilt = (end.x - start.x).sign * .35 * sin(u * pi);
     } else {
       // Gravity drop into the target, stretching as it falls.
-      final u = Curves.easeIn.transform((t - rise - across) / fall);
+      final u = Curves.easeIn.transform(((t - rise - across) / fall).clamp(0.0, 1.0));
       p = Offset(end.x, enterY + (end.y - enterY) * u);
       sx = 1 - .1 * u;
       sy = 1 + .14 * u;

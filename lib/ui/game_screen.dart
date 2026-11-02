@@ -31,8 +31,11 @@ class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
-    game = JellyGame(_board(),
-        onEvent: _onEvent, haptics: widget.s.state.haptics);
+    game = JellyGame(
+      _board(),
+      onEvent: _onEvent,
+      haptics: widget.s.state.haptics,
+    );
   }
 
   Board _board() => widget.s.levels[level - 1].toBoard();
@@ -98,18 +101,31 @@ class _GameScreenState extends State<GameScreen> {
       backgroundColor: C.bg,
       builder: (c) => Padding(
         padding: const EdgeInsets.all(24),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Text('Sticky jam!',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
-          const Text('No moves left.', style: TextStyle(color: C.text2)),
-          const SizedBox(height: 20),
-          BigButton('Undo', reward: true, onTap: () => Navigator.pop(c, 'undo')),
-          const SizedBox(height: 12),
-          if (!extraUsed)
-            BigButton('Extra tube', reward: true, onTap: () => Navigator.pop(c, 'extra')),
-          if (!extraUsed) const SizedBox(height: 12),
-          BigButton('Restart', onTap: () => Navigator.pop(c, 'restart')),
-        ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Sticky jam!',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
+            ),
+            const Text('No moves left.', style: TextStyle(color: C.text2)),
+            const SizedBox(height: 20),
+            BigButton(
+              'Undo',
+              reward: true,
+              onTap: () => Navigator.pop(c, 'undo'),
+            ),
+            const SizedBox(height: 12),
+            if (!extraUsed)
+              BigButton(
+                'Extra tube',
+                reward: true,
+                onTap: () => Navigator.pop(c, 'extra'),
+              ),
+            if (!extraUsed) const SizedBox(height: 12),
+            BigButton('Restart', onTap: () => Navigator.pop(c, 'restart')),
+          ],
+        ),
       ),
     );
     if (!mounted) return;
@@ -139,23 +155,27 @@ class _GameScreenState extends State<GameScreen> {
     await ads.maybeInterstitial(context, level, restarted: restarted);
     if (!mounted) return;
     final next = await Navigator.push<String>(
-        context,
-        PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (_, a, _) => SlideTransition(
-            position: Tween(begin: const Offset(0, 1), end: Offset.zero)
-                .animate(CurvedAnimation(parent: a, curve: Curves.easeOut)),
-            child: SweetScreen(
-                s: widget.s,
-                level: level,
-                stars: stars,
-                moves: moves,
-                par: lv.par,
-                beans: beans,
-                tubes: game.board.tubes,
-                ads: ads),
+      context,
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (_, a, _) => SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: a, curve: Curves.easeOut)),
+          child: SweetScreen(
+            s: widget.s,
+            level: level,
+            stars: stars,
+            moves: moves,
+            par: lv.par,
+            beans: beans,
+            tubes: game.board.tubes,
+            ads: ads,
           ),
-        ));
+        ),
+      ),
+    );
     if (!mounted) return;
     if (next == 'retry') {
       _start(restart: true);
@@ -173,62 +193,87 @@ class _GameScreenState extends State<GameScreen> {
     final hasPouch = game.board.tubes.any((p) => p.stack.any((x) => x.hidden));
     return Scaffold(
       body: SafeArea(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-            child: Row(children: [
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back_rounded, color: C.text)),
-              Expanded(
-                child: Column(children: [
-                  Text('Scoop $level',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
-                  MoveGoal(moves: moves, par: lv.par),
-                ]),
-              ),
-              IconButton(
-                  onPressed: () => _start(restart: true),
-                  icon: const Icon(Icons.refresh_rounded, color: C.text)),
-            ]),
-          ),
-          if (lv.hint != null)
+        child: Column(
+          children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: C.panel,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: C.border)),
-                child: Text(lv.hint!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.w700)),
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_rounded, color: C.text),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Scoop $level',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        MoveGoal(moves: moves, par: lv.par),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => _start(restart: true),
+                    icon: const Icon(Icons.refresh_rounded, color: C.text),
+                  ),
+                ],
               ),
             ),
-          Expanded(child: GameWidget(game: game)),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              _Booster(
-                  icon: Icons.undo_rounded,
-                  label: undosLeft > 0 ? 'Undo ($undosLeft)' : 'Undo',
-                  ad: undosLeft == 0,
-                  onTap: game.board.canUndo ? _undo : null),
-              _Booster(
-                  icon: Icons.visibility_rounded,
-                  label: 'Peek',
-                  ad: true,
-                  onTap: peekUsed || !hasPouch ? null : _peek),
-              _Booster(
-                  icon: Icons.add_box_rounded,
-                  label: 'Extra tube',
-                  ad: true,
-                  onTap: extraUsed ? null : _extra),
-            ]),
-          ),
-          BannerSlot(hidden: widget.s.state.removeAds),
-        ]),
+            if (lv.hint != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 6,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: C.panel,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: C.border),
+                  ),
+                  child: Text(
+                    lv.hint!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+            Expanded(child: GameWidget(game: game)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _Booster(
+                    icon: Icons.undo_rounded,
+                    label: undosLeft > 0 ? 'Undo ($undosLeft)' : 'Undo',
+                    ad: undosLeft == 0,
+                    onTap: game.board.canUndo ? _undo : null,
+                  ),
+                  _Booster(
+                    icon: Icons.visibility_rounded,
+                    label: 'Peek',
+                    ad: true,
+                    onTap: peekUsed || !hasPouch ? null : _peek,
+                  ),
+                  _Booster(
+                    icon: Icons.add_box_rounded,
+                    label: 'Extra tube',
+                    ad: true,
+                    onTap: extraUsed ? null : _extra,
+                  ),
+                ],
+              ),
+            ),
+            BannerSlot(hidden: widget.s.state.removeAds),
+          ],
+        ),
       ),
     );
   }
@@ -239,31 +284,45 @@ class _Booster extends StatelessWidget {
   final String label;
   final bool ad;
   final VoidCallback? onTap;
-  const _Booster({required this.icon, required this.label, required this.ad, this.onTap});
+  const _Booster({
+    required this.icon,
+    required this.label,
+    required this.ad,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) => Opacity(
-        opacity: onTap == null ? .4 : 1,
-        child: InkWell(
-          onTap: onTap,
+    opacity: onTap == null ? .4 : 1,
+    child: InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: C.panel,
           borderRadius: BorderRadius.circular(16),
-          child: Container(
-            width: 100,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-                color: C.panel,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: C.border, width: 2)),
-            child: Column(children: [
-              Stack(clipBehavior: Clip.none, children: [
+          border: Border.all(color: C.border, width: 2),
+        ),
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
                 Icon(icon, color: C.text, size: 30),
                 if (ad) const Positioned(right: -22, top: -4, child: AdBadge()),
-              ]),
-              Text(label, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13)),
-            ]),
-          ),
+              ],
+            ),
+            Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class SweetScreen extends StatefulWidget {
@@ -271,16 +330,17 @@ class SweetScreen extends StatefulWidget {
   final int level, stars, moves, par, beans;
   final List<Tube> tubes;
   final AdService ads;
-  const SweetScreen(
-      {super.key,
-      required this.s,
-      required this.level,
-      required this.stars,
-      required this.moves,
-      required this.par,
-      required this.beans,
-      required this.tubes,
-      required this.ads});
+  const SweetScreen({
+    super.key,
+    required this.s,
+    required this.level,
+    required this.stars,
+    required this.moves,
+    required this.par,
+    required this.beans,
+    required this.tubes,
+    required this.ads,
+  });
   @override
   State<SweetScreen> createState() => _SweetScreenState();
 }
@@ -292,66 +352,101 @@ class _SweetScreenState extends State<SweetScreen> {
   Widget build(BuildContext context) {
     final finished = [
       for (final t in widget.tubes)
-        if (t.sealed) t.stack.first.type
+        if (t.sealed) t.stack.first.type,
     ];
     return Scaffold(
       backgroundColor: const Color(0xCC4A2E2A),
       body: SafeArea(
-        child: Column(children: [
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.all(24),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
                       color: C.bg,
                       borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: C.border, width: 3)),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const Text('Sweet!',
-                        style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: C.accent)),
-                    Stars(widget.stars, size: 48),
-                    const SizedBox(height: 8),
-                    Jar(tubes: finished, width: 170),
-                    const SizedBox(height: 12),
-                    Text(
-                        widget.moves > widget.par
-                            ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
-                            : 'Done in ${widget.moves} moves · best possible!',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
-                    Text('+${widget.beans * (doubled ? 2 : 1)} beans',
-                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900)),
-                    const SizedBox(height: 20),
-                    BigButton('Next scoop', onTap: () => Navigator.pop(context, 'next')),
-                    if (widget.moves > widget.par) ...[
-                      const SizedBox(height: 12),
-                      BigButton('Retry for ★★★',
-                          primary: false,
-                          onTap: () => Navigator.pop(context, 'retry')),
-                    ],
-                    const SizedBox(height: 12),
-                    BigButton('2× beans',
-                        reward: true,
-                        onTap: doubled
-                            ? null
-                            : () async {
-                                if (await widget.ads.showRewarded(context, '2x beans')) {
-                                  widget.s.state.addCoins(widget.beans);
-                                  setState(() => doubled = true);
-                                }
-                              }),
-                    TextButton(
-                        onPressed: () => Navigator.pop(context, 'home'),
-                        child: const Text('Home', style: TextStyle(color: C.text2))),
-                  ]),
+                      border: Border.all(color: C.border, width: 3),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Sweet!',
+                          style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w900,
+                            color: C.accent,
+                          ),
+                        ),
+                        Stars(widget.stars, size: 48),
+                        const SizedBox(height: 8),
+                        Jar(tubes: finished, width: 170),
+                        const SizedBox(height: 12),
+                        Text(
+                          widget.moves > widget.par
+                              ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
+                              : 'Done in ${widget.moves} moves · best possible!',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: C.text2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          '+${widget.beans * (doubled ? 2 : 1)} beans',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        BigButton(
+                          'Next scoop',
+                          onTap: () => Navigator.pop(context, 'next'),
+                        ),
+                        if (widget.moves > widget.par) ...[
+                          const SizedBox(height: 12),
+                          BigButton(
+                            'Retry for ★★★',
+                            primary: false,
+                            onTap: () => Navigator.pop(context, 'retry'),
+                          ),
+                        ],
+                        const SizedBox(height: 12),
+                        BigButton(
+                          '2× beans',
+                          reward: true,
+                          onTap: doubled
+                              ? null
+                              : () async {
+                                  if (await widget.ads.showRewarded(
+                                    context,
+                                    '2x beans',
+                                  )) {
+                                    widget.s.state.addCoins(widget.beans);
+                                    setState(() => doubled = true);
+                                  }
+                                },
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'home'),
+                          child: const Text(
+                            'Home',
+                            style: TextStyle(color: C.text2),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          BannerSlot(hidden: widget.s.state.removeAds),
-        ]),
+            BannerSlot(hidden: widget.s.state.removeAds),
+          ],
+        ),
       ),
     );
   }
@@ -379,12 +474,22 @@ class MoveGoal extends StatelessWidget {
       2 => '★★ within ${movesForStars(2, par)} moves',
       _ => 'Finish for ★',
     };
-    return Column(children: [
-      Stars(stars, size: 22),
-      Text('Moves $moves · $goal',
-          style: TextStyle(
+    return Column(
+      children: [
+        Stars(stars, size: 22),
+        // One line at any font size, so the board never resizes mid-move.
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Moves $moves · $goal',
+            maxLines: 1,
+            style: TextStyle(
               color: stars == 3 ? C.text2 : C.accent,
-              fontWeight: FontWeight.w700)),
-    ]);
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
