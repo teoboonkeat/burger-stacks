@@ -24,7 +24,7 @@ fi
 if ! python3 -c "import socket,sys; s=socket.socket(); sys.exit(s.connect_ex(('127.0.0.1',$PORT))==0)"; then
   echo "(reusing server on port $PORT)" >&2
 else
-  (cd build/web && nohup python3 -m http.server "$PORT" >/dev/null 2>&1 &)
+  (cd build/web && setsid nohup python3 -m http.server "$PORT" </dev/null >/dev/null 2>&1 &)
 fi
 sleep 1
 echo "http://localhost:$PORT/"

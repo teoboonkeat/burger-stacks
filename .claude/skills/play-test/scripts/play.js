@@ -41,6 +41,8 @@ const { chromium } = require('playwright');
   const [w, h] = spec.viewport || [390, 844];
   const page = await browser.newPage({ viewport: { width: w, height: h }, hasTouch: false });
   page.on('console', (m) => {
+    // Skip headless-GPU noise caused by taking screenshots.
+    if (/GL Driver Message|GPU stall due to ReadPixels/.test(m.text())) return;
     if (['error', 'warning'].includes(m.type())) log.console.push(`${m.type()}: ${m.text()}`);
   });
   page.on('pageerror', (e) => log.pageErrors.push(String(e)));
