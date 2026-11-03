@@ -30,12 +30,20 @@ class JellyGame extends FlameGame {
   /// Called with a short, player-facing reason when a tap is refused.
   final void Function(String reason)? onRefuse;
   bool haptics;
+  /// When true, beans can also be dragged from tube to tube.
+  bool dragEnabled;
+  /// Finger position while a group is being dragged (game coordinates).
+  Vector2? dragPos;
+  bool get dragging => dragPos != null && selected != null;
   int? selected;
   double k = 1;
   final List<TubeComponent> tubeComps = [];
 
   JellyGame(this.board,
-      {required this.onEvent, this.onRefuse, this.haptics = true});
+      {required this.onEvent,
+      this.onRefuse,
+      this.haptics = true,
+      this.dragEnabled = true});
 
   @override
   Color backgroundColor() => const Color(0xFFFFF7EC);
@@ -43,12 +51,14 @@ class JellyGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     add(DotsBackground());
+    add(DragGhost());
     _build();
   }
 
   void reset(Board b) {
     board = b;
     selected = null;
+    dragPos = null;
     _build();
   }
 
@@ -142,6 +152,71 @@ class JellyGame extends FlameGame {
     return "Can't move there";
   }
 
+  /// Where the bottom bean of the dragged group (index [j] from the bottom)
+  /// is drawn, top-left corner. The group floats just above the finger.
+  Vector2 ghostSlot(int j) {
+    final p = dragPos!;
+    return Vector2(p.x - beanW / 2,
+        p.y - beanH * 1.6 - (beanH + _beanGap * k) * j);
+  }
+
+  void dragStart(int i, Vector2 at) {
+    if (!dragEnabled || board.isWon) return;
+    // The tap-down on this tube already ran; it may have picked it up,
+    // put it down, or dropped another tube's beans into it.
+    if (selected == null && board.canPick(i) && tubeComps[i].incoming == 0) {
+      tapTube(i);
+    }
+    if (selected == i) dragPos = at.clone();
+  }
+
+  void dragUpdate(Vector2 delta) => dragPos?.add(delta);
+
+  void dragEnd() {
+    final at = dragPos, s = selected;
+    if (at == null) return;
+    dragPos = null;
+    if (s == null) return;
+    final target = _tubeAt(at, s);
+    if (target == null || target == s) {
+      // Dropped on nothing: settle the group back into its own tube.
+      selected = null;
+      tubeComps[s].putDown();
+      return;
+    }
+    _dragFrom = at;
+    tapTube(target);
+    _dragFrom = null;
+    // A refused drop leaves the group back in its tube, unselected.
+    if (selected == s) {
+      selected = null;
+      tubeComps[s].resetLift();
+    }
+  }
+
+  Vector2? _dragFrom;
+
+  /// Tube under [p], forgiving: anywhere in a tube's column counts, using
+  /// the nearest row when tubes are laid out in two rows.
+  int? _tubeAt(Vector2 p, int source) {
+    int? best;
+    var bestD = double.infinity;
+    for (var i = 0; i < tubeComps.length; i++) {
+      final t = tubeComps[i];
+      final pad = 8 * k;
+      if (p.x < t.position.x - pad || p.x > t.position.x + t.size.x + pad) {
+        continue;
+      }
+      final cy = t.position.y + t.size.y / 2;
+      final d = (p.y - cy).abs();
+      if (d < bestD && d < t.size.y) {
+        bestD = d;
+        best = i;
+      }
+    }
+    return best;
+  }
+
   void tapTube(int i) {
     if (board.isWon) return;
     // A tube with beans still dropping into it can't be used yet.
@@ -172,6 +247,7 @@ class JellyGame extends FlameGame {
     final hiddenBefore = _hiddenCount();
     final srcLen = board.tubes[s].stack.length;
     final dstLen = board.tubes[i].stack.length;
+    final group = board.groupSize(s);
     final m = board.drop(s, i);
     if (m == null) {
       final why = _dropReason(s, i);
@@ -186,6 +262,7 @@ class JellyGame extends FlameGame {
     final lift = from.lift;
     from.resetLift();
     to.incoming += m.count;
+    final dragFrom = _dragFrom;
     var landed = 0;
     // Beans leave top-first; the first one out falls deepest in the target.
     for (var b = 0; b < m.count; b++) {
@@ -197,6 +274,7 @@ class JellyGame extends FlameGame {
         dstSlot: dstLen + b,
         lift: lift,
         delay: b * .05,
+        startAt: dragFrom == null ? null : _ghostStart(dragFrom, group, b),
         onLand: () {
           to.incoming--;
           to.landed(dstLen + b);
@@ -227,6 +305,16 @@ class JellyGame extends FlameGame {
       onEvent(GameEvent.reveal);
     }
     onEvent(GameEvent.drop);
+  }
+
+  /// Start position of the [b]th bean (0 = top) of a dragged group of
+  /// [group] beans released at [at].
+  Vector2 _ghostStart(Vector2 at, int group, int b) {
+    final saved = dragPos;
+    dragPos = at;
+    final v = ghostSlot(group - 1 - b);
+    dragPos = saved;
+    return v;
   }
 
   int _hiddenCount() =>
@@ -349,7 +437,7 @@ class DotsBackground extends Component with HasGameReference<JellyGame> {
 }
 
 class TubeComponent extends PositionComponent
-    with TapCallbacks, HasGameReference<JellyGame> {
+    with TapCallbacks, DragCallbacks, HasGameReference<JellyGame> {
   final int index;
   int incoming = 0;
   // Spring-driven lift of the selected group (overshoots, then settles).
@@ -420,6 +508,27 @@ class TubeComponent extends PositionComponent
 
   @override
   void onTapDown(TapDownEvent event) => game.tapTube(index);
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    super.onDragStart(event);
+    game.dragStart(index, event.canvasPosition);
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) => game.dragUpdate(event.canvasDelta);
+
+  @override
+  void onDragEnd(DragEndEvent event) {
+    super.onDragEnd(event);
+    game.dragEnd();
+  }
+
+  @override
+  void onDragCancel(DragCancelEvent event) {
+    super.onDragCancel(event);
+    game.dragEnd();
+  }
 
   @override
   void update(double dt) {
@@ -504,6 +613,8 @@ class TubeComponent extends PositionComponent
     final bw = game.beanW, bh = game.beanH;
     for (var i = 0; i < visible; i++) {
       final lifted = i >= stack.length - group;
+      // While dragging, the lifted group is drawn under the finger instead.
+      if (lifted && game.dragging) continue;
       // Lifted beans hover with a gentle bob.
       final bob = lifted && game.selected == index ? sin(_time * 6 + i) * 1.5 * k : 0.0;
       final y = _slotTop(i) - (lifted ? lift + bob : 0);
@@ -657,6 +768,8 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
   final int srcSlot, dstSlot;
   final double lift, delay;
   final VoidCallback onLand;
+  /// Set when released from a drag: start here and skip the rise.
+  final Vector2? startAt;
   double _t = 0;
 
   static const rise = .10, across = .13, fall = .12;
@@ -671,7 +784,10 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
     required this.lift,
     required this.delay,
     required this.onLand,
-  }) : super(priority: 10);
+    this.startAt,
+  }) : super(priority: 10) {
+    if (startAt != null) _t = rise;
+  }
 
   @override
   void update(double dt) {
@@ -685,9 +801,9 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
   @override
   void render(Canvas canvas) {
     final w = game.beanW, h = game.beanH, k = game.k;
-    final start = from.slotPos(srcSlot) - Vector2(0, lift);
+    final start = startAt ?? from.slotPos(srcSlot) - Vector2(0, lift);
     final end = to.slotPos(dstSlot);
-    final exitY = from.position.y - h - 6 * k;
+    final exitY = startAt?.y ?? from.position.y - h - 6 * k;
     final enterY = to.position.y - h - 6 * k;
     final t = max(0.0, _t - delay);
     late Offset p;
@@ -719,5 +835,27 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
     canvas.scale(sx, sy);
     paintBean(canvas, Rect.fromCenter(center: Offset.zero, width: w, height: h), type);
     canvas.restore();
+  }
+}
+
+/// The dragged group, drawn under the player's finger.
+class DragGhost extends Component with HasGameReference<JellyGame> {
+  DragGhost() : super(priority: 20);
+
+  @override
+  void render(Canvas canvas) {
+    final s = game.selected;
+    if (!game.dragging || s == null) return;
+    final n = game.board.groupSize(s);
+    final type = game.board.tubes[s].top?.type;
+    if (n == 0 || type == null) return;
+    final w = game.beanW, h = game.beanH;
+    for (var j = 0; j < n; j++) {
+      final p = game.ghostSlot(j);
+      final r = Rect.fromLTWH(p.x, p.y, w, h);
+      canvas.drawOval(r.shift(Offset(0, 6 * game.k)).deflate(2),
+          Paint()..color = const Color(0x22000000));
+      paintBean(canvas, r, type);
+    }
   }
 }

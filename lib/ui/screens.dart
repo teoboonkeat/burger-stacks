@@ -152,6 +152,11 @@ class SettingsScreen extends StatelessWidget {
               value: st.haptics,
               onChanged: (v) => st.update((x) => x.haptics = v)),
           SwitchListTile(
+              title: const Text('Drag beans'),
+              subtitle: const Text('Drag a group onto a tube, as well as tapping'),
+              value: st.dragBeans,
+              onChanged: (v) => st.update((x) => x.dragBeans = v)),
+          SwitchListTile(
               title: const Text('Unlock all levels'),
               subtitle: const Text('Testing only'),
               value: st.unlockAll,

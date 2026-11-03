@@ -36,6 +36,7 @@ class _GameScreenState extends State<GameScreen> {
       onEvent: _onEvent,
       onRefuse: _onRefuse,
       haptics: widget.s.state.haptics,
+      dragEnabled: widget.s.state.dragBeans,
     );
   }
 
