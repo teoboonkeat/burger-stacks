@@ -33,3 +33,14 @@ jobs:
           name: Jelly Beans build ${{ github.run_number }}
           prerelease: true
           files: build/app/outputs/flutter-apk/app-release.apk
+      - name: Delete old builds (keep newest 3)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release list --repo "$GITHUB_REPOSITORY" --limit 200 --json tagName \
+            --jq '.[].tagName | select(startswith("build-"))' \
+            | sort -t- -k2 -n -r | tail -n +4 \
+            | while read -r tag; do
+                echo "Deleting $tag"
+                gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+              done
