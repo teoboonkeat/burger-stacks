@@ -785,14 +785,16 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
     required this.delay,
     required this.onLand,
     this.startAt,
-  }) : super(priority: 10) {
-    if (startAt != null) _t = rise;
-  }
+  }) : super(priority: 10);
+
+  /// A dragged bean just glides straight into its slot.
+  static const glide = .14;
+  double get _duration => startAt != null ? glide : total;
 
   @override
   void update(double dt) {
     _t += dt;
-    if (_t - delay >= total) {
+    if (_t - (startAt != null ? 0 : delay) >= _duration) {
       removeFromParent();
       onLand();
     }
@@ -808,7 +810,10 @@ class FlyingBean extends PositionComponent with HasGameReference<JellyGame> {
     final t = max(0.0, _t - delay);
     late Offset p;
     var tilt = 0.0, sx = 1.0, sy = 1.0;
-    if (t < rise) {
+    if (startAt != null) {
+      final u = Curves.easeOutCubic.transform((_t / glide).clamp(0.0, 1.0));
+      p = Offset(start.x + (end.x - start.x) * u, start.y + (end.y - start.y) * u);
+    } else if (t < rise) {
       // Accelerate up and stretch tall while leaving the tube.
       final u = Curves.easeOut.transform(t / rise);
       p = Offset(start.x, start.y + (exitY - start.y) * u);
