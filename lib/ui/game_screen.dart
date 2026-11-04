@@ -26,7 +26,11 @@ class _GameScreenState extends State<GameScreen> {
   int undosLeft = 1;
   int undosUsed = 0;
   bool peekUsed = false, extraUsed = false, restarted = false;
+
+  /// Set the moment the level is won; boosters, restart and the board stay
+  /// off until the result screen has been dealt with.
   bool showingResult = false;
+  bool _stuckOpen = false;
 
   @override
   void initState() {
@@ -52,17 +56,23 @@ class _GameScreenState extends State<GameScreen> {
       restarted = restart;
       showingResult = false;
     });
+    game.inputEnabled = true;
     game.reset(_board());
   }
 
-  String? refusal;
+  /// Last refusal text; kept while the bubble fades out.
+  String refusal = '';
+  bool refusalVisible = false;
   int _refusalId = 0;
 
   void _onRefuse(String reason) {
     final id = ++_refusalId;
-    setState(() => refusal = reason);
+    setState(() {
+      refusal = reason;
+      refusalVisible = true;
+    });
     Future.delayed(const Duration(milliseconds: 1800), () {
-      if (mounted && id == _refusalId) setState(() => refusal = null);
+      if (mounted && id == _refusalId) setState(() => refusalVisible = false);
     });
   }
 
@@ -82,35 +92,54 @@ class _GameScreenState extends State<GameScreen> {
     }
   }
 
+  /// Undo is possible right now: something to undo, no beans in the air
+  /// (their move can't be taken back mid-flight) and the level not over.
+  bool get _canUndoNow =>
+      game.board.canUndo && !game.animating && !showingResult;
+
   Future<void> _undo() async {
-    if (!game.board.canUndo) return;
+    if (!_canUndoNow) return;
     if (undosLeft == 0) {
       if (!await ads.showRewarded(context, 'undo')) return;
+      if (!mounted) return;
       undosLeft = 3;
+    }
+    // The ad may have taken a while; only spend the undo if it happens.
+    if (!_canUndoNow || !game.doUndo()) {
+      setState(() {});
+      return;
     }
     setState(() {
       undosLeft--;
       undosUsed++;
     });
-    game.doUndo();
   }
 
   Future<void> _peek() async {
-    if (peekUsed || !await ads.showRewarded(context, 'peek')) return;
+    if (peekUsed || showingResult) return;
+    if (!await ads.showRewarded(context, 'peek')) return;
+    if (!mounted || showingResult) return;
     setState(() => peekUsed = true);
     game.board.revealAll();
   }
 
   Future<void> _extra() async {
-    if (extraUsed || !await ads.showRewarded(context, 'extra tube')) return;
+    if (extraUsed || showingResult) return;
+    if (!await ads.showRewarded(context, 'extra tube')) return;
+    if (!mounted || showingResult) return;
     setState(() => extraUsed = true);
     game.addTube();
   }
 
   Future<void> _stuck() async {
+    // One sheet at a time, and never once the level is won.
+    if (_stuckOpen || showingResult || !mounted) return;
+    _stuckOpen = true;
+    final noMoves = !game.board.hasValidMove;
     final choice = await showModalBottomSheet<String>(
       context: context,
       isDismissible: false,
+      enableDrag: false,
       backgroundColor: C.bg,
       builder: (c) => Padding(
         padding: const EdgeInsets.all(24),
@@ -121,7 +150,13 @@ class _GameScreenState extends State<GameScreen> {
               'Sticky jam!',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
             ),
-            const Text('No moves left.', style: TextStyle(color: C.text2)),
+            Text(
+              noMoves
+                  ? 'No moves left.'
+                  : "This jar can't be finished from here.",
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: C.text2),
+            ),
             const SizedBox(height: 20),
             BigButton(
               'Undo',
@@ -141,6 +176,7 @@ class _GameScreenState extends State<GameScreen> {
         ),
       ),
     );
+    _stuckOpen = false;
     if (!mounted) return;
     switch (choice) {
       case 'undo':
@@ -148,17 +184,25 @@ class _GameScreenState extends State<GameScreen> {
         await _undo();
       case 'extra':
         await _extra();
-      default:
+      case 'restart':
         _start(restart: true);
+      default:
+        // Closed without a choice (e.g. Back): leave the board as it is;
+        // Undo and Restart stay available in the HUD.
+        return;
     }
-    if (game.board.isStuck) _stuck();
+    if (mounted && !game.animating && game.isDeadEnd) _stuck();
   }
 
   Future<void> _won() async {
     if (showingResult) return;
-    showingResult = true;
+    // Freeze the level: nothing may change the board or the count now.
+    setState(() => showingResult = true);
+    game.inputEnabled = false;
+    final wonMoves = moves;
+    final wonTubes = [for (final t in game.board.tubes) t.copy()];
     final lv = widget.s.levels[level - 1];
-    final stars = starsFor(moves, lv.par);
+    final stars = starsFor(wonMoves, lv.par);
     final beans = 10 + stars * 5;
     widget.s.state.completeLevel(level, stars, beans, widget.s.levels.length);
     game.confetti();
@@ -180,10 +224,10 @@ class _GameScreenState extends State<GameScreen> {
             s: widget.s,
             level: level,
             stars: stars,
-            moves: moves,
+            moves: wonMoves,
             par: lv.par,
             beans: beans,
-            tubes: game.board.tubes,
+            tubes: wonTubes,
             ads: ads,
           ),
         ),
@@ -231,64 +275,82 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _start(restart: true),
+                    onPressed: showingResult
+                        ? null
+                        : () => _start(restart: true),
                     icon: const Icon(Icons.refresh_rounded, color: C.text),
                   ),
                 ],
               ),
             ),
-            if (lv.hint != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 6,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: C.panel,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: C.border),
-                  ),
-                  child: Text(
-                    lv.hint!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ),
             Expanded(
-              child: Stack(children: [
-                GameWidget(game: game),
-                Positioned(
-                  left: 16,
-                  right: 16,
-                  top: 4,
-                  child: IgnorePointer(
-                    child: AnimatedOpacity(
-                      opacity: refusal == null ? 0 : 1,
-                      duration: const Duration(milliseconds: 180),
-                      child: Center(
-                        child: Container(
+              child: Stack(
+                children: [
+                  GameWidget(game: game),
+                  // Overlaid so the board (and bean size) is the same with or
+                  // without a hint; a two-row board needs the room, so it hides.
+                  if (lv.hint != null && game.board.tubes.length <= maxPerRow)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      child: IgnorePointer(
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xE6453044),
-                            borderRadius: BorderRadius.circular(20),
+                            horizontal: 24,
+                            vertical: 6,
                           ),
-                          child: Text(
-                            refusal ?? '',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: C.panel,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: C.border),
+                            ),
+                            child: Text(
+                              lv.hint!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    top: 4,
+                    child: IgnorePointer(
+                      child: AnimatedOpacity(
+                        opacity: refusalVisible ? 1 : 0,
+                        duration: const Duration(milliseconds: 180),
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xE6453044),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              refusal,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ]),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -299,19 +361,21 @@ class _GameScreenState extends State<GameScreen> {
                     icon: Icons.undo_rounded,
                     label: undosLeft > 0 ? 'Undo ($undosLeft)' : 'Undo',
                     ad: undosLeft == 0,
-                    onTap: game.board.canUndo ? _undo : null,
+                    onTap: game.board.canUndo && !showingResult ? _undo : null,
                   ),
                   _Booster(
                     icon: Icons.visibility_rounded,
                     label: 'Peek',
                     ad: true,
-                    onTap: peekUsed || !hasPouch ? null : _peek,
+                    onTap: peekUsed || !hasPouch || showingResult
+                        ? null
+                        : _peek,
                   ),
                   _Booster(
                     icon: Icons.add_box_rounded,
                     label: 'Extra tube',
                     ad: true,
-                    onTap: extraUsed ? null : _extra,
+                    onTap: extraUsed || showingResult ? null : _extra,
                   ),
                 ],
               ),
@@ -405,88 +469,107 @@ class _SweetScreenState extends State<SweetScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: const EdgeInsets.all(24),
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: C.bg,
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: C.border, width: 3),
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  // Short screens: tighter card, and the jar shrinks to
+                  // whatever room is left so every button stays visible.
+                  final compact = box.maxHeight < 720;
+                  final gap = compact ? 8.0 : 12.0;
+                  return Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: box.maxHeight),
+                      child: Container(
+                        margin: EdgeInsets.all(compact ? 12 : 24),
+                        padding: EdgeInsets.fromLTRB(
+                          24,
+                          compact ? 12 : 24,
+                          24,
+                          compact ? 4 : 24,
+                        ),
+                        decoration: BoxDecoration(
+                          color: C.bg,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(color: C.border, width: 3),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Sweet!',
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.w900,
+                                color: C.accent,
+                              ),
+                            ),
+                            Stars(widget.stars, size: compact ? 40 : 48),
+                            const SizedBox(height: 8),
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Jar(tubes: finished, width: 170),
+                              ),
+                            ),
+                            SizedBox(height: gap),
+                            Text(
+                              widget.moves > widget.par
+                                  ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
+                                  : 'Done in ${widget.moves} moves · ★★★ — par!',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: C.text2,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Text(
+                              '+${widget.beans * (doubled ? 2 : 1)} beans',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            SizedBox(height: compact ? 12 : 20),
+                            BigButton(
+                              'Next scoop',
+                              onTap: () => Navigator.pop(context, 'next'),
+                            ),
+                            if (widget.moves > widget.par) ...[
+                              SizedBox(height: gap),
+                              BigButton(
+                                'Retry for ★★★',
+                                primary: false,
+                                onTap: () => Navigator.pop(context, 'retry'),
+                              ),
+                            ],
+                            SizedBox(height: gap),
+                            BigButton(
+                              '2× beans',
+                              reward: true,
+                              onTap: doubled
+                                  ? null
+                                  : () async {
+                                      if (await widget.ads.showRewarded(
+                                        context,
+                                        '2x beans',
+                                      )) {
+                                        widget.s.state.addCoins(widget.beans);
+                                        setState(() => doubled = true);
+                                      }
+                                    },
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'home'),
+                              child: const Text(
+                                'Home',
+                                style: TextStyle(color: C.text2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'Sweet!',
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w900,
-                            color: C.accent,
-                          ),
-                        ),
-                        Stars(widget.stars, size: 48),
-                        const SizedBox(height: 8),
-                        Jar(tubes: finished, width: 170),
-                        const SizedBox(height: 12),
-                        Text(
-                          widget.moves > widget.par
-                              ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
-                              : 'Done in ${widget.moves} moves · ★★★ — par!',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: C.text2,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          '+${widget.beans * (doubled ? 2 : 1)} beans',
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        BigButton(
-                          'Next scoop',
-                          onTap: () => Navigator.pop(context, 'next'),
-                        ),
-                        if (widget.moves > widget.par) ...[
-                          const SizedBox(height: 12),
-                          BigButton(
-                            'Retry for ★★★',
-                            primary: false,
-                            onTap: () => Navigator.pop(context, 'retry'),
-                          ),
-                        ],
-                        const SizedBox(height: 12),
-                        BigButton(
-                          '2× beans',
-                          reward: true,
-                          onTap: doubled
-                              ? null
-                              : () async {
-                                  if (await widget.ads.showRewarded(
-                                    context,
-                                    '2x beans',
-                                  )) {
-                                    widget.s.state.addCoins(widget.beans);
-                                    setState(() => doubled = true);
-                                  }
-                                },
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'home'),
-                          child: const Text(
-                            'Home',
-                            style: TextStyle(color: C.text2),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
             BannerSlot(hidden: widget.s.state.removeAds),

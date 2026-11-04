@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:jelly_beans/levels/level.dart';
+import 'package:jelly_beans/logic/board.dart';
 import 'package:jelly_beans/logic/solver.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -33,5 +34,34 @@ void main() {
       expect(n, isNotNull, reason: 'level ${l.id}');
       expect(l.par, n, reason: 'level ${l.id} par');
     }
+  });
+
+  group('level 28 soft dead end (play-test s09)', () {
+    // The tester's line: afterwards only a lone bean can shuttle between
+    // two tubes, so the level can't be won although moves remain.
+    Board deadEnd() {
+      final b = levels[27].toBoard();
+      for (final (a, c) in [(1, 5), (2, 1), (0, 2), (0, 5), (3, 5), (3, 0)]) {
+        expect(b.drop(a, c), isNotNull, reason: '$a>$c');
+      }
+      return b;
+    }
+
+    test('is detected as unwinnable although moves remain', () {
+      final b = deadEnd();
+      expect(b.hasValidMove, isTrue);
+      expect(b.isStuck, isFalse);
+      expect(Solver(maxStates: 5000).winnable(b), isFalse);
+    });
+
+    test('one move earlier the level is still winnable', () {
+      final b = deadEnd()..undo();
+      expect(Solver(maxStates: 5000).winnable(b), isTrue);
+    });
+
+    test('an extra tube gets the player out', () {
+      final b = deadEnd()..addTube();
+      expect(Solver(maxStates: 5000).winnable(b), isTrue);
+    });
   });
 }

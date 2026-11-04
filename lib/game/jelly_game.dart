@@ -9,6 +9,7 @@ import 'package:flutter/animation.dart' show Curves;
 import 'package:flutter/services.dart';
 
 import '../logic/board.dart';
+import '../logic/solver.dart';
 import 'bean_painter.dart';
 import 'spring.dart';
 
@@ -19,6 +20,9 @@ enum GameEvent { pick, drop, land, invalid, reveal, tubeComplete, won, stuck, un
 const tubeW = 62.0, tubeH = 232.0;
 const _capH = 18.0, _bodyTop = 14.0, _bodyBottom = 214.0, _slotBottom = 206.0;
 const _beanGap = 4.0;
+
+/// Most tubes in one row; more wrap onto a second row.
+const maxPerRow = 6;
 
 /// Damped spring used for every jelly wobble: starts at 1, rings out to 0.
 double wobble(double t, {double freq = 20, double decay = 7}) =>
@@ -67,6 +71,7 @@ class JellyGame extends FlameGame {
       t.removeFromParent();
     }
     children.whereType<FlyingBean>().forEach((f) => f.removeFromParent());
+    _flying = 0;
     tubeComps.clear();
     for (var i = 0; i < board.tubes.length; i++) {
       final tc = TubeComponent(i);
@@ -85,14 +90,18 @@ class JellyGame extends FlameGame {
   void _layout(Vector2 size) {
     final n = tubeComps.length;
     if (n == 0) return;
-    final rows = n > 6 ? 2 : 1;
+    final rows = (n / maxPerRow).ceil();
     final perRow = (n / rows).ceil();
     const gapX = 12.0, gapY = 34.0;
     // Leave headroom above the top row for beans arcing over the tubes.
     final headroom = 40.0;
+    // One scale for every level at a given screen size: size the tubes as
+    // if the board were full ([maxPerRow] per row, two rows), so a 4-tube
+    // level shows the same beans as an 8-tube one (or after Extra tube).
+    final kRows = max(2, rows);
     k = min(
-        min((size.x - gapX * (perRow + 1)) / (perRow * tubeW),
-            (size.y - headroom - 16 - gapY * (rows - 1)) / (rows * tubeH)),
+        min((size.x - gapX * (maxPerRow + 1)) / (maxPerRow * tubeW),
+            (size.y - headroom - 16 - gapY * (kRows - 1)) / (kRows * tubeH)),
         1.15);
     final tw = tubeW * k, th = tubeH * k;
     final totalH = rows * th + (rows - 1) * gapY;
@@ -161,7 +170,7 @@ class JellyGame extends FlameGame {
   }
 
   void dragStart(int i, Vector2 at) {
-    if (!dragEnabled || board.isWon) return;
+    if (!dragEnabled || !inputEnabled || board.isWon) return;
     // The tap-down on this tube already ran; it may have picked it up,
     // put it down, or dropped another tube's beans into it.
     if (selected == null && board.canPick(i) && tubeComps[i].incoming == 0) {
@@ -218,14 +227,15 @@ class JellyGame extends FlameGame {
   }
 
   void tapTube(int i) {
-    if (board.isWon) return;
-    // A tube with beans still dropping into it can't be used yet.
-    if (tubeComps[i].incoming > 0) {
-      onRefuse?.call('Wait for the beans to land');
-      return;
-    }
+    if (!inputEnabled || board.isWon) return;
     final s = selected;
     if (s == null) {
+      // Beans still dropping into a tube can't be lifted back out yet; it
+      // can take more beans, though (see below).
+      if (tubeComps[i].incoming > 0) {
+        onRefuse?.call('Wait for the beans to land');
+        return;
+      }
       if (board.canPick(i)) {
         selected = i;
         tubeComps[i].pickUp();
@@ -261,9 +271,14 @@ class JellyGame extends FlameGame {
     final from = tubeComps[s], to = tubeComps[i];
     final lift = from.lift;
     from.resetLift();
-    to.incoming += m.count;
+    // Board state is already final; slots stay empty until their bean lands.
+    // Earlier moves still dropping into this tube hold the slots below.
+    for (var b = 0; b < m.count; b++) {
+      to.pendingSlots.add(dstLen + b);
+    }
     final dragFrom = _dragFrom;
     var landed = 0;
+    _flying += m.count;
     // Beans leave top-first; the first one out falls deepest in the target.
     for (var b = 0; b < m.count; b++) {
       add(FlyingBean(
@@ -276,25 +291,29 @@ class JellyGame extends FlameGame {
         delay: b * .05,
         startAt: dragFrom == null ? null : _ghostStart(dragFrom, group, b),
         onLand: () {
-          to.incoming--;
+          _flying--;
+          to.pendingSlots.remove(dstLen + b);
           to.landed(dstLen + b);
           landed++;
           onEvent(GameEvent.land);
           _haptic(landed == m.count);
-          if (landed < m.count) return;
-          if (m.sealedTarget) {
+          // Seal once every bean bound for the tube is in, whichever
+          // move's beans arrive last.
+          if (to.incoming == 0 && to.tube.sealed && !to.shownSealed) {
             to.complete();
             _celebrate(to);
             onEvent(GameEvent.tubeComplete);
           }
-          if (board.completeCount > before) {
+          if (landed == m.count && board.completeCount > before) {
             for (final t in tubeComps) {
               t.unlockCheck();
             }
           }
+          // Judge the board once, after the last bean in the air lands.
+          if (_flying > 0) return;
           if (board.isWon) {
             onEvent(GameEvent.won);
-          } else if (board.isStuck) {
+          } else if (isDeadEnd) {
             onEvent(GameEvent.stuck);
           }
         },
@@ -393,19 +412,34 @@ class JellyGame extends FlameGame {
     ));
   }
 
-  bool get animating => children.whereType<FlyingBean>().isNotEmpty;
+  /// Beans currently in the air.
+  int _flying = 0;
+  bool get animating => _flying > 0;
 
-  void doUndo() {
-    if (animating) return;
+  /// False while the level is over (win shown): taps and drags do nothing.
+  bool inputEnabled = true;
+
+  /// True when the level can no longer be won from here: no legal move at
+  /// all, or a bounded search proves every line of play is a dead end
+  /// (e.g. only a bean shuttling back and forth). If the search is too big
+  /// to finish quickly, the board gets the benefit of the doubt.
+  bool get isDeadEnd {
+    if (board.isWon) return false;
+    if (!board.hasValidMove) return true;
+    return Solver(maxStates: 5000).winnable(board) == false;
+  }
+
+  bool doUndo() {
+    if (animating) return false;
     if (selected != null) tubeComps[selected!].putDown();
     selected = null;
-    if (board.undo() != null) {
-      for (final t in tubeComps) {
-        t.unlockCheck();
-        t.syncSealed();
-      }
-      onEvent(GameEvent.undo);
+    if (board.undo() == null) return false;
+    for (final t in tubeComps) {
+      t.unlockCheck();
+      t.syncSealed();
     }
+    onEvent(GameEvent.undo);
+    return true;
   }
 
   void addTube() {
@@ -439,7 +473,9 @@ class DotsBackground extends Component with HasGameReference<JellyGame> {
 class TubeComponent extends PositionComponent
     with TapCallbacks, DragCallbacks, HasGameReference<JellyGame> {
   final int index;
-  int incoming = 0;
+  /// Slots whose bean is still in the air on its way here.
+  final Set<int> pendingSlots = {};
+  int get incoming => pendingSlots.length;
   // Spring-driven lift of the selected group (overshoots, then settles).
   final _lift = Spring();
   double get lift => _lift.value;
@@ -450,6 +486,7 @@ class TubeComponent extends PositionComponent
   final Set<int> _sealTorn = {};
   double _done = 1; // 0 → 1 after completion: cap bounce + tube pop.
   bool _shownSealed = false;
+  bool get shownSealed => _shownSealed;
   /// Per-slot landing wobble clocks (0 → 1).
   final Map<int, double> _land = {};
   TubeComponent(this.index);
@@ -609,9 +646,9 @@ class TubeComponent extends PositionComponent
     // Beans.
     final stack = tube.stack;
     final group = game.selected == index ? game.board.groupSize(index) : 0;
-    final visible = stack.length - incoming;
     final bw = game.beanW, bh = game.beanH;
-    for (var i = 0; i < visible; i++) {
+    for (var i = 0; i < stack.length; i++) {
+      if (pendingSlots.contains(i)) continue;
       final lifted = i >= stack.length - group;
       // While dragging, the lifted group is drawn under the finger instead.
       if (lifted && game.dragging) continue;
@@ -628,7 +665,7 @@ class TubeComponent extends PositionComponent
             r.center.dx + bw * sx / 2, r.bottom);
       }
       paintBean(c, r, stack[i].type, hidden: stack[i].hidden && !sealed);
-      if (_reveal > 0 && i == visible - 1 && !stack[i].hidden) {
+      if (_reveal > 0 && i == stack.length - 1 && !stack[i].hidden) {
         paintPouch(c, r, tear: 1 - _reveal);
       }
       if (sealed && _sealTear > 0 && _sealTorn.contains(i)) {
