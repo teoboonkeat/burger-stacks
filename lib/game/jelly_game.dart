@@ -8,6 +8,7 @@ import 'package:flame/particles.dart';
 import 'package:flutter/animation.dart' show Curves;
 import 'package:flutter/services.dart';
 
+import '../app/theme.dart' show C, S;
 import '../logic/board.dart';
 import '../logic/solver.dart';
 import 'bean_painter.dart';
@@ -21,6 +22,9 @@ const tubeW = 62.0, tubeH = 232.0;
 const _capH = 18.0, _bodyTop = 14.0, _bodyBottom = 214.0, _slotBottom = 206.0;
 const _beanGap = 4.0;
 
+/// How far the selected group rises (design px, scaled by k).
+const liftHeight = 26.0;
+
 /// Most tubes in one row; more wrap onto a second row.
 const maxPerRow = 6;
 
@@ -31,8 +35,15 @@ double wobble(double t, {double freq = 20, double decay = 7}) =>
 class JellyGame extends FlameGame {
   Board board;
   final void Function(GameEvent e) onEvent;
-  /// Called with a short, player-facing reason when a tap is refused.
-  final void Function(String reason)? onRefuse;
+  /// Called with a short, player-facing reason when a tap on [tube] is
+  /// refused.
+  final void Function(String reason, int tube)? onRefuse;
+  /// Tutorial filter: when set, only tubes it accepts take input; a tap on
+  /// any other tube calls [onBlocked] and does nothing else (no refusal).
+  bool Function(int tube)? allowTube;
+  void Function(int tube)? onBlocked;
+  /// The next pouch to open tears slowly (first pouch in the tutorial).
+  bool slowNextReveal = false;
   bool haptics;
   /// When true, beans can also be dragged from tube to tube.
   bool dragEnabled;
@@ -50,7 +61,20 @@ class JellyGame extends FlameGame {
       this.dragEnabled = true});
 
   @override
-  Color backgroundColor() => const Color(0xFFFFF7EC);
+  Color backgroundColor() => C.bg;
+
+  /// Tube [i]'s box in game (widget-local) coordinates.
+  Rect tubeRect(int i) {
+    final t = tubeComps[i];
+    return Rect.fromLTWH(t.position.x, t.position.y, t.size.x, t.size.y);
+  }
+
+  /// Top-left of bean slot [slot] in tube [i] and the bean size, for
+  /// pointing at a bean (tutorial hand).
+  Rect slotRect(int i, int slot) {
+    final p = tubeComps[i].slotPos(slot);
+    return Rect.fromLTWH(p.x, p.y, beanW, beanH);
+  }
 
   @override
   Future<void> onLoad() async {
@@ -228,12 +252,17 @@ class JellyGame extends FlameGame {
 
   void tapTube(int i) {
     if (!inputEnabled || board.isWon) return;
+    final allow = allowTube;
+    if (allow != null && !allow(i)) {
+      onBlocked?.call(i);
+      return;
+    }
     final s = selected;
     if (s == null) {
       // Beans still dropping into a tube can't be lifted back out yet; it
       // can take more beans, though (see below).
       if (tubeComps[i].incoming > 0) {
-        onRefuse?.call('Wait for the beans to land');
+        onRefuse?.call('Wait for the beans to land', i);
         return;
       }
       if (board.canPick(i)) {
@@ -244,7 +273,7 @@ class JellyGame extends FlameGame {
       } else if (board.tubes[i].stack.isNotEmpty || board.isLocked(i)) {
         tubeComps[i].shake();
         onEvent(GameEvent.invalid);
-        onRefuse?.call(_pickReason(i));
+        onRefuse?.call(_pickReason(i), i);
       }
       return;
     }
@@ -263,7 +292,7 @@ class JellyGame extends FlameGame {
       final why = _dropReason(s, i);
       tubeComps[i].shake();
       onEvent(GameEvent.invalid);
-      onRefuse?.call(why);
+      onRefuse?.call(why, i);
       return;
     }
     selected = null;
@@ -320,7 +349,8 @@ class JellyGame extends FlameGame {
       ));
     }
     if (_hiddenCount() < hiddenBefore) {
-      from.reveal();
+      from.reveal(slow: slowNextReveal);
+      slowNextReveal = false;
       onEvent(GameEvent.reveal);
     }
     onEvent(GameEvent.drop);
@@ -481,6 +511,11 @@ class TubeComponent extends PositionComponent
   double get lift => _lift.value;
   double _time = 0;
   double _reveal = 0;
+  /// Tear speed: 1 / duration in seconds.
+  double _revealRate = 4;
+  /// Padlock pop-off clock after the tube unlocks (1 = idle).
+  double _unlock = 1;
+  bool _wasLocked = false;
   /// Tear clock for pouches opened by completing the tube.
   double _sealTear = 0;
   final Set<int> _sealTorn = {};
@@ -504,6 +539,7 @@ class TubeComponent extends PositionComponent
   void onMount() {
     super.onMount();
     _shownSealed = tube.sealed;
+    _wasLocked = game.board.isLocked(index);
   }
 
   double _shake = 1;
@@ -520,7 +556,11 @@ class TubeComponent extends PositionComponent
     }
   }
 
-  void reveal() => _reveal = 1;
+  /// Pouch tear: 0.25 s, or 0.5 s for the first one the tutorial shows.
+  void reveal({bool slow = false}) {
+    _reveal = 1;
+    _revealRate = slow ? 2 : 4;
+  }
   void complete() {
     _done = 0;
     // A finished tube never keeps a pouch closed: tear them all open.
@@ -541,7 +581,14 @@ class TubeComponent extends PositionComponent
     if (!tube.sealed) _shownSealed = false;
   }
 
-  void unlockCheck() {}
+  /// Called when the completed count changes: a tube that just opened
+  /// pops its padlock off; one locked again by Undo shows it at once.
+  void unlockCheck() {
+    final locked = game.board.isLocked(index);
+    if (_wasLocked && !locked) _unlock = 0;
+    if (locked) _unlock = 1;
+    _wasLocked = locked;
+  }
 
   @override
   void onTapDown(TapDownEvent event) => game.tapTube(index);
@@ -570,12 +617,13 @@ class TubeComponent extends PositionComponent
   @override
   void update(double dt) {
     _time += dt;
-    final target = game.selected == index ? 18.0 * k : 0.0;
+    final target = game.selected == index ? liftHeight * k : 0.0;
     _lift.update(dt, target);
     if (game.selected != index && lift.abs() < .1 && _lift.velocity.abs() < 1) {
       _lift.reset();
     }
-    _reveal = max(0, _reveal - dt * 4); // 250 ms tear
+    _reveal = max(0, _reveal - dt * _revealRate);
+    _unlock = min(1, _unlock + dt * 1.6);
     _shake = min(1, _shake + dt / .16);
     _sealTear = max(0, _sealTear - dt * 4);
     _done = min(1, _done + dt * 1.8);
@@ -588,7 +636,9 @@ class TubeComponent extends PositionComponent
   @override
   void render(Canvas canvas) {
     final c = canvas;
-    final locked = game.board.isLocked(index);
+    // Drawn lock state flips when the opening tube's beans land (see
+    // unlockCheck), so the padlock pops off at that moment.
+    final locked = _wasLocked;
     final sealed = tube.sealed && incoming == 0 && _shownSealed;
     final flavour = sealed ? beanColors[tube.stack.first.type]! : null;
 
@@ -615,7 +665,7 @@ class TubeComponent extends PositionComponent
       final pulse = .55 + .45 * sin(_time * 4).abs();
       c.drawCircle(Offset(size.x / 2, (tubeH - 6) * k), 14 * k,
           Paint()
-            ..color = const Color(0xFFE0306E).withValues(alpha: .45 * pulse)
+            ..color = C.accent.withValues(alpha: .45 * pulse)
             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8));
       // Soft halo in the flavour colour around the whole tube.
       c.drawRRect(
@@ -624,7 +674,7 @@ class TubeComponent extends PositionComponent
             ..color = flavour!.withValues(alpha: .35)
             ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10));
     }
-    c.drawPath(spout, Paint()..color = const Color(0xFFE0306E));
+    c.drawPath(spout, Paint()..color = C.accent);
 
     // Clear body (tinted with the flavour once complete).
     c.drawRRect(body.shift(Offset(0, 3 * k)), Paint()..color = const Color(0x14000000));
@@ -632,21 +682,49 @@ class TubeComponent extends PositionComponent
     if (sealed) {
       c.drawRRect(body, Paint()..color = flavour!.withValues(alpha: .18));
     }
+    final picked = game.selected == index;
     if (locked) {
       _dashed(c, body);
+    } else if (picked) {
+      // Selected source tube: raspberry ring with a soft glow.
+      c.drawRRect(
+          body.inflate(2 * k),
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 6 * k
+            ..color = C.accent.withValues(alpha: .25)
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
+      c.drawRRect(
+          body,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 3 * k
+            ..color = C.accent);
     } else {
       c.drawRRect(
           body,
           Paint()
             ..style = PaintingStyle.stroke
             ..strokeWidth = (sealed ? 3 : 2) * k
-            ..color = sealed ? flavour! : const Color(0xFFD7E3EE));
+            ..color = sealed ? flavour! : C.glass);
     }
 
     // Beans.
     final stack = tube.stack;
     final group = game.selected == index ? game.board.groupSize(index) : 0;
     final bw = game.beanW, bh = game.beanH;
+    // Soft shadow where the lifted group rests, so the lift reads as height.
+    if (group > 0 && !game.dragging && lift > 1) {
+      final rest = stack.length - group;
+      final y = _slotTop(rest) + bh * .8;
+      final a = (lift / (liftHeight * k)).clamp(0.0, 1.0);
+      c.drawOval(
+          Rect.fromCenter(
+              center: Offset(size.x / 2, y), width: bw * .8, height: bh * .25),
+          Paint()
+            ..color = C.text.withValues(alpha: .14 * a)
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3));
+    }
     for (var i = 0; i < stack.length; i++) {
       if (pendingSlots.contains(i)) continue;
       final lifted = i >= stack.length - group;
@@ -696,7 +774,22 @@ class TubeComponent extends PositionComponent
     }
 
     _drawCap(c, sealed, flavour);
-    if (locked) _padlock(c);
+    if (locked) {
+      _padlock(c);
+    } else if (_unlock < 1) {
+      // Just opened: the padlock springs up and fades away.
+      final u = Curves.easeOut.transform(_unlock);
+      final sc = 1 + .35 * wobble(_unlock, freq: 14, decay: 6).abs();
+      final cy = (_bodyTop + _bodyBottom) / 2 * k;
+      c.save();
+      c.translate(size.x / 2, cy - 40 * k * u);
+      c.scale(sc, sc);
+      c.translate(-size.x / 2, -cy);
+      c.saveLayer(null, Paint()..color = Color.fromRGBO(0, 0, 0, 1 - u));
+      _padlock(c, label: false);
+      c.restore();
+      c.restore();
+    }
     c.restore();
   }
 
@@ -763,7 +856,7 @@ class TubeComponent extends PositionComponent
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2 * k
-      ..color = const Color(0xFF7E625C);
+      ..color = C.text2;
     for (final m in (Path()..addRRect(body)).computeMetrics()) {
       for (var d = 0.0; d < m.length; d += 12 * k) {
         c.drawPath(m.extractPath(d, d + 7 * k), paint);
@@ -771,27 +864,50 @@ class TubeComponent extends PositionComponent
     }
   }
 
-  void _padlock(Canvas c) {
+  /// Padlock with the number of tubes still to finish, plus a white
+  /// "finish N tube(s)" label that never drops below [S.minBoardText].
+  void _padlock(Canvas c, {bool label = true}) {
     final cx = size.x / 2, cy = (_bodyTop + _bodyBottom) / 2 * k;
-    final ink = Paint()..color = const Color(0xFF7E625C);
+    final need = max(1, (tube.unlockAt ?? 1) - game.board.completeCount);
+    final ink = Paint()..color = C.text2;
     c.drawArc(
-        Rect.fromCenter(center: Offset(cx, cy - 6 * k), width: 18 * k, height: 20 * k),
+        Rect.fromCenter(center: Offset(cx, cy - 8 * k), width: 20 * k, height: 22 * k),
         pi, pi, false,
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 3.5 * k
-          ..color = const Color(0xFF7E625C));
+          ..strokeWidth = 4 * k
+          ..color = C.text2);
+    final lock = RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx, cy + 6 * k), width: 32 * k, height: 26 * k),
+        Radius.circular(6 * k));
+    c.drawRRect(lock, ink);
+    final n = _text('$need', max(11, 17 * k), C.bg, FontWeight.w900, lock.width);
+    c.drawParagraph(n, Offset(lock.left, lock.center.dy - n.height / 2));
+    if (!label) return;
+    final fs = max(S.minBoardText, 12 * k);
+    final p = _text(labelFor(need), fs, C.text, FontWeight.w800, size.x + 6 * k);
+    final w = p.longestLine + 10, h = p.height + 6;
+    final box = RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx, lock.bottom + 8 * k + h / 2), width: w, height: h),
+        const Radius.circular(8));
+    c.drawRRect(box, Paint()..color = C.panel);
     c.drawRRect(
-        RRect.fromRectAndRadius(
-            Rect.fromCenter(center: Offset(cx, cy + 6 * k), width: 28 * k, height: 22 * k),
-            Radius.circular(5 * k)),
-        ink);
-    c.drawCircle(Offset(cx, cy + 5 * k), 3 * k, Paint()..color = const Color(0xFFFFF7EC));
-    final pb = ParagraphBuilder(ParagraphStyle(textAlign: TextAlign.center, fontSize: 12 * k))
-      ..pushStyle(TextStyle(color: const Color(0xFF7E625C), fontWeight: FontWeight.w800))
-      ..addText('Fill ${tube.unlockAt}');
-    final p = pb.build()..layout(ParagraphConstraints(width: size.x));
-    c.drawParagraph(p, Offset(0, cy + 22 * k));
+        box,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.5
+          ..color = C.border);
+    c.drawParagraph(p, Offset(cx - p.width / 2, box.top + 3));
+  }
+
+  /// Lock label text; two short lines so it fits a narrow tube.
+  static String labelFor(int need) => 'finish\n$need tube${need == 1 ? '' : 's'}';
+
+  static Paragraph _text(String s, double size, Color col, FontWeight w, double width) {
+    final pb = ParagraphBuilder(ParagraphStyle(textAlign: TextAlign.center, fontSize: size, height: 1.1))
+      ..pushStyle(TextStyle(color: col, fontWeight: w))
+      ..addText(s);
+    return pb.build()..layout(ParagraphConstraints(width: width));
   }
 }
 
