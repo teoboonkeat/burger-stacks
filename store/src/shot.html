@@ -1,0 +1,12 @@
+<html><head><link rel="stylesheet" href="fonts.css"><style>
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;font-family:Roboto;background:#FFF7EC}
+#bg{position:absolute;inset:0}
+.cap{position:absolute;top:70px;left:0;right:0;text-align:center;color:#E0306E;font-weight:900;font-size:92px;line-height:1.05;letter-spacing:-1px}
+.sub{position:absolute;top:290px;left:0;right:0;text-align:center;color:#7E625C;font-weight:700;font-size:44px}
+.phone{position:absolute;left:50%;top:400px;width:846px;height:1504px;transform:translateX(-50%);border-radius:56px;overflow:hidden;border:14px solid #fff;box-shadow:0 10px 0 #F0DCCB,0 30px 60px rgba(74,46,42,.18)}
+.phone img{width:100%;height:100%;display:block}
+.band .cap{color:#fff}.band #band{position:absolute;top:0;left:0;right:0;height:380px;background:#E0306E;border-bottom:12px solid #B21F54}.band .sub{color:#FFE3EC}
+</style></head><body><script src="art.js"></script>
+<svg id="bg" width="1080" height="1920" data-art="dots(1080,1920,70,3,.25).replace(/r=\"([\d.]+)\"/g,(m,a)=>'r=\"'+a*2.4+'\"')"></svg>
+<div id="band"></div><div class="cap" id="c"></div><div class="sub" id="s"></div><div class="phone"><img id="i"></div>
+<script>const q=new URLSearchParams(location.search);document.getElementById('c').innerHTML=q.get('cap');document.getElementById('s').textContent=q.get('sub')||'';document.getElementById('i').src=q.get('img');if(q.get('band'))document.body.classList.add('band');</script></body></html>

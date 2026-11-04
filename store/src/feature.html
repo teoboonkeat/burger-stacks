@@ -1,0 +1,19 @@
+<html><head><link rel="stylesheet" href="fonts.css"><style>
+html,body{margin:0;width:1024px;height:500px;overflow:hidden;font-family:Roboto}
+svg{position:absolute;inset:0}.t{position:absolute;font-weight:900}
+</style></head><body><script src="art.js"></script>
+<div id="root"></div>
+<script>
+const v=new URLSearchParams(location.search).get('v');const J=JB;let s='',html='';
+if(v==='1'){document.body.style.background='#FFF7EC';
+ s=J.dots(1024,500,40,8,.3).replace(/r="([\d.]+)"/g,(m,a)=>'r="'+a*1.8+'"')+J.jar(60,115,230,{big:.26,seed:21});
+ s+=J.tube(745,110,1.05,['grape','lemon','lime'],{lift:1,liftPx:34})+J.tube(825,110,1.05,['berry','berry','berry','berry'],{sealed:1})+J.tube(905,110,1.05,['lime','grape','lemon','peach']);
+ s+=J.bean('lemon',700,120,40,-20)+J.bean('peach',690,400,36,25);
+ html='<div class="t" style="left:318px;top:178px;font-size:68px;color:#E0306E;letter-spacing:-1px">Jelly Beans</div><div class="t" style="left:322px;top:265px;font-size:32px;color:#7E625C;font-weight:700">Sort. Seal. Sweet!</div>';}
+if(v==='2'){document.body.style.background='radial-gradient(circle at 50% 40%,#F45C8E,#E0306E 70%)';
+ s=J.dots(1024,500,30,2,.0);
+ [[300,70],[430,50],[600,60],[730,80],[330,430],[470,450],[620,440],[760,420],[250,400],[780,180]].forEach((p,i)=>{s+=J.bean(J.TYPES[i%6],p[0],p[1],54+(i%3)*8,i*37-40)});
+ s+=J.tube(110,135,.95,['berry','lime','lemon','grape'])+J.tube(855,135,.95,['lime','lime','lime','lime'],{sealed:1});
+ html='<div class="t" style="left:0;right:0;text-align:center;top:160px;font-size:104px;color:#fff;text-shadow:0 7px 0 #B21F54;letter-spacing:-1px">Jelly Beans</div><div class="t" style="left:0;right:0;text-align:center;top:300px;font-size:36px;color:#FFE3EC;font-weight:700">A sweet sorting puzzle</div>';}
+document.getElementById('root').innerHTML='<svg width="1024" height="500">'+s+'</svg>'+html;
+</script></body></html>
