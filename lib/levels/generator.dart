@@ -68,6 +68,8 @@ Level? generateLevel(int id, int seed, {int capacity = 4}) {
   ];
   final draft =
       Level(id: id, capacity: capacity, par: 0, seed: seed, tubes: tubes);
+  // Par is the true optimum under the game's own rules (pouches block
+  // groups until uncovered), so ★★★ is always reachable.
   final par = Solver().solve(draft.toBoard());
   if (par == null || par > 60) return null;
   return Level(

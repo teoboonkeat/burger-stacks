@@ -433,7 +433,7 @@ class _SweetScreenState extends State<SweetScreen> {
                         Text(
                           widget.moves > widget.par
                               ? 'Done in ${widget.moves} moves · ★★★ needs ${widget.par} or fewer'
-                              : 'Done in ${widget.moves} moves · best possible!',
+                              : 'Done in ${widget.moves} moves · ★★★ — par!',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: C.text2,

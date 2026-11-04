@@ -95,6 +95,30 @@ void main() {
     expect(Solver().solve(b), 3);
   });
 
+  test('solver: a hidden bean blocks the group under real rules', () {
+    // Revealed, the two berries would lift together (2 moves); with the
+    // lower one in a pouch the berries must come off one at a time.
+    final b = Board([
+      Tube([p(ch), p(ch), p(pa, h: true), p(pa)]),
+      Tube([p(pa), p(pa), p(ch), p(ch)]),
+      Tube([]),
+    ]);
+    expect(Solver().solve(b), 4);
+    final open = b.copy()..revealAll();
+    expect(Solver().solve(open), 3);
+  });
+
+  test('solver: winnable is false when no win is reachable', () {
+    final b = Board([
+      Tube([p(pa), p(ch), p(pa), p(ch)]),
+      Tube([p(ch), p(pa), p(ch), p(pa)]),
+      Tube([p(to), p(to)]),
+      Tube([p(to)]),
+    ]);
+    expect(b.hasValidMove, isTrue);
+    expect(Solver().winnable(b), isFalse);
+  });
+
   test('ad policy caps', () {
     bool f({int level = 20, int since = 3, int now = 200000, bool r = false, bool ra = false}) =>
         AdPolicy.shouldShowInterstitial(

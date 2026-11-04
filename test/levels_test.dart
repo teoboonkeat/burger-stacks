@@ -25,12 +25,13 @@ void main() {
     }
   });
 
-  test('every level solvable within 60 moves', () {
+  test('every level is solvable and par equals the real-rules optimum', () {
+    // Solver plays by Board.drop: pouches block groups until uncovered.
     for (final l in levels) {
       expect(l.toBoard().isWon, isFalse, reason: 'level ${l.id}');
       final n = Solver().solve(l.toBoard());
       expect(n, isNotNull, reason: 'level ${l.id}');
-      expect(n! <= 60, isTrue, reason: 'level ${l.id}');
+      expect(l.par, n, reason: 'level ${l.id} par');
     }
   });
 }
