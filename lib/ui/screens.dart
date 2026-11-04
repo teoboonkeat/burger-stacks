@@ -127,6 +127,30 @@ class LevelListScreen extends StatelessWidget {
   }
 }
 
+Future<void> _confirmReset(BuildContext context, AppState st) async {
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (c) => AlertDialog(
+      title: const Text('Reset progress?'),
+      content: const Text(
+          'This clears your levels, stars and beans and starts again from '
+          'Scoop 1. It cannot be undone. Purchases such as Remove ads are kept.'),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Cancel')),
+        FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('Reset')),
+      ],
+    ),
+  );
+  if (ok != true) return;
+  // removeAds is a purchase, not progress: it survives a reset.
+  st.update((x) {
+    x.currentLevel = 1;
+    x.stars = {};
+    x.coins = 0;
+    x.unlockAll = false;
+  });
+}
+
 class SettingsScreen extends StatelessWidget {
   final Services s;
   const SettingsScreen(this.s, {super.key});
@@ -143,10 +167,8 @@ class SettingsScreen extends StatelessWidget {
               title: const Text('Sound'),
               value: st.sound,
               onChanged: (v) => st.update((x) => x.sound = v)),
-          SwitchListTile(
-              title: const Text('Music'),
-              value: st.music,
-              onChanged: (v) => st.update((x) => x.music = v)),
+          // No music yet: the Music switch stays hidden (its saved value is
+          // kept in AppState so old saves still load).
           SwitchListTile(
               title: const Text('Haptics'),
               value: st.haptics,
@@ -170,13 +192,8 @@ class SettingsScreen extends StatelessWidget {
               subtitle: Text('Consent form appears here once AdMob is connected')),
           ListTile(
               title: const Text('Reset progress'),
-              onTap: () => st.update((x) {
-                    x.currentLevel = 1;
-                    x.stars = {};
-                    x.coins = 0;
-                    x.removeAds = false;
-                    x.unlockAll = false;
-                  })),
+              subtitle: const Text('Levels, stars and beans. Purchases are kept.'),
+              onTap: () => _confirmReset(context, st)),
           const AboutListTile(
               applicationName: 'Jelly Beans',
               aboutBoxChildren: [Text('Art drawn in code. Sounds synthesised in-house.')],
