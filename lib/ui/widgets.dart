@@ -11,8 +11,18 @@ class BigButton extends StatelessWidget {
   final VoidCallback? onTap;
   final bool primary;
   final bool reward;
+  /// Fixed width; null fills the parent's width.
+  final double? width;
+  /// Reward buttons: sweets price shown next to the AD badge when the
+  /// player can pay with sweets instead.
+  final int? price;
   const BigButton(this.label,
-      {super.key, this.onTap, this.primary = true, this.reward = false});
+      {super.key,
+      this.onTap,
+      this.primary = true,
+      this.reward = false,
+      this.width,
+      this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +35,7 @@ class BigButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
+          width: width,
           constraints: const BoxConstraints(minHeight: 56, minWidth: 220),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           decoration: BoxDecoration(
@@ -35,7 +46,7 @@ class BigButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Row(mainAxisSize: MainAxisSize.min, children: [
-            if (reward) const AdBadge(),
+            if (reward) PayBadge(price: price),
             if (reward) const SizedBox(width: 8),
             Text(label,
                 style: TextStyle(
@@ -57,6 +68,93 @@ class AdBadge extends StatelessWidget {
         child: const Text('AD',
             style: TextStyle(
                 color: Colors.white, fontSize: 11, fontWeight: FontWeight.w900)),
+      );
+}
+
+/// Small white pill with a leading icon, e.g. star total or beans.
+class InfoChip extends StatelessWidget {
+  final Widget leading;
+  final String text;
+  const InfoChip({super.key, required this.leading, required this.text});
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
+        decoration: BoxDecoration(
+          color: C.panel,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: C.border, width: 2),
+        ),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          leading,
+          const SizedBox(width: 4),
+          Text(text,
+              style: const TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w800, color: C.text)),
+        ]),
+      );
+}
+
+/// Round 48 dp candy icon button (white, press shadow).
+class CandyIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onTap;
+  final String tooltip;
+  const CandyIconButton(this.icon,
+      {super.key, required this.tooltip, this.onTap});
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: tooltip,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: S.minTouch,
+            height: S.minTouch,
+            decoration: BoxDecoration(
+              color: C.panel,
+              shape: BoxShape.circle,
+              border: Border.all(color: C.border, width: 2),
+              boxShadow: const [BoxShadow(color: C.border, offset: Offset(0, 3))],
+            ),
+            child: Icon(icon, color: C.text, size: 26),
+          ),
+        ),
+      );
+}
+
+/// AD badge, plus a sweets price tag when the booster can be bought.
+class PayBadge extends StatelessWidget {
+  final int? price;
+  const PayBadge({super.key, this.price});
+  @override
+  Widget build(BuildContext context) => Row(mainAxisSize: MainAxisSize.min, children: [
+        const AdBadge(),
+        if (price != null) ...[
+          const SizedBox(width: 3),
+          PriceTag(price!),
+        ],
+      ]);
+}
+
+/// Small sweets price: bean mark and number.
+class PriceTag extends StatelessWidget {
+  final int price;
+  const PriceTag(this.price, {super.key});
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.fromLTRB(3, 1, 5, 1),
+        decoration: BoxDecoration(
+          color: C.panel,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: C.border, width: 1.5),
+        ),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          const SweetIcon(width: 12),
+          const SizedBox(width: 2),
+          Text('$price',
+              style: const TextStyle(
+                  color: C.text, fontSize: 11, fontWeight: FontWeight.w900)),
+        ]),
       );
 }
 
@@ -204,4 +302,21 @@ class JarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(JarPainter o) => o.tubes != tubes;
+}
+
+/// One small jelly bean, the mark of the "sweets" currency.
+class SweetIcon extends StatelessWidget {
+  final double width;
+  const SweetIcon({super.key, this.width = 18});
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+      size: Size(width, width * beanSize.height / beanSize.width),
+      painter: _BeanIconPainter());
+}
+
+class _BeanIconPainter extends CustomPainter {
+  @override
+  void paint(Canvas c, Size s) => paintBean(c, Offset.zero & s, Ingredient.berry);
+  @override
+  bool shouldRepaint(_BeanIconPainter o) => false;
 }
