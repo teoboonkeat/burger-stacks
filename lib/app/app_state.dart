@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Local save: progress, coins, settings, ad counters.
-class AppState extends ChangeNotifier {
+import 'shop.dart';
+import 'tutorial.dart';
+
+/// Local save: progress, coins (shown as "sweets"), settings, ad counters.
+class AppState extends ChangeNotifier implements Wallet {
   late SharedPreferences _p;
   int currentLevel = 1;
   Map<int, int> stars = {};
+  @override
   int coins = 0;
   bool removeAds = false;
   bool sound = true, music = true, haptics = true;
@@ -14,6 +18,8 @@ class AppState extends ChangeNotifier {
   bool dragBeans = true;
   int completedSinceAd = 0;
   int lastInterstitialMs = 0;
+  /// Tutorial lessons already shown (save key `tutorialSeen`).
+  Set<Lesson> tutorialSeen = {};
 
   Future<void> load() async {
     _p = await SharedPreferences.getInstance();
@@ -27,6 +33,7 @@ class AppState extends ChangeNotifier {
     dragBeans = _p.getBool('dragBeans') ?? true;
     completedSinceAd = _p.getInt('completedSinceAd') ?? 0;
     lastInterstitialMs = _p.getInt('lastInterstitialMs') ?? 0;
+    tutorialSeen = Tutorial.load(_p.getStringList('tutorialSeen'), currentLevel);
     stars = {
       for (final s in _p.getStringList('stars') ?? <String>[])
         int.parse(s.split(':')[0]): int.parse(s.split(':')[1])
@@ -44,6 +51,7 @@ class AppState extends ChangeNotifier {
     await _p.setBool('dragBeans', dragBeans);
     await _p.setInt('completedSinceAd', completedSinceAd);
     await _p.setInt('lastInterstitialMs', lastInterstitialMs);
+    await _p.setStringList('tutorialSeen', Tutorial.save(tutorialSeen));
     await _p.setStringList(
         'stars', [for (final e in stars.entries) '${e.key}:${e.value}']);
   }
@@ -55,6 +63,26 @@ class AppState extends ChangeNotifier {
     if (earnedStars > prev) stars[level] = earnedStars;
     coins += tips;
     if (level >= currentLevel && level < total) currentLevel = level + 1;
+    save();
+    notifyListeners();
+  }
+
+  int get starTotal => stars.values.fold(0, (a, b) => a + b);
+
+  bool seen(Lesson l) => tutorialSeen.contains(l);
+
+  void markSeen(Iterable<Lesson> ls) {
+    if (tutorialSeen.containsAll(ls)) return;
+    tutorialSeen.addAll(ls);
+    save();
+  }
+
+  /// Settings > Replay tutorial: every lesson shows again.
+  void replayTutorial() => update((s) => s.tutorialSeen = {});
+
+  @override
+  void spendCoins(int n) {
+    coins = (coins - n).clamp(0, coins);
     save();
     notifyListeners();
   }
