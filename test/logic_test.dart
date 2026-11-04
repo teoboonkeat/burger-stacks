@@ -36,6 +36,16 @@ void main() {
     expect(b.tubes[0].stack.first.hidden, isTrue);
   });
 
+  test('undo after Peek does not close the pouch again', () {
+    final b = Board([Tube([p(ch, h: true), p(to, h: true), p(pa)]), Tube([])]);
+    b.drop(0, 1); // uncovers the lime
+    b.revealAll(); // Peek
+    expect(b.tubes[0].stack.every((x) => !x.hidden), isTrue);
+    b.undo();
+    expect(b.tubes[0].stack.every((x) => !x.hidden), isTrue);
+    expect(b.tubes[0].top!.type, pa);
+  });
+
   test('covered pouch cannot be picked up', () {
     final b = Board([Tube([p(ch), p(pa)])]);
     b.tubes[0].stack.last.hidden = true;

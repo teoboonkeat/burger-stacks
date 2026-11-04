@@ -42,6 +42,9 @@ class Board {
   final int capacity;
   final List<Tube> tubes;
   final List<Move> _undo = [];
+  /// Set once every pouch has been opened by Peek; undo then never closes
+  /// a pouch again.
+  bool peeked = false;
 
   Board(this.tubes, {this.capacity = 4}) {
     for (final p in tubes) {
@@ -50,7 +53,8 @@ class Board {
     }
   }
 
-  Board copy() => Board(tubes.map((p) => p.copy()).toList(), capacity: capacity);
+  Board copy() => Board(tubes.map((p) => p.copy()).toList(), capacity: capacity)
+    ..peeked = peeked;
 
   int get completeCount => tubes.where((p) => p.sealed).length;
   int get undoDepth => _undo.length;
@@ -130,7 +134,7 @@ class Board {
     final m = _undo.removeLast();
     final src = tubes[m.from], dst = tubes[m.to];
     if (m.sealedTarget) dst.sealed = false;
-    if (m.revealed) src.top!.hidden = true;
+    if (m.revealed && !peeked) src.top!.hidden = true;
     final moved = dst.stack.sublist(dst.stack.length - m.count);
     dst.stack.removeRange(dst.stack.length - m.count, dst.stack.length);
     src.stack.addAll(moved);
@@ -150,6 +154,7 @@ class Board {
   bool get isStuck => !isWon && !hasValidMove;
 
   void revealAll() {
+    peeked = true;
     for (final p in tubes) {
       for (final x in p.stack) {
         x.hidden = false;
