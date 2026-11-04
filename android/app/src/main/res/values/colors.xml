@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cream app background (C.bg in lib/app/theme.dart). The splash and
+         the window behind Flutter use it in light and dark mode alike, so
+         there is no flash before the first frame. -->
+    <color name="splash_background">#FFF7EC</color>
+</resources>
