@@ -6,6 +6,7 @@
 // {
 //   "url": "http://localhost:8790/",
 //   "viewport": [390, 844],          // phone portrait by default
+//   "scale": 3,                      // optional device pixel ratio (store shots)
 //   "clearStorage": true,            // start from a fresh save
 //   "storage": {"flutter.currentLevel": "30"},  // optional seed
 //   "steps": [
@@ -39,7 +40,9 @@ const { chromium } = require('playwright');
   const log = { console: [], pageErrors: [], frames: [], semantics: [], shots: [] };
   const browser = await chromium.launch();
   const [w, h] = spec.viewport || [390, 844];
-  const page = await browser.newPage({ viewport: { width: w, height: h }, hasTouch: false });
+  // "scale" sets the device pixel ratio, e.g. 3 for 1080x1920 shots at 360x640.
+  const page = await browser.newPage({ viewport: { width: w, height: h }, hasTouch: false,
+    deviceScaleFactor: spec.scale || 1 });
   page.on('console', (m) => {
     // Skip headless-GPU noise caused by taking screenshots.
     if (/GL Driver Message|GPU stall due to ReadPixels/.test(m.text())) return;
