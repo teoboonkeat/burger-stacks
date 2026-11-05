@@ -4,7 +4,7 @@ library;
 /// One concept taught once. The enum name is what goes in the save
 /// (`tutorialSeen`, a string list).
 enum Lesson {
-  /// Scoop 1: tap a tube to lift its top bean.
+  /// Scoop 1: tap a tube; its top bean lifts.
   tap(1),
   /// Scoop 1: tap an empty tube to drop it.
   drop(1),

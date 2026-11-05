@@ -277,21 +277,25 @@ class _GameScreenState extends State<GameScreen> {
           if (_src == null || _dst == null) return null;
         }
         final group = l == Lesson.group;
+        // Say "tap the tube" and point at the tube body, not a bean, so
+        // players don't think they must hit the bean itself.
         if (step == 0) {
           return CoachStep(
-            text: group ? 'Matching beans move together' : 'Tap a tube to lift its top bean',
-            sub: group ? 'Tap to lift the group · 1 of 2' : '1 of 2',
+            text: 'Tap this tube',
+            sub: group
+                ? 'Matching beans on top lift together · 1 of 2'
+                : 'Its top bean pops up · 1 of 2',
             target: () => _tubeRect(_src),
             passThrough: _guidedArea,
-            hand: () => _slotCenter(_src, game.board.tubes[_src!].stack.length - 1),
+            hand: () => _tubeRect(_src)?.center,
           );
         }
         return CoachStep(
-          text: group ? 'Drop them in an empty tube' : 'Now tap an empty tube to drop it',
-          sub: '2 of 2',
+          text: 'Now tap the empty tube',
+          sub: group ? 'The group drops in · 2 of 2' : 'The bean drops in · 2 of 2',
           target: () => _tubeRect(_dst),
           passThrough: _guidedArea,
-          hand: () => _slotCenter(_dst, 1),
+          hand: () => _tubeRect(_dst)?.center,
         );
       case Lesson.drag:
         final a = _source(l), b = _emptyTube();
