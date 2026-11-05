@@ -631,7 +631,7 @@ class _GameScreenState extends State<GameScreen> {
     final wonTubes = [for (final t in game.board.tubes) t.copy()];
     final lv = _lv;
     final stars = starsFor(wonMoves, lv.par);
-    final beans = 10 + stars * 5;
+    final beans = sweetsFor(stars);
     widget.s.state.completeLevel(level, stars, beans, widget.s.levels.length);
     game.confetti();
     HapticFeedback.heavyImpact();
@@ -997,6 +997,9 @@ Future<Pay?> choosePayment(BuildContext context,
 
 /// Result line under the jar. No "par": at or under the goal it simply
 /// shows the three stars; over it, how many moves ★★★ needs.
+/// Sweets for a win: 10 plus 5 per star (15 / 20 / 25).
+int sweetsFor(int stars) => 10 + stars * 5;
+
 String resultLine(int moves, int par) => moves > par
     ? 'Done in $moves moves · ★★★ needs $par or fewer'
     : 'Done in $moves moves · ★★★';
@@ -1095,6 +1098,16 @@ class _SweetScreenState extends State<SweetScreen> {
                                     ),
                                   ],
                                 ),
+                                if (over) ...[
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '★★★ pays ${sweetsFor(3)} sweets',
+                                    style: const TextStyle(
+                                      color: C.accent,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
                                 SizedBox(height: compact ? 10 : 16),
                                 BigButton(
                                   'Next scoop',
