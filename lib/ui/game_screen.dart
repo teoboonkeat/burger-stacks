@@ -1101,7 +1101,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                 if (over) ...[
                                   const SizedBox(height: 2),
                                   Text(
-                                    '★★★ pays ${sweetsFor(3)} sweets',
+                                    'A ★★★ win pays ${sweetsFor(3)} instead of ${sweetsFor(widget.stars)}',
                                     style: const TextStyle(
                                       color: C.accent,
                                       fontWeight: FontWeight.w800,
