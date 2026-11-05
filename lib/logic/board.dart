@@ -167,8 +167,12 @@ class Board {
   void clearUndo() => _undo.clear();
 }
 
+/// ★★★ at par; ★★ within 20% over par (at least one spare move); ★ beyond.
+/// Simulated players who strayed now and then landed 5-33% over par, so the
+/// old 50% band made ★ unreachable.
 int starsFor(int moves, int par) {
   if (moves <= par) return 3;
-  if (moves <= par * 1.5) return 2;
+  final two = (par * 1.2).floor();
+  if (moves <= (two > par ? two : par + 1)) return 2;
   return 1;
 }

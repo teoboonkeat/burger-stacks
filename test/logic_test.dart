@@ -75,8 +75,12 @@ void main() {
 
   test('stars', () {
     expect(starsFor(10, 10), 3);
-    expect(starsFor(15, 10), 2);
-    expect(starsFor(16, 10), 1);
+    expect(starsFor(12, 10), 2);
+    expect(starsFor(13, 10), 1);
+    expect(starsFor(20, 17), 2);
+    expect(starsFor(21, 17), 1);
+    expect(starsFor(4, 3), 2);
+    expect(starsFor(5, 3), 1);
   });
 
   test('stuck when no valid move', () {
