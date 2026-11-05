@@ -1020,10 +1020,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1232,10 +1229,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1395,10 +1389,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1749,10 +1740,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1806,10 +1794,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1933,10 +1918,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -1996,6 +1978,9 @@
      "cola",
      "grape"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -2335,10 +2320,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -2454,10 +2436,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -2467,7 +2446,7 @@
  {
   "id": 49,
   "capacity": 4,
-  "par": 19,
+  "par": 18,
   "seed": 49001,
   "tubes": [
    {
@@ -2519,10 +2498,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -2582,6 +2558,9 @@
      "cola",
      "cola"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -2749,10 +2728,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -2995,10 +2971,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -3116,7 +3089,7 @@
  {
   "id": 60,
   "capacity": 4,
-  "par": 21,
+  "par": 20,
   "seed": 60003,
   "tubes": [
    {
@@ -3166,6 +3139,9 @@
      "grape",
      "lime"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -3641,10 +3617,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -3698,10 +3671,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -3761,6 +3731,9 @@
      "peach",
      "lemon"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -4044,10 +4017,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -4339,6 +4309,9 @@
      "grape",
      "peach"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -4805,10 +4778,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -4862,10 +4832,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -4925,6 +4892,9 @@
      "grape",
      "lime"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -5218,10 +5188,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -5458,7 +5425,7 @@
  {
   "id": 100,
   "capacity": 4,
-  "par": 19,
+  "par": 18,
   "seed": 100004,
   "tubes": [
    {
@@ -5508,6 +5475,9 @@
      "berry",
      "lime"
     ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -5894,10 +5864,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6024,10 +5991,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6414,10 +6378,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6869,10 +6830,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6999,10 +6957,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7129,10 +7084,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7584,10 +7536,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7649,10 +7598,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7714,10 +7660,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7792,7 +7735,7 @@
  {
   "id": 136,
   "capacity": 4,
-  "par": 18,
+  "par": 17,
   "seed": 163000,
   "tubes": [
    {
@@ -7844,10 +7787,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -8169,10 +8109,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -8299,10 +8236,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -9144,10 +9078,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -9534,10 +9465,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -9794,10 +9722,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -9924,10 +9849,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -10314,10 +10236,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -10509,10 +10428,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -10704,10 +10620,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -10977,7 +10890,7 @@
  {
   "id": 185,
   "capacity": 4,
-  "par": 20,
+  "par": 19,
   "seed": 185003,
   "tubes": [
    {
@@ -11029,10 +10942,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11159,10 +11069,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11562,7 +11469,7 @@
  {
   "id": 194,
   "capacity": 4,
-  "par": 21,
+  "par": 19,
   "seed": 159000,
   "tubes": [
    {
@@ -11614,10 +11521,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11627,7 +11531,7 @@
  {
   "id": 195,
   "capacity": 4,
-  "par": 21,
+  "par": 20,
   "seed": 188002,
   "tubes": [
    {
@@ -11679,10 +11583,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11692,7 +11593,7 @@
  {
   "id": 196,
   "capacity": 4,
-  "par": 21,
+  "par": 19,
   "seed": 145000,
   "tubes": [
    {
@@ -11744,10 +11645,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11822,7 +11720,7 @@
  {
   "id": 198,
   "capacity": 4,
-  "par": 22,
+  "par": 21,
   "seed": 141001,
   "tubes": [
    {
@@ -11874,10 +11772,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -12004,10 +11899,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
