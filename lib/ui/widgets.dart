@@ -217,18 +217,65 @@ class _DotsPainter extends CustomPainter {
 
 /// Glass jar. With [tubes] it shows each finished tube as a mini tube;
 /// without, it is filled with mixed beans (logo).
+/// The candy jar. With [tubes] (the flavours of the finished tubes) it fills
+/// with those beans, four per tube, tumbling in one after another; without
+/// it, it shows a full jar of mixed beans (Home).
 class Jar extends StatelessWidget {
   final List<Ingredient>? tubes;
   final double width;
-  const Jar({super.key, this.tubes, this.width = 180});
+  /// Pour the beans in when first shown.
+  final bool pour;
+  const Jar({super.key, this.tubes, this.width = 180, this.pour = true});
   @override
-  Widget build(BuildContext context) => CustomPaint(
-      size: Size(width, width * 1.15), painter: JarPainter(tubes));
+  Widget build(BuildContext context) {
+    final size = Size(width, width * 1.15);
+    if (tubes == null || !pour) {
+      return CustomPaint(size: size, painter: JarPainter(tubes, 1));
+    }
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: Duration(milliseconds: 500 + 60 * tubes!.length * 4),
+      builder: (_, t, _) => CustomPaint(size: size, painter: JarPainter(tubes, t)),
+    );
+  }
 }
 
 class JarPainter extends CustomPainter {
   final List<Ingredient>? tubes;
-  JarPainter(this.tubes);
+  /// Pour progress 0..1.
+  final double t;
+  JarPainter(this.tubes, this.t);
+
+  /// Loose beans packed from the bottom in staggered rows.
+  /// Returns the bean width used and each bean's centre, tilt and flavour.
+  @visibleForTesting
+  static (double, List<(Offset, double, Ingredient)>) pack(
+      Rect inner, List<Ingredient> beans, double minTop) {
+    final n = beans.length;
+    var bw = inner.width * .2;
+    for (var cols = 3; cols <= 8; cols++) {
+      bw = inner.width / (cols * .92);
+      final bh = bw * beanSize.height / beanSize.width;
+      final rows = (n / cols).ceil();
+      if (rows * bh * .8 + bh <= inner.bottom - minTop) break;
+    }
+    final bh = bw * beanSize.height / beanSize.width;
+    final rnd = Random(7);
+    final out = <(Offset, double, Ingredient)>[];
+    var i = 0, row = 0;
+    while (i < n) {
+      final y = inner.bottom - bh / 2 - row * bh * .8;
+      final shift = row.isEven ? 0.0 : bw * .45;
+      for (var x = inner.left + bw * .5 + shift;
+          x <= inner.right - bw * .35 && i < n;
+          x += bw * .92) {
+        out.add((Offset(x + (rnd.nextDouble() - .5) * bw * .12, y),
+            (rnd.nextDouble() - .5) * 1.1, beans[i++]));
+      }
+      row++;
+    }
+    return (bw, out);
+  }
 
   @override
   void paint(Canvas c, Size s) {
@@ -257,31 +304,30 @@ class JarPainter extends CustomPainter {
         i++;
       }
     } else {
-      final n = tubes!.length;
-      final cols = n <= 4 ? max(n, 1) : (n / 2).ceil();
-      final rows = n <= 4 ? 1 : 2;
-      final tw = min(inner.width / cols * .78, w * .2);
-      final th = min(inner.height / rows * .9, tw * 3.2);
-      for (var i = 0; i < n; i++) {
-        final row = i ~/ cols, col = i % cols;
-        final inRow = row == rows - 1 ? n - cols * (rows - 1) : cols;
-        final gap = (inner.width - inRow * tw) / (inRow + 1);
-        final x = inner.left + gap + col * (tw + gap);
-        final y = inner.bottom - (rows - row) * (th + 6);
-        final tr = RRect.fromRectAndRadius(Rect.fromLTWH(x, y, tw, th), Radius.circular(tw * .3));
-        c.drawRRect(tr, Paint()..color = const Color(0xE6FFFFFF));
-        c.drawRRect(tr, Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.5
-          ..color = const Color(0xFFD7E3EE));
-        final bh = (th - 10) / 4 - 2;
-        final bw = min(tw - 6, bh * beanSize.width / beanSize.height);
-        for (var b = 0; b < 4; b++) {
-          paintBean(c, Rect.fromLTWH(x + (tw - bw) / 2, y + th - 5 - (bh + 2) * (b + 1), bw, bh), tubes![i]);
+      // Four beans per finished tube, mixed so the flavours tumble together.
+      final rnd = Random(3);
+      final beans = [for (final f in tubes!) for (var k = 0; k < 4; k++) f]..shuffle(rnd);
+      final (bw, placed) = pack(inner, beans, inner.top + h * .04);
+      final bh = bw * beanSize.height / beanSize.width;
+      final n = placed.length;
+      if (n > 0) {
+        // Each bean falls for `fall` of the timeline, starts staggered.
+        const fall = .35;
+        for (var i = 0; i < n; i++) {
+          final start = n == 1 ? 0.0 : (1 - fall) * i / (n - 1);
+          final u = ((t - start) / fall).clamp(0.0, 1.0);
+          if (u <= 0) continue;
+          final (p, rot, type) = placed[i];
+          // Drop from above the glass with a small bounce on landing.
+          final drop = Curves.bounceOut.transform(u);
+          final y0 = inner.top - h * .25;
+          final y = y0 + (p.dy - y0) * drop;
+          c.save();
+          c.translate(p.dx, y);
+          c.rotate(rot * u);
+          paintBean(c, Rect.fromCenter(center: Offset.zero, width: bw, height: bh), type);
+          c.restore();
         }
-        c.drawRRect(
-            RRect.fromRectAndRadius(Rect.fromLTWH(x - 1, y - 4, tw + 2, 7), const Radius.circular(3)),
-            Paint()..color = const Color(0xFFC9D1D9));
       }
     }
     c.restore();
@@ -301,7 +347,7 @@ class JarPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(JarPainter o) => o.tubes != tubes;
+  bool shouldRepaint(JarPainter o) => o.tubes != tubes || o.t != t;
 }
 
 /// One small jelly bean, the mark of the "sweets" currency.
