@@ -921,7 +921,7 @@ class _Booster extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(icon, color: C.text, size: 30),
+                  Icon(icon, color: C.text, size: 26),
                   Text(
                     label,
                     style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13),
@@ -930,18 +930,18 @@ class _Booster extends StatelessWidget {
               ),
             ),
             // Badges sit on the top edge, clear of the icon.
-            if (ad) Positioned(right: -6, top: -10, child: PayBadge(price: price)),
+            if (ad) Positioned(right: -8, top: -14, child: PayBadge(price: price)),
             if (isNew)
               Positioned(
-                left: -6,
-                top: -10,
+                left: -8,
+                top: -14,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                   decoration: BoxDecoration(
                       color: C.newBadge, borderRadius: BorderRadius.circular(5)),
                   child: const Text('NEW',
                       style: TextStyle(
-                          color: Colors.white, fontSize: 11, fontWeight: FontWeight.w900)),
+                          color: Colors.white, fontSize: 10, fontWeight: FontWeight.w900)),
                 ),
               ),
           ],

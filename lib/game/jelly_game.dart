@@ -116,7 +116,7 @@ class JellyGame extends FlameGame {
     if (n == 0) return;
     final rows = (n / maxPerRow).ceil();
     final perRow = (n / rows).ceil();
-    const gapX = 12.0, gapY = 34.0;
+    const gapX = 12.0, gapY = 44.0;
     // Leave headroom above the top row for beans arcing over the tubes.
     final headroom = 40.0;
     // One scale for every level at a given screen size: size the tubes as

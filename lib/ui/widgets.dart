@@ -127,13 +127,25 @@ class PayBadge extends StatelessWidget {
   final int? price;
   const PayBadge({super.key, this.price});
   @override
-  Widget build(BuildContext context) => Row(mainAxisSize: MainAxisSize.min, children: [
-        const AdBadge(),
-        if (price != null) ...[
-          const SizedBox(width: 3),
-          PriceTag(price!),
-        ],
-      ]);
+  Widget build(BuildContext context) => price == null
+      ? const AdBadge()
+      : Container(
+          padding: const EdgeInsets.only(right: 4),
+          decoration: BoxDecoration(
+            color: C.panel,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: C.border, width: 1.5),
+          ),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            const AdBadge(),
+            const SizedBox(width: 3),
+            const SweetIcon(width: 11),
+            const SizedBox(width: 2),
+            Text('$price',
+                style: const TextStyle(
+                    color: C.text, fontSize: 11, fontWeight: FontWeight.w900)),
+          ]),
+        );
 }
 
 /// Small sweets price: bean mark and number.
