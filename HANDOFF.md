@@ -145,6 +145,62 @@ Questions still to answer:
 4. Existing players: seal their finished jars silently, or give a catch-up gift?
 5. Jar size: 10 levels or 20?
 
+### Round 2: P6–P13
+
+These were added to the same page. A copy of the page is in
+`docs/game-design/proposal.html` (it opens offline), with the data behind it:
+`sim.csv`, `lock2.csv` and `cap5.csv`.
+
+What the level data shows:
+
+- After level 30, every board uses the same parts.
+- At level 101 the simulated win rate drops from 78% to 35%, and by levels
+  181–200 it is 18–26%.
+
+The options:
+
+- **P6 A new twist every 20 levels.**
+  - Level 41: a lock that needs 2 sealed tubes. On levels 101–200, 52 of 100
+    boards stay solvable with it.
+  - Level 61: tall 5-bean tubes.
+  - Level 101: a named "Big Kitchen" stage, with a lesson.
+  - P6a uses only today's rules. P6b adds a label tube and sticky beans.
+- **P7 Candy Road:** a map-style level list. It replaces P1b.
+- **P8 Player rank:** XP and 25 ranks, +25 sweets per rank. Use it instead of P2.
+- **P9 Bean Album:** 48 stickers in packs of 3, earned or bought for 120 sweets.
+  It is a sweets sink.
+- **P10 Master spoons:** a gold spoon for 3 stars on a replay with no boosters.
+  This needs an `undoUsed` flag.
+- **P11 Weekly Bake-off:** 5 fixed boards a week. It needs a separate level
+  source and overlaps P4.
+- **P12 Customer orders:** order slips that are filled by sealing flavours.
+- **P13 Comeback hooks.** P13a is a welcome-back gift. P13b is opt-in reminders,
+  which add a new package and the Android 13 notification permission.
+
+The recommended bundle is P1a + P5 + P6a + P8 + P10, then P7. Build order:
+
+1. P5
+2. P1a
+3. P6a
+4. P8
+5. P10
+6. P7
+
+After that, add a sweets sink (P9 or P3). Then add P4 or P11, together with
+P13a.
+
+Round 2 questions:
+
+1. Which of P6–P13 should be built, and is the bundle right?
+2. Is it OK to re-tune levels 41–200 that players have already starred? Their
+   stars stay.
+3. Should P8 replace P2? Should existing players get a catch-up gift for ranks
+   they already have?
+4. Sticker packs: random, or fixed rewards?
+5. Should the free undo cost the spoon? The designer recommends yes.
+6. P11 or P4 as the calendar habit?
+7. Are push notifications (P13b) in scope?
+
 Older open items:
 
 - Undo for sweets costs 1 while the ad option gives 3. Is that balance right?
@@ -156,5 +212,5 @@ with the chosen options.
 ## Previews
 
 - Web build of the current game: https://claude.ai/artifact/D1EV5qf1k1CSus6m7xCDDN
-- Game-design proposal: https://claude.ai/artifact/HK3jTbyrASDKteY8D43Ndo
+- Game-design proposal (P1–P13): https://claude.ai/artifact/HK3jTbyrASDKteY8D43Ndo, with a copy in `docs/game-design/`
 - Store assets (screenshots, feature graphic, listing): `store/`
