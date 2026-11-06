@@ -7,6 +7,7 @@ import '../app/chapters.dart';
 import '../app/theme.dart';
 import '../levels/level.dart';
 import 'game_screen.dart';
+import 'road_screen.dart';
 import 'widgets.dart';
 
 class Services {
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                     primary: false,
                     width: bw,
                     onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => LevelListScreen(s)))),
+                        MaterialPageRoute(builder: (_) => RoadScreen(s)))),
                 const SizedBox(height: 12),
                 BigButton('Settings',
                     primary: false,
@@ -160,81 +161,9 @@ Future<void> buyRemoveAds(BuildContext context, AppState st) async {
   if (ok == true) st.update((s) => s.removeAds = true);
 }
 
-/// Level grid geometry, shared by the grid and its initial scroll.
-class LevelGrid {
-  static const cols = 5, pad = 16.0, gap = 10.0;
-
-  /// Scroll offset that puts [level]'s row in the middle of a [viewH] high
-  /// grid that is [width] wide, clamped to the scrollable range.
-  static double offsetFor(int level, int count, double width, double viewH) {
-    final tile = (width - 2 * pad - (cols - 1) * gap) / cols;
-    final rowH = tile + gap;
-    final rows = (count / cols).ceil();
-    final content = 2 * pad + rows * rowH - gap;
-    final row = (level - 1) ~/ cols;
-    final want = pad + row * rowH - (viewH - tile) / 2;
-    return want.clamp(0.0, max(0.0, content - viewH));
-  }
-}
-
-class LevelListScreen extends StatelessWidget {
-  final Services s;
-  const LevelListScreen(this.s, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final st = s.state;
-    return Scaffold(
-      appBar: AppBar(title: const Text('Levels'), actions: [
-        ListenableBuilder(
-          listenable: st,
-          builder: (context, _) => InfoChip(
-              leading: const Icon(Icons.star_rounded, color: C.star, size: 20),
-              text: '${st.starTotal} / ${s.levels.length * 3}'),
-        ),
-        const SizedBox(width: 16),
-      ]),
-      body: ListenableBuilder(
-        listenable: st,
-        builder: (context, _) => Column(children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, box) => GridView.builder(
-                controller: ScrollController(
-                    initialScrollOffset: LevelGrid.offsetFor(st.currentLevel,
-                        s.levels.length, box.maxWidth, box.maxHeight)),
-                padding: const EdgeInsets.all(LevelGrid.pad),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: LevelGrid.cols,
-                    mainAxisSpacing: LevelGrid.gap,
-                    crossAxisSpacing: LevelGrid.gap),
-                itemCount: s.levels.length,
-                itemBuilder: (context, i) {
-                  final id = i + 1;
-                  return _LevelTile(
-                    id: id,
-                    open: st.isUnlocked(id),
-                    next: id == st.currentLevel && (st.stars[id] ?? 0) == 0,
-                    lid: Jars.isLid(id),
-                    spoon: (st.stars[id] ?? 0) == 0
-                        ? null
-                        : st.spoons.contains(id),
-                    stars: st.stars[id] ?? 0,
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => GameScreen(s, id))),
-                  );
-                },
-              ),
-            ),
-          ),
-          BannerSlot(hidden: st.removeAds),
-        ]),
-      ),
-    );
-  }
-}
-
-class _LevelTile extends StatelessWidget {
+/// One scoop as a tile: number, stars, lock or play, the Lid label and
+/// the Master spoon. Used as the stops of the Candy Road.
+class LevelTile extends StatelessWidget {
   final int id, stars;
   final bool open, next;
   /// Lid scoop: the jar's last scoop, gold-edged and labelled.
@@ -243,8 +172,9 @@ class _LevelTile extends StatelessWidget {
   /// it is won gold.
   final bool? spoon;
   final VoidCallback onTap;
-  const _LevelTile(
-      {required this.id,
+  const LevelTile(
+      {super.key,
+      required this.id,
       required this.open,
       required this.next,
       required this.stars,
@@ -329,6 +259,7 @@ Future<void> _confirmReset(BuildContext context, AppState st) async {
     x.boosterStock = {};
     x.rankPaid = 1;
     x.spoons = {};
+    x.roadSeen = 1;
     x.unlockAll = false;
   });
 }

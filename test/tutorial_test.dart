@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jelly_beans/app/app_state.dart';
+import 'package:jelly_beans/app/road.dart';
 import 'package:jelly_beans/app/tutorial.dart';
 import 'package:jelly_beans/game/jelly_game.dart';
 import 'package:jelly_beans/ui/game_screen.dart';
-import 'package:jelly_beans/ui/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -197,16 +197,29 @@ void main() {
     expect(right.dx, 360 - 8 - 200);
   });
 
-  test('level grid opens with the next level in view', () {
-    expect(LevelGrid.offsetFor(1, 200, 360, 500), 0);
-    final o = LevelGrid.offsetFor(100, 200, 360, 500);
-    const tile = (360 - 32 - 40) / 5, rowH = tile + 10;
-    final rowTop = 16 + 19 * rowH - o;
-    expect(rowTop, greaterThan(0));
-    expect(rowTop + tile, lessThan(500));
-    // Last row: clamped to the end of the grid.
-    final end = LevelGrid.offsetFor(200, 200, 360, 500);
-    expect(end, closeTo(32 + 40 * rowH - 10 - 500, .01));
+  test('Candy Road opens with the next scoop in view', () {
+    const view = 500.0;
+    expect(RoadLayout.offsetFor(1, 200, view), 0);
+    for (final l in [57, 60, 100, 133]) {
+      // Bottom-up: the stop's centre, measured from the bottom of the road.
+      var centre = RoadLayout.pad + RoadLayout.heightOf(l) / 2;
+      for (var k = 1; k < l; k++) {
+        centre += RoadLayout.heightOf(k);
+      }
+      final onScreen = centre - RoadLayout.offsetFor(l, 200, view);
+      expect(onScreen, closeTo(view / 2, .01), reason: 'scoop $l');
+    }
+    // The top of the road: clamped to its end.
+    expect(RoadLayout.offsetFor(200, 200, view),
+        RoadLayout.extent(200) - view);
+    expect(RoadLayout.extent(200), 2 * RoadLayout.pad + 180 * 84 + 20 * 124);
+  });
+
+  test('Candy Road: signposts 10 stops before each twist, stops on screen', () {
+    expect(RoadLayout.signs.keys, [31, 51, 91, 131]);
+    for (var l = 1; l <= 200; l++) {
+      expect(RoadLayout.xOf(l), inInclusiveRange(.2, .8));
+    }
   });
 
   test('lock label', () {
