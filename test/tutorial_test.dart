@@ -90,6 +90,35 @@ void main() {
           [Lesson.lock]);
     });
 
+    test('P6a twists: double lock, tall tubes, Big Kitchen', () {
+      final early = {for (final l in Lesson.values) if (!l.isTwist) l};
+      expect(
+          Tutorial.atStart(const LevelFacts(41, hasLock: true, hasLock2: true),
+              early, dragOn: true),
+          [Lesson.lock2]);
+      expect(
+          Tutorial.atStart(const LevelFacts(61, tall: true), early,
+              dragOn: true),
+          [Lesson.tall]);
+      expect(Tutorial.atStart(const LevelFacts(101), early, dragOn: true),
+          [Lesson.bigKitchen]);
+      expect(
+          Tutorial.atStart(
+              const LevelFacts(141, hasLock: true, hasLock2: true, tall: true),
+              early, dragOn: true),
+          [Lesson.bigKitchen, Lesson.lock2, Lesson.tall]);
+      expect(
+          Tutorial.atStart(const LevelFacts(141, hasLock2: true, tall: true),
+              {...Lesson.values}, dragOn: true),
+          isEmpty);
+    });
+
+    test('an old save past 41 still meets the twists', () {
+      final seen = Tutorial.load(null, 150);
+      expect(seen, contains(Lesson.lock));
+      expect(seen.where((l) => l.isTwist), isEmpty);
+    });
+
     test('event lessons', () {
       expect(Tutorial.showUndoAfterMove(2, none), isTrue);
       expect(Tutorial.showUndoAfterMove(3, none), isFalse);

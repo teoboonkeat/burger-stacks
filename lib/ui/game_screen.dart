@@ -30,6 +30,8 @@ class GameScreen extends StatefulWidget {
 extension on Level {
   bool get hasPouch => tubes.any((t) => t.stack.any((k) => k.startsWith('?')));
   bool get hasLock => tubes.any((t) => t.unlockAt != null);
+  bool get hasLock2 => tubes.any((t) => (t.unlockAt ?? 0) >= 2);
+  bool get tall => capacity > 4;
 }
 
 class _GameScreenState extends State<GameScreen> {
@@ -127,7 +129,11 @@ class _GameScreenState extends State<GameScreen> {
     _queue
       ..clear()
       ..addAll(Tutorial.atStart(
-          LevelFacts(level, hasPouch: _lv.hasPouch, hasLock: _lv.hasLock),
+          LevelFacts(level,
+              hasPouch: _lv.hasPouch,
+              hasLock: _lv.hasLock,
+              hasLock2: _lv.hasLock2,
+              tall: _lv.tall),
           _seen,
           dragOn: widget.s.state.dragBeans));
     _lesson = null;
@@ -354,6 +360,37 @@ class _GameScreenState extends State<GameScreen> {
           sub: 'Tap to continue',
           target: () => _tubeRect(t),
           tapToClose: true,
+          above: false,
+          skippable: false,
+        );
+      case Lesson.lock2:
+        final t = _lockedTube();
+        if (t == null) return null;
+        return CoachStep(
+          text: 'New: Double lock',
+          sub: 'It opens once you seal ${game.board.tubes[t].unlockAt} tubes · '
+              'tap to continue',
+          target: () => _tubeRect(t),
+          tapToClose: true,
+          above: false,
+          skippable: false,
+        );
+      case Lesson.tall:
+        return CoachStep(
+          text: 'New: Tall tubes',
+          sub: 'Each tube holds ${game.board.capacity} beans · tap to continue',
+          target: () => _tubeRect(0),
+          tapToClose: true,
+          above: false,
+          skippable: false,
+        );
+      case Lesson.bigKitchen:
+        return CoachStep(
+          text: 'Welcome to the Big Kitchen!',
+          sub: 'Six flavours and more pouches from here · tap to continue',
+          target: _gameArea,
+          tapToClose: true,
+          // Below the board, so the HUD and the board stay in view.
           above: false,
           skippable: false,
         );

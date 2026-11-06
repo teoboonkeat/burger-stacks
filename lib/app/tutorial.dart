@@ -21,12 +21,21 @@ enum Lesson {
   /// First Sticky jam: what Extra tube does. Not tied to a scoop.
   extra(null),
   /// First scoop with a locked tube (21).
-  lock(21);
+  lock(21),
+  /// P6a twists. First board with a double lock (41).
+  lock2(41),
+  /// First board with tall, 5-bean tubes (61).
+  tall(61),
+  /// The Big Kitchen stage starts (101).
+  bigKitchen(101);
 
   /// Scoop where the lesson first appears in level order; null when it
   /// depends on play (a Sticky jam can happen anywhere).
   final int? level;
   const Lesson(this.level);
+
+  /// Added with the P6a twists (save keys from before them have none).
+  bool get isTwist => index > Lesson.lock.index;
 
   static Lesson? byName(String s) {
     for (final l in values) {
@@ -41,20 +50,29 @@ class LevelFacts {
   final int level;
   final bool hasPouch;
   final bool hasLock;
-  const LevelFacts(this.level, {this.hasPouch = false, this.hasLock = false});
+  /// A lock that needs 2 or more sealed tubes.
+  final bool hasLock2;
+  /// Tubes hold more than 4 beans.
+  final bool tall;
+  const LevelFacts(this.level,
+      {this.hasPouch = false,
+      this.hasLock = false,
+      this.hasLock2 = false,
+      this.tall = false});
 }
 
 class Tutorial {
   /// Seen set read from the save. [stored] is the saved list, or null when
   /// the key has never been written (a save from before the tutorial).
-  /// Such players skip every lesson for a scoop they have already passed.
+  /// Such players skip every lesson for a scoop they have already passed,
+  /// except the twists, which they meet on boards that are new to them.
   static Set<Lesson> load(List<String>? stored, int currentLevel) {
     if (stored != null) {
       return {for (final s in stored) ?Lesson.byName(s)};
     }
     return {
       for (final l in Lesson.values)
-        if (l.level != null && l.level! < currentLevel) l
+        if (l.level != null && l.level! < currentLevel && !l.isTwist) l
     };
   }
 
@@ -73,7 +91,13 @@ class Tutorial {
       if (f.level == 2 && dragOn && want(Lesson.drag)) Lesson.drag,
       if (f.level == 4 && want(Lesson.group)) Lesson.group,
       if (f.hasPouch && want(Lesson.pouch)) Lesson.pouch,
-      if (f.hasLock && want(Lesson.lock)) Lesson.lock,
+      if (f.level >= Lesson.bigKitchen.level! && want(Lesson.bigKitchen))
+        Lesson.bigKitchen,
+      if (f.hasLock2 && want(Lesson.lock2))
+        Lesson.lock2
+      else if (f.hasLock && want(Lesson.lock))
+        Lesson.lock,
+      if (f.tall && want(Lesson.tall)) Lesson.tall,
     ];
   }
 
