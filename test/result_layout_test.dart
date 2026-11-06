@@ -12,26 +12,54 @@ import 'package:jelly_beans/ui/game_screen.dart';
 import 'package:jelly_beans/ui/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Real Roboto from the Flutter SDK, so text is measured as on a phone
-/// (the test font draws every letter as a wide square).
-Future<void> _loadRoboto() async {
-  final dir = '${Platform.environment['FLUTTER_ROOT']}/bin/cache/artifacts/material_fonts';
+/// Roboto from the Flutter SDK's material fonts, found from FLUTTER_ROOT or
+/// from the test runner, which lives inside the SDK's bin/cache.
+List<File> _robotoFiles() {
+  final roots = [
+    ?Platform.environment['FLUTTER_ROOT'],
+    for (final p in [Platform.resolvedExecutable, Platform.executable])
+      if (p.replaceAll(r'\', '/').indexOf('/bin/cache/') case final i when i > 0)
+        p.substring(0, i),
+  ];
+  const weights = {'regular', 'medium', 'bold', 'black'};
+  for (final r in roots) {
+    final dir = Directory('$r/bin/cache/artifacts/material_fonts');
+    if (!dir.existsSync()) continue;
+    // Matched without case: the file names differ between platforms.
+    final files = [
+      for (final f in dir.listSync().whereType<File>())
+        if (weights.any((w) => f.path.toLowerCase().endsWith('roboto-$w.ttf'))) f
+    ];
+    if (files.isNotEmpty) return files;
+  }
+  return [];
+}
+
+/// Real Roboto, so text is measured as on a phone (the test font draws
+/// every letter as a wide square and would overflow anything).
+Future<bool> _loadRoboto() async {
+  final files = _robotoFiles();
+  if (files.isEmpty) return false;
   final loader = FontLoader('Roboto');
-  for (final w in ['regular', 'medium', 'bold', 'black']) {
-    final f = File('$dir/roboto-$w.ttf');
-    if (f.existsSync()) {
-      loader.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
-    }
+  for (final f in files) {
+    loader.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
   }
   await loader.load();
+  return true;
 }
 
 void main() {
-  setUpAll(_loadRoboto);
+  var roboto = false;
+  setUpAll(() async => roboto = await _loadRoboto());
 
   // The busiest result card: a Lid scoop that seals a jar and ranks up,
   // on a 360x640 phone. A layout overflow fails the test.
   testWidgets('result card fits a small phone with every reward', (t) async {
+    if (!roboto) {
+      markTestSkipped('Roboto not found in the Flutter SDK; text would not '
+          'measure as on a phone');
+      return;
+    }
     SharedPreferences.setMockInitialValues({
       'stars': [for (var l = 1; l <= 9; l++) '$l:2'],
       'currentLevel': 10,
