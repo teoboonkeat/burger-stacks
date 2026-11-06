@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../ads/ad_service.dart';
+import '../app/rewards.dart';
 import '../app/sfx.dart';
 import '../app/shop.dart';
 import '../app/theme.dart';
@@ -631,8 +632,9 @@ class _GameScreenState extends State<GameScreen> {
     final wonTubes = [for (final t in game.board.tubes) t.copy()];
     final lv = _lv;
     final stars = starsFor(wonMoves, lv.par);
-    final beans = sweetsFor(stars);
-    widget.s.state.completeLevel(level, stars, beans, widget.s.levels.length);
+    final best = widget.s.state.stars[level] ?? 0;
+    final beans =
+        widget.s.state.completeLevel(level, stars, widget.s.levels.length);
     game.confetti();
     HapticFeedback.heavyImpact();
     // Let the confetti play before the card covers it.
@@ -655,6 +657,7 @@ class _GameScreenState extends State<GameScreen> {
             stars: stars,
             moves: wonMoves,
             par: lv.par,
+            best: best,
             beans: beans,
             tubes: wonTubes,
             ads: ads,
@@ -954,6 +957,8 @@ class _Booster extends StatelessWidget {
 class SweetScreen extends StatefulWidget {
   final Services s;
   final int level, stars, moves, par, beans;
+  /// Best stars on this scoop before this win (0 = first win).
+  final int best;
   final List<Tube> tubes;
   final AdService ads;
   const SweetScreen({
@@ -963,6 +968,7 @@ class SweetScreen extends StatefulWidget {
     required this.stars,
     required this.moves,
     required this.par,
+    required this.best,
     required this.beans,
     required this.tubes,
     required this.ads,
@@ -995,10 +1001,26 @@ Future<Pay?> choosePayment(BuildContext context,
       ),
     );
 
+/// Line under the sweets: what ★★★ would pay on a first win, or how a
+/// replay was paid ([winPay]). Null when there is nothing to add.
+String? payNote(int stars, int best) {
+  if (best == 0) {
+    return stars < 3
+        ? 'A ★★★ win pays ${sweetsFor(3)} instead of ${sweetsFor(stars)}'
+        : null;
+  }
+  if (stars > best) {
+    final n = stars - best;
+    return 'Best was ${'★' * best} · +${winPay(stars, best)} '
+        'for the new star${n == 1 ? '' : 's'}';
+  }
+  return best < 3
+      ? 'Replays pay for new stars · ★★★ pays +${winPay(3, best)}'
+      : 'Replays pay for new stars only';
+}
+
 /// Result line under the jar. No "par": at or under the goal it simply
 /// shows the three stars; over it, how many moves ★★★ needs.
-/// Sweets for a win: 10 plus 5 per star (15 / 20 / 25).
-int sweetsFor(int stars) => 10 + stars * 5;
 
 String resultLine(int moves, int par) => moves > par
     ? 'Done in $moves moves · ★★★ needs $par or fewer'
@@ -1022,6 +1044,7 @@ class _SweetScreenState extends State<SweetScreen> {
         if (t.sealed) t.stack.first.type,
     ];
     final over = widget.moves > widget.par;
+    final note = payNote(widget.stars, widget.best);
     return Scaffold(
       backgroundColor: C.resultScrim,
       body: SafeArea(
@@ -1091,17 +1114,22 @@ class _SweetScreenState extends State<SweetScreen> {
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
-                                    _DoubleChip(
-                                      done: doubled,
-                                      onTap: doubled ? null : _double,
-                                    ),
+                                    // ×2 doubles what this win paid, so a
+                                    // replay that paid nothing has no ad.
+                                    if (widget.beans > 0) ...[
+                                      const SizedBox(width: 8),
+                                      _DoubleChip(
+                                        done: doubled,
+                                        onTap: doubled ? null : _double,
+                                      ),
+                                    ],
                                   ],
                                 ),
-                                if (over) ...[
+                                if (note != null) ...[
                                   const SizedBox(height: 2),
                                   Text(
-                                    'A ★★★ win pays ${sweetsFor(3)} instead of ${sweetsFor(widget.stars)}',
+                                    note,
+                                    textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: C.accent,
                                       fontWeight: FontWeight.w800,

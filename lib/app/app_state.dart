@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'rewards.dart';
 import 'shop.dart';
 import 'tutorial.dart';
 
@@ -58,13 +59,16 @@ class AppState extends ChangeNotifier implements Wallet {
 
   bool isUnlocked(int level) => unlockAll || level <= currentLevel;
 
-  void completeLevel(int level, int earnedStars, int tips, int total) {
+  /// Records a win and pays for it ([winPay]). Returns the sweets paid.
+  int completeLevel(int level, int earnedStars, int total) {
     final prev = stars[level] ?? 0;
+    final pay = winPay(earnedStars, prev);
     if (earnedStars > prev) stars[level] = earnedStars;
-    coins += tips;
+    coins += pay;
     if (level >= currentLevel && level < total) currentLevel = level + 1;
     save();
     notifyListeners();
+    return pay;
   }
 
   int get starTotal => stars.values.fold(0, (a, b) => a + b);
