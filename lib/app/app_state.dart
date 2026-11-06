@@ -31,6 +31,9 @@ class AppState extends ChangeNotifier implements Wallet {
   /// Highest rank whose gift is paid (`rankPaid`). A save from before ranks
   /// starts at its current rank, so there is no back-pay.
   int rankPaid = 1;
+  /// Scoops with a gold Master spoon (`spoons`). Starts empty: past runs
+  /// did not record whether help was used.
+  Set<int> spoons = {};
 
   Future<void> load() async {
     _p = await SharedPreferences.getInstance();
@@ -57,6 +60,7 @@ class AppState extends ChangeNotifier implements Wallet {
       for (final s in _p.getStringList('boosterStock') ?? <String>[])
         ?Booster.values.asNameMap()[s.split(':')[0]]: int.parse(s.split(':')[1])
     };
+    spoons = {for (final s in _p.getStringList('spoons') ?? <String>[]) int.parse(s)};
     rankPaid = _p.getInt('rankPaid') ?? rank;
   }
 
@@ -79,15 +83,26 @@ class AppState extends ChangeNotifier implements Wallet {
     await _p.setStringList('boosterStock',
         [for (final e in boosterStock.entries) '${e.key.name}:${e.value}']);
     await _p.setInt('rankPaid', rankPaid);
+    await _p.setStringList('spoons', [for (final s in spoons.toList()..sort()) '$s']);
   }
 
   bool isUnlocked(int level) => unlockAll || level <= currentLevel;
 
   /// Records a win and pays for it: [winPay], the Lid bonus on a first Lid
-  /// win, the jar seal (sweets and a free Extra tube) and any rank gained.
-  WinReport completeLevel(int level, int earnedStars, int total) {
+  /// win, the jar seal (sweets and a free Extra tube), a gold spoon and any
+  /// rank gained. [helped]: Undo, Peek or Extra tube was used this run.
+  WinReport completeLevel(int level, int earnedStars, int total,
+      {bool helped = true}) {
     final xpBefore = xp;
     final prev = stars[level] ?? 0;
+    final spoon = Spoons.earns(best: prev, stars: earnedStars, helped: helped) &&
+        spoons.add(level);
+    var spoonPay = spoon ? Spoons.pay : 0;
+    int? spoonJar;
+    if (spoon && allSpooned(Jars.of(level))) {
+      spoonJar = Jars.of(level);
+      spoonPay += Spoons.jarPay;
+    }
     final lid = prev == 0 && Jars.isLid(level) ? Jars.lidBonus : 0;
     final pay = winPay(earnedStars, prev) + lid;
     if (earnedStars > prev) stars[level] = earnedStars;
@@ -103,7 +118,7 @@ class AppState extends ChangeNotifier implements Wallet {
     final rankUp = r > rankPaid ? r : null;
     final rankPay = r > rankPaid ? (r - rankPaid) * Rank.gift : 0;
     if (r > rankPaid) rankPaid = r;
-    coins += pay + sealPay + rankPay;
+    coins += pay + sealPay + rankPay + spoonPay;
     if (level >= currentLevel && level < total) currentLevel = level + 1;
     save();
     notifyListeners();
@@ -114,8 +129,20 @@ class AppState extends ChangeNotifier implements Wallet {
         sealPay: sealPay,
         xp: xp - xpBefore,
         rankUp: rankUp,
-        rankPay: rankPay);
+        rankPay: rankPay,
+        spoon: spoon,
+        spoonPay: spoonPay,
+        spoonJar: spoonJar);
   }
+
+  /// Gold spoons won in [jar].
+  int spoonsIn(int jar) => [
+        for (var l = Jars.first(jar); l <= Jars.lid(jar); l++)
+          if (spoons.contains(l)) l
+      ].length;
+
+  /// Every scoop of [jar] has its gold spoon (gold rim on the shelf).
+  bool allSpooned(int jar) => spoonsIn(jar) == Jars.size;
 
   int get starTotal => stars.values.fold(0, (a, b) => a + b);
 
@@ -123,7 +150,8 @@ class AppState extends ChangeNotifier implements Wallet {
   int get xp => Rank.xp(
       clears: stars.values.where((s) => s > 0).length,
       stars: starTotal,
-      jars: jarsSealed.length);
+      jars: jarsSealed.length,
+      spoons: spoons.length);
 
   int get rank => Rank.of(xp);
 

@@ -429,16 +429,19 @@ class JarProgress extends StatelessWidget {
 }
 
 /// The Pantry shelf: one small jar per chapter, filled and lidded once
-/// sealed, gold-lidded every 5th jar, outlined for the jar in progress.
+/// sealed, gold-lidded every 5th jar, outlined for the jar in progress,
+/// and gold-rimmed once all its Master spoons are won.
 class PantryShelf extends StatelessWidget {
   final int jars, current;
   final Set<int> sealed;
+  final Set<int> goldRim;
   final double width;
   const PantryShelf(
       {super.key,
       required this.jars,
       required this.current,
       required this.sealed,
+      this.goldRim = const {},
       required this.width});
 
   static const perRow = 10;
@@ -451,7 +454,7 @@ class PantryShelf extends StatelessWidget {
       label: 'Pantry shelf, ${sealed.length} of $jars jars sealed',
       child: CustomPaint(
         size: Size(width, rows * cell * 1.35),
-        painter: _ShelfPainter(jars, current, sealed),
+        painter: _ShelfPainter(jars, current, sealed, goldRim),
       ),
     );
   }
@@ -459,8 +462,8 @@ class PantryShelf extends StatelessWidget {
 
 class _ShelfPainter extends CustomPainter {
   final int jars, current;
-  final Set<int> sealed;
-  _ShelfPainter(this.jars, this.current, this.sealed);
+  final Set<int> sealed, goldRim;
+  _ShelfPainter(this.jars, this.current, this.sealed, this.goldRim);
 
   @override
   void paint(Canvas c, Size s) {
@@ -488,8 +491,10 @@ class _ShelfPainter extends CustomPainter {
           body,
           Paint()
             ..style = PaintingStyle.stroke
-            ..strokeWidth = j == current ? 2.5 : 1.5
-            ..color = j == current ? C.accent : C.glass);
+            ..strokeWidth = j == current || goldRim.contains(j) ? 2.5 : 1.5
+            ..color = j == current
+                ? C.accent
+                : (goldRim.contains(j) ? C.star : C.glass));
       if (done) {
         final lid = RRect.fromRectAndRadius(
             Rect.fromLTWH(x + cell * .2, y + cell * .16, cell * .6, cell * .18),
@@ -501,7 +506,10 @@ class _ShelfPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ShelfPainter o) =>
-      o.jars != jars || o.current != current || o.sealed.length != sealed.length;
+      o.jars != jars ||
+      o.current != current ||
+      o.sealed.length != sealed.length ||
+      o.goldRim.length != goldRim.length;
 }
 
 /// Confectioner rank: badge with the rank number, title and a thin XP bar
@@ -569,4 +577,45 @@ class RankBar extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Master spoon mark: gold once won, an outline while still to win.
+class SpoonIcon extends StatelessWidget {
+  final bool gold;
+  final double size;
+  const SpoonIcon({super.key, required this.gold, this.size = 14});
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+      size: Size(size * .55, size), painter: _SpoonPainter(gold));
+}
+
+class _SpoonPainter extends CustomPainter {
+  final bool gold;
+  _SpoonPainter(this.gold);
+
+  @override
+  void paint(Canvas c, Size s) {
+    final w = s.width, h = s.height;
+    final bowl = Rect.fromLTWH(0, 0, w, h * .45);
+    final handle = RRect.fromRectAndRadius(
+        Rect.fromLTWH(w * .36, h * .4, w * .28, h * .6), Radius.circular(w * .14));
+    if (gold) {
+      final p = Paint()..color = C.star;
+      c.drawOval(bowl, p);
+      c.drawRRect(handle, p);
+      c.drawOval(bowl.deflate(w * .18).shift(Offset(-w * .08, -h * .04)),
+          Paint()..color = const Color(0x99FFFFFF));
+    } else {
+      final p = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = max(1.2, w * .14)
+        ..color = C.text2.withValues(alpha: .7);
+      c.drawOval(bowl.deflate(p.strokeWidth / 2), p);
+      c.drawRRect(handle.deflate(p.strokeWidth / 2), p);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SpoonPainter o) => o.gold != gold;
 }

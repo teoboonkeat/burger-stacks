@@ -681,8 +681,12 @@ class _GameScreenState extends State<GameScreen> {
     final lv = _lv;
     final stars = starsFor(wonMoves, lv.par);
     final best = widget.s.state.stars[level] ?? 0;
-    final report =
-        widget.s.state.completeLevel(level, stars, widget.s.levels.length);
+    final hadSpoon = widget.s.state.spoons.contains(level);
+    // Any help counts against the spoon, the free undo included.
+    final helped = undosUsed > 0 || peekUsed || extraUsed;
+    final report = widget.s.state.completeLevel(
+        level, stars, widget.s.levels.length,
+        helped: helped);
     game.confetti();
     HapticFeedback.heavyImpact();
     // Let the confetti play before the card covers it.
@@ -706,6 +710,12 @@ class _GameScreenState extends State<GameScreen> {
             moves: wonMoves,
             par: lv.par,
             best: best,
+            spoonNote: Spoons.note(
+                best: best,
+                stars: stars,
+                helped: helped,
+                earned: report.spoon,
+                had: hadSpoon),
             report: report,
             tubes: wonTubes,
             ads: ads,
@@ -1010,6 +1020,8 @@ class SweetScreen extends StatefulWidget {
   final int best;
   /// What the win paid; [WinReport.pay] is what the ×2 ad doubles.
   final WinReport report;
+  /// Line about the Master spoon ([Spoons.note]), if any.
+  final String? spoonNote;
   final List<Tube> tubes;
   final AdService ads;
   const SweetScreen({
@@ -1021,6 +1033,7 @@ class SweetScreen extends StatefulWidget {
     required this.par,
     required this.best,
     required this.report,
+    this.spoonNote,
     required this.tubes,
     required this.ads,
   });
@@ -1207,6 +1220,32 @@ class _SweetScreenState extends State<SweetScreen> {
                                     ],
                                   ],
                                 ),
+                                if (widget.spoonNote case final sn?)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SpoonIcon(gold: widget.report.spoon),
+                                        const SizedBox(width: 6),
+                                        Flexible(
+                                          child: Text(
+                                            widget.report.spoonJar != null
+                                                ? '$sn · all 10 in this jar: +${Spoons.jarPay}'
+                                                : sn,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: widget.report.spoon
+                                                  ? C.accentText
+                                                  : C.text2,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 if (note != null) ...[
                                   const SizedBox(height: 2),
                                   Text(

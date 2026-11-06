@@ -135,6 +135,10 @@ class JarCard extends StatelessWidget {
             jars: jars,
             current: jar,
             sealed: st.jarsSealed,
+            goldRim: {
+              for (var j = 1; j <= jars; j++)
+                if (st.allSpooned(j)) j
+            },
             width: width - 32),
       ]),
     );
@@ -212,6 +216,9 @@ class LevelListScreen extends StatelessWidget {
                     open: st.isUnlocked(id),
                     next: id == st.currentLevel && (st.stars[id] ?? 0) == 0,
                     lid: Jars.isLid(id),
+                    spoon: (st.stars[id] ?? 0) == 0
+                        ? null
+                        : st.spoons.contains(id),
                     stars: st.stars[id] ?? 0,
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => GameScreen(s, id))),
@@ -232,6 +239,9 @@ class _LevelTile extends StatelessWidget {
   final bool open, next;
   /// Lid scoop: the jar's last scoop, gold-edged and labelled.
   final bool lid;
+  /// Master spoon: null before the first clear, then an outline until
+  /// it is won gold.
+  final bool? spoon;
   final VoidCallback onTap;
   const _LevelTile(
       {required this.id,
@@ -239,16 +249,20 @@ class _LevelTile extends StatelessWidget {
       required this.next,
       required this.stars,
       required this.onTap,
-      this.lid = false});
+      this.lid = false,
+      this.spoon});
 
   @override
   Widget build(BuildContext context) {
     final bg = next ? C.primary : (open ? C.panel : C.lockedTile);
     final edge = next ? C.primaryShadow : (lid ? C.star : C.border);
     final kind = lid ? 'Lid scoop' : 'Scoop';
-    return Semantics(
+    final spoonText = spoon == true ? ', gold spoon' : '';
+    final tile = Semantics(
       button: open,
-      label: open ? '$kind $id, $stars stars' : '$kind $id, locked',
+      label: open
+          ? '$kind $id, $stars stars$spoonText'
+          : '$kind $id, locked',
       child: GestureDetector(
         onTap: open ? onTap : null,
         child: Container(
@@ -283,6 +297,11 @@ class _LevelTile extends StatelessWidget {
         ),
       ),
     );
+    if (spoon == null) return tile;
+    return Stack(fit: StackFit.expand, children: [
+      tile,
+      Positioned(top: 5, right: 6, child: SpoonIcon(gold: spoon!, size: 13)),
+    ]);
   }
 }
 
@@ -309,6 +328,7 @@ Future<void> _confirmReset(BuildContext context, AppState st) async {
     x.jarsSealed = {};
     x.boosterStock = {};
     x.rankPaid = 1;
+    x.spoons = {};
     x.unlockAll = false;
   });
 }
