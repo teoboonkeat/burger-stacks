@@ -11,3 +11,26 @@ int winPay(int stars, int best) {
   if (best == 0) return sweetsFor(stars);
   return stars > best ? (stars - best) * 5 : 0;
 }
+
+/// Everything one win paid, for the result card.
+class WinReport {
+  /// The win itself ([winPay]) plus the Lid bonus: what the ×2 ad doubles.
+  final int pay;
+
+  /// Part of [pay] that is the Lid scoop bonus.
+  final int lidBonus;
+
+  /// Jar sealed by this win, if any, and what sealing it paid.
+  final int? sealed;
+  final int sealPay;
+
+  const WinReport({
+    required this.pay,
+    this.lidBonus = 0,
+    this.sealed,
+    this.sealPay = 0,
+  });
+
+  /// All sweets this win added.
+  int get total => pay + sealPay;
+}

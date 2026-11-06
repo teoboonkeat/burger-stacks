@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../ads/ad_service.dart';
+import '../app/chapters.dart';
 import '../app/rewards.dart';
 import '../app/sfx.dart';
 import '../app/shop.dart';
@@ -509,6 +510,12 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> _extra() async {
     if (extraUsed || showingResult) return;
+    // A free Extra tube from a sealed jar goes first, with no ad or price.
+    if (widget.s.state.useStock(Booster.extra)) {
+      game.addTube();
+      setState(() => extraUsed = true);
+      return;
+    }
     final pay = await _pay(Booster.extra);
     if (pay == null || !mounted) return;
     final ok = Shop.redeem(widget.s.state, Booster.extra, pay, () {
@@ -527,6 +534,7 @@ class _GameScreenState extends State<GameScreen> {
     final explainExtra = !extraUsed && Tutorial.showExtraInJam(_seen);
     if (explainExtra) widget.s.state.markSeen([Lesson.extra]);
     final free = undosLeft > 0;
+    final freeExtra = widget.s.state.stock(Booster.extra);
     final choice = await showModalBottomSheet<String>(
       context: context,
       isDismissible: false,
@@ -559,7 +567,9 @@ class _GameScreenState extends State<GameScreen> {
               ),
               const SizedBox(height: 16),
               if ((!free && _priceIfAffordable(Booster.undo) != null) ||
-                  (!extraUsed && _priceIfAffordable(Booster.extra) != null))
+                  (!extraUsed &&
+                      freeExtra == 0 &&
+                      _priceIfAffordable(Booster.extra) != null))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: InfoChip(
@@ -575,8 +585,8 @@ class _GameScreenState extends State<GameScreen> {
               if (!extraUsed) ...[
                 const SizedBox(height: 12),
                 BigButton(
-                  'Extra tube',
-                  reward: true,
+                  freeExtra > 0 ? 'Extra tube ($freeExtra free)' : 'Extra tube',
+                  reward: freeExtra == 0,
                   price: _priceIfAffordable(Booster.extra),
                   onTap: () => Navigator.pop(c, 'extra'),
                 ),
@@ -633,7 +643,7 @@ class _GameScreenState extends State<GameScreen> {
     final lv = _lv;
     final stars = starsFor(wonMoves, lv.par);
     final best = widget.s.state.stars[level] ?? 0;
-    final beans =
+    final report =
         widget.s.state.completeLevel(level, stars, widget.s.levels.length);
     game.confetti();
     HapticFeedback.heavyImpact();
@@ -658,7 +668,7 @@ class _GameScreenState extends State<GameScreen> {
             moves: wonMoves,
             par: lv.par,
             best: best,
-            beans: beans,
+            report: report,
             tubes: wonTubes,
             ads: ads,
           ),
@@ -692,6 +702,7 @@ class _GameScreenState extends State<GameScreen> {
     final hasPouchNow = _hasPouchNow;
     final showBasic = Boosters.basic(level);
     final showPeek = Boosters.peek(level, lv.hasPouch);
+    final freeExtra = widget.s.state.stock(Booster.extra);
     final coach = _coach;
     return Scaffold(
       body: SafeArea(
@@ -713,7 +724,7 @@ class _GameScreenState extends State<GameScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'Scoop $level',
+                              Jars.isLid(level) ? 'Lid scoop $level' : 'Scoop $level',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w900,
@@ -829,8 +840,8 @@ class _GameScreenState extends State<GameScreen> {
                       if (showBasic)
                         _Booster(
                           icon: Icons.add_box_outlined,
-                          label: 'Extra tube',
-                          ad: true,
+                          label: freeExtra > 0 ? 'Extra tube ($freeExtra)' : 'Extra tube',
+                          ad: freeExtra == 0,
                           price: _priceIfAffordable(Booster.extra),
                           onTap: extraUsed || showingResult ? null : _extra,
                         ),
@@ -956,9 +967,11 @@ class _Booster extends StatelessWidget {
 
 class SweetScreen extends StatefulWidget {
   final Services s;
-  final int level, stars, moves, par, beans;
+  final int level, stars, moves, par;
   /// Best stars on this scoop before this win (0 = first win).
   final int best;
+  /// What the win paid; [WinReport.pay] is what the ×2 ad doubles.
+  final WinReport report;
   final List<Tube> tubes;
   final AdService ads;
   const SweetScreen({
@@ -969,7 +982,7 @@ class SweetScreen extends StatefulWidget {
     required this.moves,
     required this.par,
     required this.best,
-    required this.beans,
+    required this.report,
     required this.tubes,
     required this.ads,
   });
@@ -1029,10 +1042,25 @@ String resultLine(int moves, int par) => moves > par
 class _SweetScreenState extends State<SweetScreen> {
   bool doubled = false;
 
+  /// The jar-sealed celebration covers the card briefly; tap skips it.
+  late bool sealShowing = widget.report.sealed != null;
+
+  int get beans => widget.report.pay;
+
+  @override
+  void initState() {
+    super.initState();
+    if (sealShowing) {
+      Future.delayed(S.sealShown, () {
+        if (mounted) setState(() => sealShowing = false);
+      });
+    }
+  }
+
   Future<void> _double() async {
     if (doubled) return;
     if (await widget.ads.showRewarded(context, '2x sweets')) {
-      widget.s.state.addCoins(widget.beans);
+      widget.s.state.addCoins(beans);
       if (mounted) setState(() => doubled = true);
     }
   }
@@ -1108,7 +1136,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '+${widget.beans * (doubled ? 2 : 1)} sweets',
+                                      '+${beans * (doubled ? 2 : 1)} sweets',
                                       style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w900,
@@ -1116,7 +1144,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                     ),
                                     // ×2 doubles what this win paid, so a
                                     // replay that paid nothing has no ad.
-                                    if (widget.beans > 0) ...[
+                                    if (beans > 0) ...[
                                       const SizedBox(width: 8),
                                       _DoubleChip(
                                         done: doubled,
@@ -1136,6 +1164,34 @@ class _SweetScreenState extends State<SweetScreen> {
                                     ),
                                   ),
                                 ],
+                                if (widget.report.lidBonus > 0)
+                                  Text(
+                                    'Includes +${widget.report.lidBonus} Lid scoop bonus',
+                                    style: const TextStyle(
+                                      color: C.text2,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                SizedBox(height: gap),
+                                JarProgress(
+                                  jar: Jars.of(widget.level),
+                                  filled: Jars.filled(
+                                      Jars.of(widget.level), widget.s.state.stars),
+                                  compact: true,
+                                ),
+                                if (widget.report.sealed != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'Sealed · +${widget.report.sealPay} sweets · +1 Extra tube',
+                                      style: const TextStyle(
+                                        color: C.accentText,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ),
                                 SizedBox(height: compact ? 10 : 16),
                                 BigButton(
                                   'Next scoop',
@@ -1160,6 +1216,22 @@ class _SweetScreenState extends State<SweetScreen> {
                                 onTap: () => Navigator.pop(context, 'home'),
                               ),
                             ),
+                            if (widget.report.sealed case final jar?)
+                              Positioned.fill(
+                                child: IgnorePointer(
+                                  ignoring: !sealShowing,
+                                  child: AnimatedOpacity(
+                                    opacity: sealShowing ? 1 : 0,
+                                    duration: S.fade,
+                                    child: GestureDetector(
+                                      onTap: () =>
+                                          setState(() => sealShowing = false),
+                                      child: SealCard(
+                                          jar: jar, pay: widget.report.sealPay),
+                                    ),
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -1174,6 +1246,37 @@ class _SweetScreenState extends State<SweetScreen> {
       ),
     );
   }
+}
+
+/// Short celebration over the result card when a Lid scoop seals a jar.
+class SealCard extends StatelessWidget {
+  final int jar, pay;
+  const SealCard({super.key, required this.jar, required this.pay});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        color: C.bg,
+        alignment: Alignment.center,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('Jar sealed!',
+              style: TextStyle(
+                  fontSize: 32, fontWeight: FontWeight.w900, color: C.accent)),
+          const SizedBox(height: 8),
+          Jar(
+              tubes: List.filled(Jars.size, Jars.flavour(jar)),
+              width: 120),
+          const SizedBox(height: 8),
+          Text(Jars.name(jar),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+          Text(
+              '+$pay sweets · +1 Extra tube${Jars.isGold(jar) ? ' · gold lid' : ''}',
+              style: const TextStyle(
+                  color: C.accentText, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 12),
+          const Text('Tap to continue',
+              style: TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+        ]),
+      );
 }
 
 /// "AD ×2" reward chip next to the beans; 48 dp tall touch target.

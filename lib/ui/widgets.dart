@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../app/chapters.dart';
 import '../app/theme.dart';
 import '../game/bean_painter.dart';
 import '../logic/board.dart';
@@ -377,4 +378,127 @@ class _BeanIconPainter extends CustomPainter {
   void paint(Canvas c, Size s) => paintBean(c, Offset.zero & s, Ingredient.berry);
   @override
   bool shouldRepaint(_BeanIconPainter o) => false;
+}
+
+/// Bean Jars progress: "Jar 6 · Lime", scoops filled out of 10 and a bar
+/// in the jar's flavour. [compact] is the one-line version for the result
+/// card.
+class JarProgress extends StatelessWidget {
+  final int jar, filled;
+  final bool compact;
+  const JarProgress(
+      {super.key, required this.jar, required this.filled, this.compact = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final colour = beanColors[Jars.flavour(jar)]!;
+    final bar = ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: LinearProgressIndicator(
+        value: filled / Jars.size,
+        minHeight: compact ? 8 : 12,
+        backgroundColor: C.border,
+        color: colour,
+      ),
+    );
+    final head = Row(children: [
+      Expanded(
+        child: Text(Jars.name(jar).toUpperCase(),
+            style: TextStyle(
+                fontSize: compact ? 13 : 15,
+                fontWeight: FontWeight.w900,
+                letterSpacing: .5,
+                color: C.text)),
+      ),
+      Text('$filled / ${Jars.size} scoops',
+          style: TextStyle(
+              fontSize: compact ? 13 : 15,
+              fontWeight: FontWeight.w800,
+              color: C.text2)),
+    ]);
+    return Semantics(
+      label: '${Jars.name(jar)}, $filled of ${Jars.size} scoops',
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        head,
+        SizedBox(height: compact ? 4 : 6),
+        bar,
+      ]),
+    );
+  }
+}
+
+/// The Pantry shelf: one small jar per chapter, filled and lidded once
+/// sealed, gold-lidded every 5th jar, outlined for the jar in progress.
+class PantryShelf extends StatelessWidget {
+  final int jars, current;
+  final Set<int> sealed;
+  final double width;
+  const PantryShelf(
+      {super.key,
+      required this.jars,
+      required this.current,
+      required this.sealed,
+      required this.width});
+
+  static const perRow = 10;
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = (jars / perRow).ceil();
+    final cell = width / perRow;
+    return Semantics(
+      label: 'Pantry shelf, ${sealed.length} of $jars jars sealed',
+      child: CustomPaint(
+        size: Size(width, rows * cell * 1.35),
+        painter: _ShelfPainter(jars, current, sealed),
+      ),
+    );
+  }
+}
+
+class _ShelfPainter extends CustomPainter {
+  final int jars, current;
+  final Set<int> sealed;
+  _ShelfPainter(this.jars, this.current, this.sealed);
+
+  @override
+  void paint(Canvas c, Size s) {
+    final cell = s.width / PantryShelf.perRow;
+    final rowH = cell * 1.35;
+    final rows = (jars / PantryShelf.perRow).ceil();
+    for (var r = 0; r < rows; r++) {
+      // The plank under each row.
+      c.drawRRect(
+          RRect.fromRectAndRadius(
+              Rect.fromLTWH(0, r * rowH + cell * 1.12, s.width, cell * .14),
+              const Radius.circular(3)),
+          Paint()..color = C.border);
+    }
+    for (var j = 1; j <= jars; j++) {
+      final i = j - 1;
+      final x = (i % PantryShelf.perRow) * cell, y = (i ~/ PantryShelf.perRow) * rowH;
+      final body = RRect.fromRectAndRadius(
+          Rect.fromLTWH(x + cell * .14, y + cell * .32, cell * .72, cell * .8),
+          Radius.circular(cell * .16));
+      final done = sealed.contains(j);
+      final colour = beanColors[Jars.flavour(j)]!;
+      c.drawRRect(body, Paint()..color = done ? colour : C.panel);
+      c.drawRRect(
+          body,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = j == current ? 2.5 : 1.5
+            ..color = j == current ? C.accent : C.glass);
+      if (done) {
+        final lid = RRect.fromRectAndRadius(
+            Rect.fromLTWH(x + cell * .2, y + cell * .16, cell * .6, cell * .18),
+            Radius.circular(cell * .06));
+        c.drawRRect(lid, Paint()..color = Jars.isGold(j) ? C.star : C.accent);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ShelfPainter o) =>
+      o.jars != jars || o.current != current || o.sealed.length != sealed.length;
 }

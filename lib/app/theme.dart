@@ -49,6 +49,8 @@ class S {
   /// Tutorial goal chip stays this long, then fades.
   static const goalChip = Duration(seconds: 3);
   static const refusalShown = Duration(milliseconds: 1800);
+  /// Jar-sealed celebration over the result card (tap skips it).
+  static const sealShown = Duration(milliseconds: 1800);
   static const fade = Duration(milliseconds: 180);
 }
 

@@ -24,9 +24,9 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final s = AppState();
       await s.load();
-      expect(s.completeLevel(2, 2, 200), 20);
-      expect(s.completeLevel(2, 2, 200), 0);
-      expect(s.completeLevel(2, 3, 200), 5);
+      expect(s.completeLevel(2, 2, 200).pay, 20);
+      expect(s.completeLevel(2, 2, 200).pay, 0);
+      expect(s.completeLevel(2, 3, 200).pay, 5);
       expect(s.coins, 25);
       expect(s.stars[2], 3);
     });

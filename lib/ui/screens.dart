@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../app/app_state.dart';
+import '../app/chapters.dart';
 import '../app/theme.dart';
 import '../levels/level.dart';
 import 'game_screen.dart';
@@ -32,8 +33,12 @@ class HomeScreen extends StatelessWidget {
           builder: (context, _) => Center(
             child: SingleChildScrollView(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-                const Jar(width: 150),
-                const SizedBox(height: 8),
+                // Short phones drop the logo jar so every button fits
+                // under the jar card without scrolling.
+                if (MediaQuery.sizeOf(context).height >= 720) ...[
+                  const Jar(width: 110),
+                  const SizedBox(height: 4),
+                ],
                 const Text('Jelly Beans',
                     style: TextStyle(
                         fontSize: 40, fontWeight: FontWeight.w900, color: C.accent)),
@@ -47,7 +52,9 @@ class HomeScreen extends StatelessWidget {
                       leading: const SweetIcon(),
                       text: '${s.state.coins} sweets'),
                 ]),
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
+                JarCard(s: s, width: bw),
+                const SizedBox(height: 20),
                 BigButton('Play · Scoop ${s.state.currentLevel}',
                     width: bw,
                     onTap: () => _play(context, s.state.currentLevel)),
@@ -73,6 +80,61 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Home's goal card: the jar being filled, what sealing it pays, how far
+/// the Lid scoop is, and the Pantry shelf of every jar.
+class JarCard extends StatelessWidget {
+  final Services s;
+  final double width;
+  const JarCard({super.key, required this.s, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    final st = s.state;
+    final jars = Jars.count(s.levels.length);
+    final jar = Jars.of(st.currentLevel);
+    final sealed = st.jarsSealed.contains(jar);
+    final toLid = Jars.lid(jar) - st.currentLevel;
+    const small = TextStyle(fontSize: 13, fontWeight: FontWeight.w800);
+    return Container(
+      width: width,
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
+      decoration: BoxDecoration(
+        color: C.panel,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: C.border, width: 2),
+      ),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        JarProgress(jar: jar, filled: Jars.filled(jar, st.stars)),
+        const SizedBox(height: 6),
+        Row(children: [
+          Expanded(
+            child: Text(
+                sealed
+                    ? 'Sealed'
+                    : 'Seal it: +${Jars.payFor(jar)} sweets, Extra tube',
+                style: small.copyWith(color: C.accentText)),
+          ),
+          if (!sealed)
+            Text(toLid == 0 ? 'Lid scoop next!' : 'Lid scoop in $toLid',
+                style: small.copyWith(color: C.text2)),
+        ]),
+        const SizedBox(height: 10),
+        Row(children: [
+          const Expanded(child: Text('Pantry shelf', style: small)),
+          Text('${st.jarsSealed.length} / $jars sealed',
+              style: small.copyWith(color: C.text2)),
+        ]),
+        const SizedBox(height: 4),
+        PantryShelf(
+            jars: jars,
+            current: jar,
+            sealed: st.jarsSealed,
+            width: width - 32),
+      ]),
     );
   }
 }
@@ -147,6 +209,7 @@ class LevelListScreen extends StatelessWidget {
                     id: id,
                     open: st.isUnlocked(id),
                     next: id == st.currentLevel && (st.stars[id] ?? 0) == 0,
+                    lid: Jars.isLid(id),
                     stars: st.stars[id] ?? 0,
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => GameScreen(s, id))),
@@ -165,31 +228,42 @@ class LevelListScreen extends StatelessWidget {
 class _LevelTile extends StatelessWidget {
   final int id, stars;
   final bool open, next;
+  /// Lid scoop: the jar's last scoop, gold-edged and labelled.
+  final bool lid;
   final VoidCallback onTap;
   const _LevelTile(
       {required this.id,
       required this.open,
       required this.next,
       required this.stars,
-      required this.onTap});
+      required this.onTap,
+      this.lid = false});
 
   @override
   Widget build(BuildContext context) {
     final bg = next ? C.primary : (open ? C.panel : C.lockedTile);
-    final edge = next ? C.primaryShadow : C.border;
+    final edge = next ? C.primaryShadow : (lid ? C.star : C.border);
+    final kind = lid ? 'Lid scoop' : 'Scoop';
     return Semantics(
       button: open,
-      label: open ? 'Scoop $id, $stars stars' : 'Scoop $id, locked',
+      label: open ? '$kind $id, $stars stars' : '$kind $id, locked',
       child: GestureDetector(
         onTap: open ? onTap : null,
         child: Container(
           decoration: BoxDecoration(
             color: bg,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: edge, width: 2),
+            border: Border.all(color: edge, width: lid ? 3 : 2),
             boxShadow: open ? [BoxShadow(color: edge, offset: const Offset(0, 3))] : null,
           ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            if (lid)
+              Text('LID',
+                  style: TextStyle(
+                      fontSize: 10,
+                      height: 1,
+                      fontWeight: FontWeight.w900,
+                      color: next ? Colors.white : C.text2)),
             Text('$id',
                 style: TextStyle(
                     fontSize: 20,
@@ -230,6 +304,8 @@ Future<void> _confirmReset(BuildContext context, AppState st) async {
     x.currentLevel = 1;
     x.stars = {};
     x.coins = 0;
+    x.jarsSealed = {};
+    x.boosterStock = {};
     x.unlockAll = false;
   });
 }
