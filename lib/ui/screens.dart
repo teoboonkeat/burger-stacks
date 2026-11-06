@@ -52,19 +52,21 @@ class HomeScreen extends StatelessWidget {
                       leading: const SweetIcon(),
                       text: '${s.state.coins} sweets'),
                 ]),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
+                SizedBox(width: bw - 8, child: RankBar(xp: s.state.xp)),
+                const SizedBox(height: 12),
                 JarCard(s: s, width: bw),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
                 BigButton('Play · Scoop ${s.state.currentLevel}',
                     width: bw,
                     onTap: () => _play(context, s.state.currentLevel)),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 BigButton('Levels',
                     primary: false,
                     width: bw,
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => LevelListScreen(s)))),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 BigButton('Settings',
                     primary: false,
                     width: bw,
@@ -306,6 +308,7 @@ Future<void> _confirmReset(BuildContext context, AppState st) async {
     x.coins = 0;
     x.jarsSealed = {};
     x.boosterStock = {};
+    x.rankPaid = 1;
     x.unlockAll = false;
   });
 }

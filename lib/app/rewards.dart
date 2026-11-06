@@ -24,13 +24,23 @@ class WinReport {
   final int? sealed;
   final int sealPay;
 
+  /// Rank XP this win added.
+  final int xp;
+
+  /// New rank reached by this win, if any, and its gift.
+  final int? rankUp;
+  final int rankPay;
+
   const WinReport({
     required this.pay,
     this.lidBonus = 0,
     this.sealed,
     this.sealPay = 0,
+    this.xp = 0,
+    this.rankUp,
+    this.rankPay = 0,
   });
 
   /// All sweets this win added.
-  int get total => pay + sealPay;
+  int get total => pay + sealPay + rankPay;
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../app/chapters.dart';
+import '../app/rank.dart';
 import '../app/theme.dart';
 import '../game/bean_painter.dart';
 import '../logic/board.dart';
@@ -501,4 +502,71 @@ class _ShelfPainter extends CustomPainter {
   @override
   bool shouldRepaint(_ShelfPainter o) =>
       o.jars != jars || o.current != current || o.sealed.length != sealed.length;
+}
+
+/// Confectioner rank: badge with the rank number, title and a thin XP bar
+/// towards the next rank. [gain] shows "+N XP" from the last win instead of
+/// the XP count.
+class RankBar extends StatelessWidget {
+  final int xp;
+  final int? gain;
+  const RankBar({super.key, required this.xp, this.gain});
+
+  @override
+  Widget build(BuildContext context) {
+    final rank = Rank.of(xp);
+    final top = rank >= Rank.top;
+    final from = Rank.threshold(rank), to = Rank.threshold(rank + 1);
+    final right = gain != null
+        ? '+$gain XP'
+        : (top ? 'Top rank' : '$xp / $to XP');
+    return Semantics(
+      label: 'Rank $rank, ${Rank.title(rank)}, $right',
+      child: ExcludeSemantics(
+        child: Row(children: [
+          Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: C.accent,
+              shape: BoxShape.circle,
+              border: Border.all(color: C.primaryShadow, width: 2),
+            ),
+            child: Text('$rank',
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900)),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(children: [
+                Expanded(
+                  child: Text(Rank.title(rank),
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w900, color: C.text)),
+                ),
+                Text(right,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: gain != null ? C.accentText : C.text2)),
+              ]),
+              const SizedBox(height: 3),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: top ? 1 : (xp - from) / (to - from),
+                  minHeight: 6,
+                  backgroundColor: C.border,
+                  color: C.star,
+                ),
+              ),
+            ]),
+          ),
+        ]),
+      ),
+    );
+  }
 }

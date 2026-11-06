@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import '../ads/ad_service.dart';
 import '../app/chapters.dart';
+import '../app/rank.dart';
 import '../app/rewards.dart';
 import '../app/sfx.dart';
 import '../app/shop.dart';
@@ -1079,19 +1080,35 @@ String resultLine(int moves, int par) => moves > par
 class _SweetScreenState extends State<SweetScreen> {
   bool doubled = false;
 
-  /// The jar-sealed celebration covers the card briefly; tap skips it.
-  late bool sealShowing = widget.report.sealed != null;
+  /// Celebrations shown over the card one after another (jar sealed, then
+  /// rank up), each briefly; a tap skips to the next.
+  late final List<Widget> _cards = [
+    if (widget.report.sealed case final jar?)
+      SealCard(jar: jar, pay: widget.report.sealPay),
+    if (widget.report.rankUp case final rank?)
+      RankUpCard(rank: rank, pay: widget.report.rankPay),
+  ];
+  int _card = 0;
 
   int get beans => widget.report.pay;
 
   @override
   void initState() {
     super.initState();
-    if (sealShowing) {
-      Future.delayed(S.sealShown, () {
-        if (mounted) setState(() => sealShowing = false);
-      });
-    }
+    _timeCard();
+  }
+
+  void _timeCard() {
+    if (_card >= _cards.length) return;
+    final shown = _card;
+    Future.delayed(S.sealShown, () {
+      if (mounted && _card == shown) _nextCard();
+    });
+  }
+
+  void _nextCard() {
+    setState(() => _card++);
+    _timeCard();
   }
 
   Future<void> _double() async {
@@ -1143,10 +1160,10 @@ class _SweetScreenState extends State<SweetScreen> {
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text(
+                                Text(
                                   'Sweet!',
                                   style: TextStyle(
-                                    fontSize: 36,
+                                    fontSize: compact ? 30 : 36,
                                     fontWeight: FontWeight.w900,
                                     color: C.accent,
                                   ),
@@ -1201,7 +1218,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                     ),
                                   ),
                                 ],
-                                if (widget.report.lidBonus > 0)
+                                if (widget.report.lidBonus > 0 && !compact)
                                   Text(
                                     'Includes +${widget.report.lidBonus} Lid scoop bonus',
                                     style: const TextStyle(
@@ -1217,7 +1234,13 @@ class _SweetScreenState extends State<SweetScreen> {
                                       Jars.of(widget.level), widget.s.state.stars),
                                   compact: true,
                                 ),
-                                if (widget.report.sealed != null)
+                                SizedBox(height: compact ? 6 : 10),
+                                RankBar(
+                                    xp: widget.s.state.xp, gain: widget.report.xp),
+                                // Short screens rely on the celebration card
+                                // for the seal; the line would push the
+                                // buttons off.
+                                if (widget.report.sealed != null && !compact)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4),
                                     child: Text(
@@ -1253,18 +1276,23 @@ class _SweetScreenState extends State<SweetScreen> {
                                 onTap: () => Navigator.pop(context, 'home'),
                               ),
                             ),
-                            if (widget.report.sealed case final jar?)
+                            if (_cards.isNotEmpty)
                               Positioned.fill(
                                 child: IgnorePointer(
-                                  ignoring: !sealShowing,
+                                  ignoring: _card >= _cards.length,
                                   child: AnimatedOpacity(
-                                    opacity: sealShowing ? 1 : 0,
+                                    opacity: _card < _cards.length ? 1 : 0,
                                     duration: S.fade,
                                     child: GestureDetector(
-                                      onTap: () =>
-                                          setState(() => sealShowing = false),
-                                      child: SealCard(
-                                          jar: jar, pay: widget.report.sealPay),
+                                      onTap: _nextCard,
+                                      child: AnimatedSwitcher(
+                                        duration: S.fade,
+                                        child: KeyedSubtree(
+                                          key: ValueKey(_card),
+                                          child: _cards[
+                                              _card.clamp(0, _cards.length - 1)],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -1307,6 +1335,54 @@ class SealCard extends StatelessWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
           Text(
               '+$pay sweets · +1 Extra tube${Jars.isGold(jar) ? ' · gold lid' : ''}',
+              style: const TextStyle(
+                  color: C.accentText, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 12),
+          const Text('Tap to continue',
+              style: TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+        ]),
+      );
+}
+
+/// Rank-up celebration over the result card: the new rank, its title and
+/// the gift.
+class RankUpCard extends StatelessWidget {
+  final int rank, pay;
+  const RankUpCard({super.key, required this.rank, required this.pay});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        color: C.bg,
+        alignment: Alignment.center,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('RANK UP',
+              style: TextStyle(
+                  fontSize: 15,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w900,
+                  color: C.text2)),
+          const SizedBox(height: 8),
+          Container(
+            width: 72,
+            height: 72,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: C.accent,
+              shape: BoxShape.circle,
+              border: Border.all(color: C.primaryShadow, width: 3),
+            ),
+            child: Text('$rank',
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 32, fontWeight: FontWeight.w900)),
+          ),
+          const SizedBox(height: 8),
+          Text(Rank.title(rank),
+              style: const TextStyle(
+                  fontSize: 24, fontWeight: FontWeight.w900, color: C.accent)),
+          Text(
+              rank < Rank.top
+                  ? '+$pay sweets · next title at rank ${rank + 1}'
+                  : '+$pay sweets · top rank!',
               style: const TextStyle(
                   color: C.accentText, fontWeight: FontWeight.w800)),
           const SizedBox(height: 12),
