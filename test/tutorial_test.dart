@@ -202,7 +202,7 @@ void main() {
     expect(RoadLayout.offsetFor(1, 200, view), 0);
     for (final l in [57, 60, 100, 133]) {
       // Bottom-up: the stop's centre, measured from the bottom of the road.
-      var centre = RoadLayout.pad + RoadLayout.heightOf(l) / 2;
+      var centre = RoadLayout.bottomPad + RoadLayout.heightOf(l) / 2;
       for (var k = 1; k < l; k++) {
         centre += RoadLayout.heightOf(k);
       }
@@ -212,7 +212,10 @@ void main() {
     // The top of the road: clamped to its end.
     expect(RoadLayout.offsetFor(200, 200, view),
         RoadLayout.extent(200) - view);
-    expect(RoadLayout.extent(200), 2 * RoadLayout.pad + 180 * 84 + 20 * 124);
+    expect(RoadLayout.extent(200),
+        RoadLayout.pad + RoadLayout.bottomPad + 180 * 84 + 20 * 124);
+    // Room below scoop 1 for the Jump to scoop chip.
+    expect(RoadLayout.bottomPad, greaterThanOrEqualTo(RoadLayout.pad + 56));
   });
 
   test('Candy Road: signposts 10 stops before each twist, stops on screen', () {

@@ -19,7 +19,7 @@ void main() {
               best: best, stars: stars, helped: helped, earned: earned, had: had);
       expect(n(2, 3, false, true, false), 'Gold spoon · +10 sweets');
       expect(n(0, 3, false, false, false),
-          'Replay at par with no help for a gold spoon');
+          'Next time, win ★★★ with no help to earn a gold spoon');
       expect(n(3, 3, true, false, false),
           'A gold spoon needs no Undo, Peek or Extra tube');
       expect(n(3, 3, false, false, true), isNull);

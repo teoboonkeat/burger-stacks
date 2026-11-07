@@ -15,6 +15,8 @@ class C {
   static const primaryShadow = Color(0xFFB21F54);
   static const adBadge = accent;
   static const star = Color(0xFFF2C230);
+  /// Edge of gold things: signposts, gold jar lids, the gold-jar star.
+  static const starEdge = Color(0xFFC99A12);
   /// "New" tag on a booster that was just introduced (white text, 5.3:1).
   static const newBadge = Color(0xFF2F7A1F);
   /// Locked level tile.
@@ -51,7 +53,15 @@ class S {
   static const refusalShown = Duration(milliseconds: 1800);
   /// Jar-sealed celebration over the result card (tap skips it).
   static const sealShown = Duration(milliseconds: 1800);
+
+  /// Taps are ignored this long after the last celebration card.
+  static const cardGrace = Duration(milliseconds: 600);
   static const fade = Duration(milliseconds: 180);
+  /// Candy Road: the stop Jump to scoop lands on pulses this long.
+  static const pulse = Duration(milliseconds: 900);
+  /// Jar sealed card: the full jar pours in this fast (the card shows for
+  /// [sealShown]).
+  static const sealPour = Duration(milliseconds: 900);
 }
 
 const _titleStyle =

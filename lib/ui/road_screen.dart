@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,6 +35,12 @@ class _RoadScreenState extends State<RoadScreen> {
   @override
   void initState() {
     super.initState();
+    _walk();
+  }
+
+  /// Walks the marker to the current scoop if it is behind, after a short
+  /// pause so the player sees it move, and remembers where it stopped.
+  void _walk() {
     final st = widget.s.state;
     if (_marker < st.currentLevel) {
       Future.delayed(const Duration(milliseconds: 450), () {
@@ -51,8 +59,21 @@ class _RoadScreenState extends State<RoadScreen> {
     super.dispose();
   }
 
-  void _open(int level) => Navigator.push(context,
-      MaterialPageRoute(builder: (_) => GameScreen(widget.s, level)));
+  /// Plays [level]; coming back after a win walks the marker on.
+  Future<void> _open(int level) async {
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (_) => GameScreen(widget.s, level)));
+    if (!mounted) return;
+    // Several wins in a row can leave the new stop off screen: bring it in.
+    final st = widget.s.state;
+    if (_marker < st.currentLevel) {
+      _scroll?.animateTo(
+          RoadLayout.offsetFor(st.currentLevel, _count, _viewH),
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut);
+    }
+    _walk();
+  }
 
   Future<void> _jump() async {
     final ctl = TextEditingController();
@@ -78,11 +99,19 @@ class _RoadScreenState extends State<RoadScreen> {
       },
     );
     if (n == null || !mounted || _scroll == null) return;
-    _scroll!.animateTo(
-        RoadLayout.offsetFor(n.clamp(1, _count), _count, _viewH),
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut);
+    final to = n.clamp(1, _count);
+    await _scroll!.animateTo(RoadLayout.offsetFor(to, _count, _viewH),
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    if (!mounted) return;
+    // Pulse the stop it landed on, once.
+    setState(() => _pulse = to);
+    Future.delayed(S.pulse, () {
+      if (mounted && _pulse == to) setState(() => _pulse = null);
+    });
   }
+
+  /// Stop that pulses after Jump to scoop, while it pulses.
+  int? _pulse;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +139,10 @@ class _RoadScreenState extends State<RoadScreen> {
                 builder: (context, _) => ListView.builder(
                   controller: _scroll,
                   reverse: true,
-                  padding: const EdgeInsets.symmetric(vertical: RoadLayout.pad),
+                  // Room below scoop 1 for the Jump chip (bottom is
+                  // below scoop 1: the list is reversed).
+                  padding: const EdgeInsets.only(
+                      top: RoadLayout.pad, bottom: RoadLayout.bottomPad),
                   itemCount: _count,
                   itemBuilder: (context, i) => _Stop(
                     s: widget.s,
@@ -118,6 +150,7 @@ class _RoadScreenState extends State<RoadScreen> {
                     count: _count,
                     width: box.maxWidth,
                     marker: _marker == i + 1,
+                    pulse: _pulse == i + 1,
                     onTap: () => _open(i + 1),
                   ),
                 ),
@@ -153,6 +186,8 @@ class _Stop extends StatelessWidget {
   final int level, count;
   final double width;
   final bool marker;
+  /// Pulse once: Jump to scoop just landed here.
+  final bool pulse;
   final VoidCallback onTap;
   const _Stop(
       {required this.s,
@@ -160,6 +195,7 @@ class _Stop extends StatelessWidget {
       required this.count,
       required this.width,
       required this.marker,
+      this.pulse = false,
       required this.onTap});
 
   static const tile = 58.0;
@@ -195,14 +231,24 @@ class _Stop extends StatelessWidget {
           top: (h - tile) / 2,
           width: tile,
           height: tile,
-          child: LevelTile(
-            id: level,
-            open: st.isUnlocked(level),
-            next: level == st.currentLevel && stars == 0,
-            stars: stars,
-            lid: Jars.isLid(level),
-            spoon: stars == 0 ? null : st.spoons.contains(level),
-            onTap: onTap,
+          child: TweenAnimationBuilder<double>(
+            // A new key restarts the pulse; idle stops sit at t = 1.
+            key: ValueKey(pulse),
+            tween: Tween(begin: pulse ? 0 : 1, end: 1),
+            duration: S.pulse,
+            builder: (context, t, child) => Transform.scale(
+                // Two bumps of +12%.
+                scale: 1 + .12 * sin(t * 2 * pi).abs(),
+                child: child),
+            child: LevelTile(
+              id: level,
+              open: st.isUnlocked(level),
+              next: level == st.currentLevel && stars == 0,
+              stars: stars,
+              lid: Jars.isLid(level),
+              spoon: stars == 0 ? null : st.spoons.contains(level),
+              onTap: onTap,
+            ),
           ),
         ),
         if (Jars.isLid(level))
@@ -210,6 +256,7 @@ class _Stop extends StatelessWidget {
             jar: jar,
             sealed: st.jarsSealed.contains(jar),
             spoons: st.spoonsIn(jar),
+            played: Jars.filled(jar, st.stars) > 0,
             alignEnd: labelLeft,
           ))
         else if (sign != null)
@@ -232,16 +279,22 @@ class _Stop extends StatelessWidget {
   }
 }
 
-/// Jar landmark beside a Lid scoop: "Jar 6 · Cola", sealed or "seal here",
-/// and its Master spoons.
+/// Jar landmark beside a Lid scoop: "Jar 6 · Cola", sealed or "Seal here"
+/// with what sealing pays, and its Master spoons once the jar is played.
 class _JarLabel extends StatelessWidget {
   final int jar, spoons;
   final bool sealed, alignEnd;
+  /// A scoop of this jar has been won: its spoons are worth showing.
+  final bool played;
   const _JarLabel(
       {required this.jar,
       required this.sealed,
       required this.spoons,
+      required this.played,
       required this.alignEnd});
+
+  static const _reward =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: C.text);
 
   @override
   Widget build(BuildContext context) {
@@ -262,18 +315,44 @@ class _JarLabel extends StatelessWidget {
           Text(
               sealed
                   ? (Jars.isGold(jar) ? 'Sealed · gold lid' : 'Sealed')
-                  : 'Seal here · +${Jars.payFor(jar)}',
+                  : 'Seal here',
               style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   color: sealed ? C.newBadge : C.accentText)),
-          Row(mainAxisSize: MainAxisSize.min, children: [
-            SpoonIcon(gold: spoons == Jars.size, size: 12),
-            const SizedBox(width: 4),
-            Text('Spoons $spoons / ${Jars.size}',
-                style: const TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w700, color: C.text2)),
-          ]),
+          // What sealing pays, with the same icons as the reward chips:
+          // the sweets bean and the Extra tube.
+          if (!sealed)
+            Semantics(
+              label: '+${Jars.payFor(jar)} sweets and an Extra tube',
+              // Narrow side of a stop near the middle: shrink rather than
+              // overflow the label.
+              child: ExcludeSemantics(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    const SweetIcon(width: 14),
+                    const SizedBox(width: 3),
+                    Text('+${Jars.payFor(jar)}', style: _reward),
+                    const SizedBox(width: 6),
+                    const Icon(Icons.add_box_outlined, color: C.text, size: 14),
+                    const SizedBox(width: 3),
+                    const Text('Extra tube', style: _reward),
+                  ]),
+                ),
+              ),
+            ),
+          if (played)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                SpoonIcon(gold: spoons == Jars.size, size: 14),
+                const SizedBox(width: 4),
+                Text('Spoons $spoons / ${Jars.size}',
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.w700, color: C.text2)),
+              ]),
+            ),
         ],
       ),
     );
@@ -291,7 +370,7 @@ class _Sign extends StatelessWidget {
         decoration: BoxDecoration(
           color: C.star,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xFFC99A12), width: 2),
+          border: Border.all(color: C.starEdge, width: 2),
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(head.toUpperCase(),

@@ -239,7 +239,10 @@ class Jar extends StatelessWidget {
   final double width;
   /// Pour the beans in when first shown.
   final bool pour;
-  const Jar({super.key, this.tubes, this.width = 180, this.pour = true});
+  /// How long the pour takes; null scales with the number of beans.
+  final Duration? pourTime;
+  const Jar(
+      {super.key, this.tubes, this.width = 180, this.pour = true, this.pourTime});
   @override
   Widget build(BuildContext context) {
     final size = Size(width, width * 1.15);
@@ -248,7 +251,7 @@ class Jar extends StatelessWidget {
     }
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
-      duration: Duration(milliseconds: 500 + 60 * tubes!.length * 4),
+      duration: pourTime ?? Duration(milliseconds: 500 + 60 * tubes!.length * 4),
       builder: (_, t, _) => CustomPaint(size: size, painter: JarPainter(tubes, t)),
     );
   }
@@ -428,13 +431,131 @@ class JarProgress extends StatelessWidget {
   }
 }
 
-/// The Pantry shelf: one small jar per chapter, filled and lidded once
-/// sealed, gold-lidded every 5th jar, outlined for the jar in progress,
-/// and gold-rimmed once all its Master spoons are won.
+/// One shelf jar drawn in [cell] (a square; the lid rises into its top).
+/// [fill] is how full an unsealed jar is (0..1); a sealed jar is full and
+/// lidded. Gold jars (every 5th) get a gold lid and a gold star, outlined
+/// while still to seal, so the bigger prize is visible on the shelf.
+void paintShelfJar(Canvas c, Rect cell,
+    {required Color colour,
+    bool sealed = false,
+    bool gold = false,
+    bool current = false,
+    bool goldRim = false,
+    double fill = 0,
+    bool faint = false}) {
+  final u = cell.width;
+  final x = cell.left, y = cell.top;
+  final body = RRect.fromRectAndRadius(
+      Rect.fromLTWH(x + u * .14, y + u * .32, u * .72, u * .8),
+      Radius.circular(u * .16));
+  final lid = RRect.fromRectAndRadius(
+      Rect.fromLTWH(x + u * .2, y + u * .16, u * .6, u * .18),
+      Radius.circular(u * .06));
+  final a = faint ? .55 : 1.0;
+  c.drawRRect(body, Paint()..color = sealed ? colour : C.panel);
+  if (!sealed && fill > 0) {
+    c.save();
+    c.clipRRect(body);
+    final r = body.outerRect;
+    c.drawRect(Rect.fromLTRB(r.left, r.bottom - r.height * fill.clamp(0, 1), r.right, r.bottom),
+        Paint()..color = colour);
+    c.restore();
+  }
+  c.drawRRect(
+      body,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = current || goldRim ? 2.5 : 1.5
+        ..color = current
+            ? C.accent
+            : (goldRim || gold ? C.starEdge : C.glass).withValues(alpha: a));
+  if (sealed) {
+    c.drawRRect(lid, Paint()..color = gold ? C.star : C.accent);
+    c.drawRRect(
+        lid,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2
+          ..color = gold ? C.starEdge : C.primaryShadow);
+  } else {
+    c.drawRRect(
+        lid,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2
+          ..color = (current ? C.accent : (gold ? C.starEdge : C.glass))
+              .withValues(alpha: a));
+  }
+  if (gold) {
+    final centre = body.outerRect.center;
+    final star = _starPath(centre, u * .2);
+    if (sealed) c.drawPath(star, Paint()..color = C.star);
+    c.drawPath(
+        star,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.2
+          ..strokeJoin = StrokeJoin.round
+          ..color = C.starEdge.withValues(alpha: a));
+  }
+}
+
+Path _starPath(Offset c, double r) {
+  final p = Path();
+  for (var i = 0; i < 10; i++) {
+    final rr = i.isEven ? r : r * .45;
+    final t = -pi / 2 + i * pi / 5;
+    final o = c + Offset(cos(t) * rr, sin(t) * rr);
+    i == 0 ? p.moveTo(o.dx, o.dy) : p.lineTo(o.dx, o.dy);
+  }
+  return p..close();
+}
+
+/// One small jar filling up: the jar in progress on Home's jar chip.
+class MiniJar extends StatelessWidget {
+  final int jar, filled;
+  final bool sealed;
+  final double size;
+  const MiniJar(
+      {super.key,
+      required this.jar,
+      required this.filled,
+      this.sealed = false,
+      this.size = 34});
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(
+      size: Size(size, size * 1.15),
+      painter: _MiniJarPainter(jar, filled, sealed));
+}
+
+class _MiniJarPainter extends CustomPainter {
+  final int jar, filled;
+  final bool sealed;
+  _MiniJarPainter(this.jar, this.filled, this.sealed);
+
+  @override
+  void paint(Canvas c, Size s) => paintShelfJar(c, Offset.zero & Size(s.width, s.width),
+      colour: beanColors[Jars.flavour(jar)]!,
+      sealed: sealed,
+      gold: Jars.isGold(jar),
+      fill: filled / Jars.size);
+
+  @override
+  bool shouldRepaint(_MiniJarPainter o) =>
+      o.jar != jar || o.filled != filled || o.sealed != sealed;
+}
+
+/// The Pantry shelf: one small jar per chapter. Sealed jars are full and
+/// lidded; the jar in progress is outlined and filled to its scoops; gold
+/// jars (every 5th) carry a gold star; a jar with all its Master spoons
+/// gets a gold rim. Jars not reached yet are faint.
 class PantryShelf extends StatelessWidget {
   final int jars, current;
   final Set<int> sealed;
   final Set<int> goldRim;
+  /// Scoops won in the [current] jar.
+  final int filled;
   final double width;
   const PantryShelf(
       {super.key,
@@ -442,6 +563,7 @@ class PantryShelf extends StatelessWidget {
       required this.current,
       required this.sealed,
       this.goldRim = const {},
+      this.filled = 0,
       required this.width});
 
   static const perRow = 10;
@@ -454,16 +576,16 @@ class PantryShelf extends StatelessWidget {
       label: 'Pantry shelf, ${sealed.length} of $jars jars sealed',
       child: CustomPaint(
         size: Size(width, rows * cell * 1.35),
-        painter: _ShelfPainter(jars, current, sealed, goldRim),
+        painter: _ShelfPainter(jars, current, sealed, goldRim, filled),
       ),
     );
   }
 }
 
 class _ShelfPainter extends CustomPainter {
-  final int jars, current;
+  final int jars, current, filled;
   final Set<int> sealed, goldRim;
-  _ShelfPainter(this.jars, this.current, this.sealed, this.goldRim);
+  _ShelfPainter(this.jars, this.current, this.sealed, this.goldRim, this.filled);
 
   @override
   void paint(Canvas c, Size s) {
@@ -481,26 +603,15 @@ class _ShelfPainter extends CustomPainter {
     for (var j = 1; j <= jars; j++) {
       final i = j - 1;
       final x = (i % PantryShelf.perRow) * cell, y = (i ~/ PantryShelf.perRow) * rowH;
-      final body = RRect.fromRectAndRadius(
-          Rect.fromLTWH(x + cell * .14, y + cell * .32, cell * .72, cell * .8),
-          Radius.circular(cell * .16));
       final done = sealed.contains(j);
-      final colour = beanColors[Jars.flavour(j)]!;
-      c.drawRRect(body, Paint()..color = done ? colour : C.panel);
-      c.drawRRect(
-          body,
-          Paint()
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = j == current || goldRim.contains(j) ? 2.5 : 1.5
-            ..color = j == current
-                ? C.accent
-                : (goldRim.contains(j) ? C.star : C.glass));
-      if (done) {
-        final lid = RRect.fromRectAndRadius(
-            Rect.fromLTWH(x + cell * .2, y + cell * .16, cell * .6, cell * .18),
-            Radius.circular(cell * .06));
-        c.drawRRect(lid, Paint()..color = Jars.isGold(j) ? C.star : C.accent);
-      }
+      paintShelfJar(c, Rect.fromLTWH(x, y, cell, cell),
+          colour: beanColors[Jars.flavour(j)]!,
+          sealed: done,
+          gold: Jars.isGold(j),
+          current: j == current && !done,
+          goldRim: goldRim.contains(j),
+          fill: j == current && !done ? filled / Jars.size : 0,
+          faint: !done && j > current);
     }
   }
 
@@ -508,13 +619,39 @@ class _ShelfPainter extends CustomPainter {
   bool shouldRepaint(_ShelfPainter o) =>
       o.jars != jars ||
       o.current != current ||
+      o.filled != filled ||
       o.sealed.length != sealed.length ||
       o.goldRim.length != goldRim.length;
 }
 
+/// Rank badge: the rank number in a raspberry circle.
+class RankDot extends StatelessWidget {
+  final int rank;
+  final double size;
+  const RankDot(this.rank, {super.key, this.size = 30});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: size,
+        height: size,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: C.accent,
+          shape: BoxShape.circle,
+          border: Border.all(color: C.primaryShadow, width: size >= 24 ? 2 : 1.5),
+        ),
+        child: Text('$rank',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: size * .47,
+                height: 1,
+                fontWeight: FontWeight.w900)),
+      );
+}
+
 /// Confectioner rank: badge with the rank number, title and a thin XP bar
-/// towards the next rank. [gain] shows "+N XP" from the last win instead of
-/// the XP count.
+/// towards the next rank, with how much XP the next title needs. [gain]
+/// shows "+N XP" from the last win instead.
 class RankBar extends StatelessWidget {
   final int xp;
   final int? gain;
@@ -527,24 +664,12 @@ class RankBar extends StatelessWidget {
     final from = Rank.threshold(rank), to = Rank.threshold(rank + 1);
     final right = gain != null
         ? '+$gain XP'
-        : (top ? 'Top rank' : '$xp / $to XP');
+        : (top ? 'Top rank' : '${to - xp} XP to ${Rank.title(rank + 1)}');
     return Semantics(
       label: 'Rank $rank, ${Rank.title(rank)}, $right',
       child: ExcludeSemantics(
         child: Row(children: [
-          Container(
-            width: 30,
-            height: 30,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: C.accent,
-              shape: BoxShape.circle,
-              border: Border.all(color: C.primaryShadow, width: 2),
-            ),
-            child: Text('$rank',
-                style: const TextStyle(
-                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900)),
-          ),
+          RankDot(rank),
           const SizedBox(width: 8),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -579,15 +704,46 @@ class RankBar extends StatelessWidget {
   }
 }
 
-/// Master spoon mark: gold once won, an outline while still to win.
+/// A reward as a small chip: icon and "+50 jar sealed". [gold] edges it in
+/// gold (gold jar).
+class RewardChip extends StatelessWidget {
+  final Widget icon;
+  final String text;
+  final bool gold;
+  const RewardChip({super.key, required this.icon, required this.text, this.gold = false});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.fromLTRB(6, 3, 10, 3),
+        decoration: BoxDecoration(
+          color: C.panel,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: gold ? C.star : C.border, width: 2),
+        ),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          SizedBox(height: 18, child: Center(child: icon)),
+          const SizedBox(width: 4),
+          Text(text,
+              style: const TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w800, color: C.text)),
+        ]),
+      );
+}
+
+/// Icon of the Extra tube booster, for reward chips.
+const extraTubeIcon = Icon(Icons.add_box_outlined, color: C.text, size: 17);
+
+/// Master spoon mark: gold once won, a soft "ghost" spoon while still to
+/// win. Drawn tilted, like a spoon laid down, so it never reads as a pin
+/// or a key.
 class SpoonIcon extends StatelessWidget {
   final bool gold;
   final double size;
-  const SpoonIcon({super.key, required this.gold, this.size = 14});
+  const SpoonIcon({super.key, required this.gold, this.size = 16});
 
   @override
-  Widget build(BuildContext context) => CustomPaint(
-      size: Size(size * .55, size), painter: _SpoonPainter(gold));
+  Widget build(BuildContext context) =>
+      CustomPaint(size: Size(size * .85, size), painter: _SpoonPainter(gold));
 }
 
 class _SpoonPainter extends CustomPainter {
@@ -596,24 +752,46 @@ class _SpoonPainter extends CustomPainter {
 
   @override
   void paint(Canvas c, Size s) {
-    final w = s.width, h = s.height;
-    final bowl = Rect.fromLTWH(0, 0, w, h * .45);
-    final handle = RRect.fromRectAndRadius(
-        Rect.fromLTWH(w * .36, h * .4, w * .28, h * .6), Radius.circular(w * .14));
+    // A spoon of length l along the box's diagonal: a big oval bowl taller
+    // than wide and a handle that widens a little towards its end (no
+    // round knob: that reads as a key).
+    final l = s.height * .9;
+    final handle = Path()
+      ..moveTo(-l * .05, -l * .05)
+      ..lineTo(l * .05, -l * .05)
+      ..lineTo(l * .09, l * .44)
+      ..quadraticBezierTo(0, l * .52, -l * .09, l * .44)
+      ..close();
+    final shape = Path.combine(
+        PathOperation.union,
+        Path()
+          ..addOval(Rect.fromCenter(
+              center: Offset(0, -l * .24), width: l * .46, height: l * .56)),
+        handle);
+    c.save();
+    c.translate(s.width / 2, s.height / 2);
+    c.rotate(pi / 5);
     if (gold) {
-      final p = Paint()..color = C.star;
-      c.drawOval(bowl, p);
-      c.drawRRect(handle, p);
-      c.drawOval(bowl.deflate(w * .18).shift(Offset(-w * .08, -h * .04)),
-          Paint()..color = const Color(0x99FFFFFF));
+      c.drawPath(shape, Paint()..color = C.star);
+      c.drawPath(
+          shape,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = max(1.0, l * .06)
+            ..color = C.starEdge);
+      c.drawOval(
+          Rect.fromCenter(center: Offset(-l * .06, -l * .3), width: l * .12, height: l * .2),
+          Paint()..color = const Color(0xAAFFFFFF));
     } else {
-      final p = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = max(1.2, w * .14)
-        ..color = C.text2.withValues(alpha: .7);
-      c.drawOval(bowl.deflate(p.strokeWidth / 2), p);
-      c.drawRRect(handle.deflate(p.strokeWidth / 2), p);
+      c.drawPath(shape, Paint()..color = C.lockedTile);
+      c.drawPath(
+          shape,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = max(1.2, l * .07)
+            ..color = C.text2.withValues(alpha: .6));
     }
+    c.restore();
   }
 
   @override

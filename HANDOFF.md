@@ -114,11 +114,16 @@ and P7, built in that order (one commit each). Rules:
   all 10 in a jar pay +50 and gold-rim the jar on the shelf.
 - **Candy Road** (P7, `lib/ui/road_screen.dart`): the Levels screen.
   Signposts sit 10 stops before each twist (`RoadLayout.signs`).
+- **Home and Pantry** (UI review, option J2): a new save sees only the logo,
+  star and sweets counts, Play, Levels, Settings and Remove ads. From the first win a jar chip shows the current
+  jar; tapping it (or the rank badge, from rank 2) opens the Pantry sheet
+  with rank, jar goal and the shelf. Result card shows each extra reward as
+  a chip plus a total.
 
 New save keys (defaults keep old saves working): `jarsSealed` (old saves:
 every jar whose Lid scoop is won, no back-pay), `boosterStock`,
 `rankPaid` (old saves: their current rank, no back-pay), `spoons`
-(starts empty), `roadSeen`.
+(starts empty), `roadSeen`, `jarChipSeen` (one-time chip explainer).
 
 `test/result_layout_test.dart` renders the busiest result card at 360×640
 with real Roboto and fails on overflow. Run it after changing that card.

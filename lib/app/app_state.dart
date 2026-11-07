@@ -37,6 +37,8 @@ class AppState extends ChangeNotifier implements Wallet {
   /// Candy Road stop the marker was last drawn at (`roadSeen`), so it
   /// walks to a new stop once. Starts at the current scoop.
   int roadSeen = 1;
+  /// Home's jar chip has shown its one-line explainer (`jarChipSeen`).
+  bool jarChipSeen = false;
 
   Future<void> load() async {
     _p = await SharedPreferences.getInstance();
@@ -66,6 +68,7 @@ class AppState extends ChangeNotifier implements Wallet {
     spoons = {for (final s in _p.getStringList('spoons') ?? <String>[]) int.parse(s)};
     rankPaid = _p.getInt('rankPaid') ?? rank;
     roadSeen = _p.getInt('roadSeen') ?? currentLevel;
+    jarChipSeen = _p.getBool('jarChipSeen') ?? false;
   }
 
   Future<void> save() async {
@@ -88,6 +91,7 @@ class AppState extends ChangeNotifier implements Wallet {
         [for (final e in boosterStock.entries) '${e.key.name}:${e.value}']);
     await _p.setInt('rankPaid', rankPaid);
     await _p.setInt('roadSeen', roadSeen);
+    await _p.setBool('jarChipSeen', jarChipSeen);
     await _p.setStringList('spoons', [for (final s in spoons.toList()..sort()) '$s']);
   }
 

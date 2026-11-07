@@ -35,7 +35,7 @@ class Spoons {
       required bool had}) {
     if (earned) return 'Gold spoon · +$pay sweets';
     if (stars < 3 || had) return null;
-    if (best == 0) return 'Replay at par with no help for a gold spoon';
+    if (best == 0) return 'Next time, win ★★★ with no help to earn a gold spoon';
     return helped ? 'A gold spoon needs no Undo, Peek or Extra tube' : null;
   }
 }

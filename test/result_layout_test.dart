@@ -7,9 +7,11 @@ import 'package:jelly_beans/ads/ad_service.dart';
 import 'package:jelly_beans/app/app_state.dart';
 import 'package:jelly_beans/app/rewards.dart';
 import 'package:jelly_beans/app/theme.dart';
+import 'package:jelly_beans/levels/level.dart';
 import 'package:jelly_beans/logic/board.dart';
 import 'package:jelly_beans/ui/game_screen.dart';
 import 'package:jelly_beans/ui/screens.dart';
+import 'package:jelly_beans/ui/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Roboto from the Flutter SDK's material fonts, found from FLUTTER_ROOT or
@@ -97,8 +99,69 @@ void main() {
     await t.pumpAndSettle();
     expect(find.text('Next scoop'), findsOneWidget);
     expect(find.text('Retry for ★★★'), findsOneWidget);
+    // Every reward as a chip, and the total of all of them.
+    for (final chip in ['+10 Lid scoop', '+50 jar sealed', 'Extra tube', '+25 rank 3']) {
+      expect(find.text(chip), findsOneWidget, reason: chip);
+    }
+    expect(find.text('+20 sweets'), findsOneWidget);
+    expect(find.text('Total +105 sweets'), findsOneWidget);
+    // The chips must not squeeze the jar picture to nothing.
+    expect(t.getRect(find.byType(Jar).first).height, greaterThan(60));
     expect(t.takeException(), isNull);
     // Let the celebration timers run out.
     await t.pump(S.sealShown * 2);
+  });
+  /// 200 placeholder scoops: Home and the Pantry only count them.
+  final levels = [
+    for (var i = 1; i <= 200; i++)
+      Level(id: i, capacity: 4, par: 1, tubes: const [])
+  ];
+
+  Future<AppState> homeOn(WidgetTester t, Map<String, Object> save) async {
+    SharedPreferences.setMockInitialValues(save);
+    final st = AppState();
+    await st.load();
+    t.view.physicalSize = const Size(360, 640);
+    t.view.devicePixelRatio = 1;
+    addTearDown(t.view.reset);
+    await t.pumpWidget(MaterialApp(
+        theme: buildTheme(), home: HomeScreen(Services(st, levels))));
+    await t.pump(const Duration(seconds: 3));
+    return st;
+  }
+
+  // J2: a brand-new save shows only the logo, Play, Levels and Settings.
+  testWidgets('Home on a new save has no jar chip or rank', (t) async {
+    if (!roboto) return markTestSkipped('Roboto not found');
+    await homeOn(t, {});
+    expect(find.byType(JarChip), findsNothing);
+    expect(find.byType(RankBar), findsNothing);
+    expect(find.text('Play · Scoop 1'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
+    expect(t.takeException(), isNull);
+  });
+
+  testWidgets('jar chip explains jars once, then opens the Pantry', (t) async {
+    if (!roboto) return markTestSkipped('Roboto not found');
+    final st = await homeOn(t, {
+      'currentLevel': 58,
+      'stars': [for (var l = 1; l <= 57; l++) '$l:${1 + l % 3}'],
+      'jarsSealed': ['1', '2', '3', '4', '5'],
+      'spoons': ['3', '7'],
+    });
+    expect(find.text('Win 10 scoops to fill and seal a jar'), findsOneWidget);
+    // A rank badge from rank 2 (this save is well past it).
+    expect(find.bySemanticsLabel(RegExp(r'^Rank \d+')), findsOneWidget);
+    await t.tap(find.byType(JarChip));
+    await t.pumpAndSettle();
+    expect(st.jarChipSeen, isTrue);
+    expect(find.text('Pantry'), findsOneWidget);
+    expect(find.byType(PantryShelf), findsOneWidget);
+    expect(find.text('Win Lid scoop 60 to seal it · 2 to go'), findsOneWidget);
+    expect(t.takeException(), isNull);
+    // Closed, the chip now shows the reward instead of the explainer.
+    Navigator.of(t.element(find.text('Pantry'))).pop();
+    await t.pumpAndSettle();
+    expect(find.text('Seal it at Lid scoop 60 · +50'), findsOneWidget);
   });
 }
