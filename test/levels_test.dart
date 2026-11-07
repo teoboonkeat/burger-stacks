@@ -36,6 +36,26 @@ void main() {
     }
   });
 
+  test('P6a twist schedule', () {
+    bool lock2(Level l) => l.tubes.any((t) => (t.unlockAt ?? 0) >= 2);
+    bool tall(Level l) => l.capacity > 4;
+    bool locked(Level l) => l.tubes.any((t) => t.unlockAt != null);
+    // Nothing arrives early.
+    expect(levels.take(40).where(lock2), isEmpty);
+    expect(levels.take(60).where(tall), isEmpty);
+    // Each twist opens with two boards, then mixes into later ones.
+    expect(lock2(levels[40]) && lock2(levels[41]), isTrue);
+    expect(tall(levels[60]) && tall(levels[61]), isTrue);
+    expect(lock2(levels[140]) && tall(levels[140]), isTrue);
+    expect(lock2(levels[141]) && tall(levels[141]), isTrue);
+    expect(levels.skip(42).where(lock2).length, greaterThanOrEqualTo(10));
+    expect(levels.skip(62).where(tall).length, greaterThanOrEqualTo(10));
+    // Big Kitchen opens on three breathers with no lock.
+    for (final l in levels.sublist(100, 103)) {
+      expect(locked(l), isFalse, reason: 'level ${l.id}');
+    }
+  });
+
   group('level 28 soft dead end (play-test s09)', () {
     // The tester's line: afterwards only a lone bean can shuttle between
     // two tubes, so the level can't be won although moves remain.

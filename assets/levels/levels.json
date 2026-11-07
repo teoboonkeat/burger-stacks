@@ -1990,51 +1990,47 @@
  {
   "id": 41,
   "capacity": 4,
-  "par": 16,
-  "seed": 41000,
+  "par": 10,
+  "seed": 41510,
+  "hint": "A double lock opens once you seal two tubes.",
   "tubes": [
    {
     "stack": [
-     "lime",
-     "?peach",
-     "?lime",
-     "grape"
+     "grape",
+     "grape",
+     "peach",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "cola",
+     "?berry",
+     "berry",
+     "grape",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
      "lemon",
-     "?cola",
-     "lime"
+     "lemon",
+     "berry",
+     "peach"
     ]
    },
    {
     "stack": [
-     "cola",
      "grape",
-     "lime",
-     "lemon"
+     "berry",
+     "lemon",
+     "peach"
     ]
    },
    {
-    "stack": [
-     "?peach",
-     "?peach",
-     "grape",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
-     "cola",
-     "?peach",
-     "grape",
-     "lemon"
-    ]
-   },
-   {
-    "stack": []
+    "stack": [],
+    "locked": {
+     "completeCount": 2
+    }
    },
    {
     "stack": []
@@ -2044,59 +2040,46 @@
  {
   "id": 42,
   "capacity": 4,
-  "par": 16,
-  "seed": 42000,
+  "par": 9,
+  "seed": 42502,
   "tubes": [
    {
     "stack": [
      "lemon",
-     "lemon",
-     "cola",
-     "lime"
+     "peach",
+     "peach",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "grape",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
      "?peach",
+     "lemon",
      "grape",
-     "berry",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "?lemon",
+     "lemon",
+     "peach",
      "grape"
     ]
    },
    {
-    "stack": [
-     "?lime",
-     "cola",
-     "cola",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
-     "grape",
-     "lime",
-     "peach",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "berry",
-     "berry",
-     "grape",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "lemon",
-     "berry",
-     "peach"
-    ]
-   },
-   {
-    "stack": []
+    "stack": [],
+    "locked": {
+     "completeCount": 2
+    }
    },
    {
     "stack": []
@@ -3150,55 +3133,49 @@
  },
  {
   "id": 61,
-  "capacity": 4,
-  "par": 15,
-  "seed": 61000,
+  "capacity": 5,
+  "par": 14,
+  "seed": 61500,
+  "hint": "Tall tubes hold five beans.",
   "tubes": [
    {
     "stack": [
-     "?lemon",
-     "cola",
+     "?peach",
+     "grape",
      "peach",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
-     "peach",
-     "lime",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "berry",
-     "?cola",
-     "lemon",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
-     "lemon",
-     "lime",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "lemon",
      "berry",
      "lime"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "lime",
+     "lime",
+     "grape",
+     "grape",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "berry",
+     "lime",
+     "peach",
+     "peach",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "?grape",
+     "peach",
+     "berry",
+     "berry",
+     "grape"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -3207,55 +3184,48 @@
  },
  {
   "id": 62,
-  "capacity": 4,
-  "par": 13,
-  "seed": 62000,
+  "capacity": 5,
+  "par": 16,
+  "seed": 62500,
   "tubes": [
    {
     "stack": [
-     "?cola",
-     "cola",
      "lemon",
+     "lemon",
+     "peach",
+     "lime",
      "lemon"
     ]
    },
    {
     "stack": [
-     "?cola",
-     "?lemon",
      "?lime",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "peach",
-     "cola",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
      "peach",
      "lime",
-     "lemon",
-     "grape"
+     "peach",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?grape",
-     "grape",
      "peach",
-     "peach"
+     "cola",
+     "lime",
+     "cola",
+     "cola"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "lime",
+     "cola",
+     "lemon",
+     "peach",
+     "lemon"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -3445,63 +3415,57 @@
  },
  {
   "id": 66,
-  "capacity": 4,
-  "par": 17,
-  "seed": 66001,
+  "capacity": 5,
+  "par": 18,
+  "seed": 66510,
   "tubes": [
    {
     "stack": [
-     "?grape",
-     "?lime",
      "berry",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
      "lemon",
      "lemon",
      "grape",
-     "peach"
+     "lime"
     ]
    },
    {
     "stack": [
      "?berry",
-     "?berry",
-     "cola",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "grape",
      "lemon",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "?peach",
-     "cola",
-     "lemon",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "cola",
      "peach",
      "lime",
      "lime"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "?berry",
+     "grape",
+     "lemon",
+     "lemon",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "peach",
+     "berry",
+     "grape",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "berry",
+     "peach",
+     "peach",
+     "lime",
+     "lime"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -3908,7 +3872,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -3918,48 +3882,53 @@
  },
  {
   "id": 74,
-  "capacity": 4,
-  "par": 16,
-  "seed": 74001,
+  "capacity": 5,
+  "par": 14,
+  "seed": 74500,
   "tubes": [
    {
     "stack": [
-     "?grape",
-     "?cola",
+     "?lime",
+     "lime",
      "grape",
+     "lemon",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "lemon",
+     "?lime",
+     "cola",
+     "cola",
      "cola"
     ]
    },
    {
     "stack": [
-     "peach",
-     "grape",
+     "berry",
+     "?grape",
      "lemon",
+     "grape",
      "grape"
     ]
    },
    {
     "stack": [
+     "grape",
+     "lemon",
      "cola",
      "lime",
-     "lemon",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
-     "lime",
-     "peach",
      "lime"
     ]
    },
    {
     "stack": [
-     "?lime",
-     "lemon",
-     "lemon",
-     "cola"
+     "?cola",
+     "berry",
+     "berry",
+     "berry",
+     "lemon"
     ]
    },
    {
@@ -4142,48 +4111,53 @@
  },
  {
   "id": 78,
-  "capacity": 4,
-  "par": 15,
-  "seed": 78000,
+  "capacity": 5,
+  "par": 18,
+  "seed": 78501,
   "tubes": [
    {
     "stack": [
-     "lemon",
-     "?lime",
+     "cola",
+     "peach",
      "grape",
-     "grape"
+     "berry",
+     "cola"
+    ]
+   },
+   {
+    "stack": [
+     "?peach",
+     "cola",
+     "grape",
+     "grape",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "berry",
+     "lime",
+     "lime",
+     "berry",
+     "berry"
     ]
    },
    {
     "stack": [
      "?grape",
      "berry",
-     "lemon",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "lemon",
-     "lime",
-     "cola",
+     "peach",
+     "peach",
      "cola"
     ]
    },
    {
     "stack": [
-     "?lime",
      "cola",
-     "berry",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "?berry",
      "grape",
-     "cola",
-     "lemon"
+     "lime",
+     "peach",
+     "lime"
     ]
    },
    {
@@ -4555,38 +4529,15 @@
  },
  {
   "id": 85,
-  "capacity": 4,
-  "par": 11,
-  "seed": 85001,
+  "capacity": 5,
+  "par": 20,
+  "seed": 85502,
   "tubes": [
    {
     "stack": [
-     "?lime",
-     "lime",
-     "peach",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
+     "cola",
      "?grape",
-     "peach",
-     "grape",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
      "cola",
-     "?cola",
-     "cola",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "berry",
-     "berry",
      "cola",
      "berry"
     ]
@@ -4594,9 +4545,37 @@
    {
     "stack": [
      "?berry",
+     "lime",
+     "berry",
+     "lime",
+     "lemon"
+    ]
+   },
+   {
+    "stack": [
+     "?lime",
      "grape",
-     "peach",
-     "lime"
+     "cola",
+     "lemon",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
+     "berry",
+     "lime",
+     "cola",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "lemon",
+     "grape",
+     "lemon",
+     "lemon"
     ]
    },
    {
@@ -5019,48 +4998,53 @@
  },
  {
   "id": 93,
-  "capacity": 4,
-  "par": 13,
-  "seed": 93000,
+  "capacity": 5,
+  "par": 18,
+  "seed": 93500,
   "tubes": [
    {
     "stack": [
-     "?lemon",
+     "?peach",
+     "?peach",
+     "cola",
      "peach",
-     "lime",
      "lemon"
     ]
    },
    {
     "stack": [
-     "grape",
+     "?grape",
+     "cola",
+     "lemon",
+     "cola",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
      "peach",
+     "?peach",
+     "lemon",
      "grape",
      "grape"
     ]
    },
    {
     "stack": [
-     "?cola",
-     "?lemon",
+     "lime",
+     "lime",
      "grape",
-     "cola"
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
+     "lime",
+     "grape",
      "cola",
-     "cola",
-     "peach",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "?lime",
-     "lemon",
-     "lime"
+     "lime",
+     "lemon"
     ]
    },
    {
@@ -5251,48 +5235,53 @@
  },
  {
   "id": 97,
-  "capacity": 4,
-  "par": 17,
-  "seed": 97000,
+  "capacity": 5,
+  "par": 20,
+  "seed": 97502,
   "tubes": [
    {
     "stack": [
      "lime",
-     "?peach",
-     "lime",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "berry",
-     "?peach",
+     "?lime",
+     "cola",
      "berry",
      "lime"
     ]
    },
    {
     "stack": [
+     "berry",
      "peach",
-     "?lemon",
+     "cola",
      "grape",
-     "lime"
+     "berry"
     ]
    },
    {
     "stack": [
-     "lemon",
      "peach",
-     "berry",
-     "grape"
+     "grape",
+     "cola",
+     "peach",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "?grape",
+     "lime",
+     "cola",
+     "grape",
+     "berry"
     ]
    },
    {
     "stack": [
      "?berry",
-     "lemon",
-     "grape",
-     "lemon"
+     "cola",
+     "peach",
+     "lime",
+     "grape"
     ]
    },
    {
@@ -5414,7 +5403,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -5539,10 +5528,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -5604,10 +5590,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -5669,10 +5652,7 @@
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -5873,63 +5853,66 @@
  },
  {
   "id": 107,
-  "capacity": 4,
-  "par": 16,
-  "seed": 158000,
+  "capacity": 5,
+  "par": 23,
+  "seed": 107500,
   "tubes": [
    {
     "stack": [
+     "?cola",
+     "?peach",
+     "cola",
+     "peach",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "?lemon",
+     "?lemon",
+     "grape",
      "lime",
-     "?grape",
-     "berry",
      "berry"
     ]
    },
    {
     "stack": [
+     "?berry",
      "cola",
-     "?peach",
-     "lemon",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
      "berry",
-     "lime",
-     "lemon"
+     "berry",
+     "grape"
     ]
    },
    {
     "stack": [
-     "?grape",
-     "?lime",
      "peach",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
-     "?peach",
-     "cola",
-     "cola",
+     "peach",
+     "lemon",
+     "berry",
      "cola"
     ]
    },
    {
     "stack": [
-     "berry",
-     "?grape",
+     "lemon",
+     "lime",
+     "cola",
+     "lime",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
      "grape",
+     "peach",
+     "lime",
      "lemon"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6055,7 +6038,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -6185,7 +6168,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -6315,7 +6298,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -6387,63 +6370,66 @@
  },
  {
   "id": 115,
-  "capacity": 4,
-  "par": 17,
-  "seed": 138001,
+  "capacity": 5,
+  "par": 24,
+  "seed": 115500,
   "tubes": [
    {
     "stack": [
+     "?peach",
+     "?grape",
+     "lemon",
+     "berry",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "cola",
+     "?lime",
+     "grape",
      "peach",
-     "lemon",
-     "lemon",
      "grape"
     ]
    },
    {
     "stack": [
-     "lemon",
-     "?berry",
      "?lemon",
+     "lemon",
+     "berry",
+     "peach",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "?peach",
+     "lemon",
+     "cola",
+     "peach",
      "cola"
     ]
    },
    {
     "stack": [
-     "?peach",
      "berry",
-     "?peach",
-     "lime"
+     "cola",
+     "berry",
+     "lime",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "?lime",
-     "berry",
-     "peach",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
      "?grape",
-     "grape",
-     "grape"
+     "berry",
+     "lime",
+     "lime",
+     "cola"
     ]
    },
    {
-    "stack": [
-     "?lime",
-     "cola",
-     "cola",
-     "lime"
-    ]
-   },
-   {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -6507,7 +6493,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -6966,63 +6952,66 @@
  },
  {
   "id": 124,
-  "capacity": 4,
-  "par": 17,
-  "seed": 180000,
+  "capacity": 5,
+  "par": 19,
+  "seed": 124501,
   "tubes": [
    {
     "stack": [
-     "?cola",
-     "?cola",
-     "peach",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "lemon",
-     "cola",
-     "?grape",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "lime",
-     "grape",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "cola",
-     "?grape",
-     "peach",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
      "?berry",
-     "lemon",
-     "lemon"
+     "?lime",
+     "cola",
+     "lime",
+     "lime"
     ]
    },
    {
     "stack": [
+     "peach",
+     "?peach",
+     "cola",
+     "cola",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
      "?grape",
+     "peach",
+     "berry",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "?lemon",
+     "grape",
+     "berry",
+     "peach",
+     "cola"
+    ]
+   },
+   {
+    "stack": [
+     "lemon",
+     "lemon",
+     "lemon",
+     "grape",
+     "cola"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
      "lemon",
      "berry",
-     "peach"
+     "peach",
+     "grape"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -7213,7 +7202,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -7545,55 +7534,61 @@
  },
  {
   "id": 133,
-  "capacity": 4,
-  "par": 17,
-  "seed": 146000,
+  "capacity": 5,
+  "par": 23,
+  "seed": 133500,
   "tubes": [
    {
     "stack": [
+     "?lemon",
      "grape",
      "lime",
-     "?peach",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "?lemon",
-     "?lemon",
-     "grape",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
-     "?berry",
-     "peach",
+     "cola",
      "peach"
     ]
    },
    {
     "stack": [
      "berry",
-     "berry",
+     "?peach",
+     "grape",
      "lime",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "cola",
+     "peach",
+     "lemon",
+     "lemon",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "?lime",
+     "lime",
+     "peach",
+     "cola",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
+     "lemon",
+     "grape",
+     "lemon",
      "cola"
     ]
    },
    {
     "stack": [
      "?cola",
-     "?peach",
-     "lime",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
      "grape",
-     "lemon",
-     "cola",
+     "berry",
+     "berry",
      "grape"
     ]
    },
@@ -7916,7 +7911,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -8056,60 +8051,61 @@
  },
  {
   "id": 141,
-  "capacity": 4,
-  "par": 20,
-  "seed": 140000,
+  "capacity": 5,
+  "par": 19,
+  "seed": 141622,
+  "hint": "Tall tubes and a double lock, together.",
   "tubes": [
    {
     "stack": [
-     "berry",
-     "lime",
-     "?cola",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "cola",
+     "?lime",
      "lemon",
-     "lemon",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
      "peach",
-     "?cola",
-     "?lime",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "berry",
-     "?lime",
-     "?lime",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "?berry",
      "grape",
-     "lemon",
-     "grape"
+     "lime"
     ]
    },
    {
     "stack": [
      "?grape",
-     "?peach",
      "lemon",
-     "grape"
+     "grape",
+     "lime",
+     "berry"
     ]
    },
    {
-    "stack": []
+    "stack": [
+     "peach",
+     "peach",
+     "berry",
+     "peach",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "lime",
+     "berry",
+     "lemon",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
+     "grape",
+     "lemon",
+     "lemon",
+     "berry"
+    ]
+   },
+   {
+    "stack": [],
+    "locked": {
+     "completeCount": 2
+    }
    },
    {
     "stack": []
@@ -8118,62 +8114,59 @@
  },
  {
   "id": 142,
-  "capacity": 4,
-  "par": 18,
-  "seed": 139001,
+  "capacity": 5,
+  "par": 20,
+  "seed": 142520,
   "tubes": [
-   {
-    "stack": [
-     "?lime",
-     "peach",
-     "lemon",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "?berry",
-     "?cola",
-     "lime",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
-     "peach",
-     "?lemon",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "lime",
-     "lime",
-     "grape",
-     "cola"
-    ]
-   },
    {
     "stack": [
      "?peach",
      "?lemon",
-     "cola",
+     "berry",
+     "grape",
      "berry"
     ]
    },
    {
     "stack": [
      "grape",
-     "?grape",
+     "lemon",
+     "peach",
+     "lime",
+     "lemon"
+    ]
+   },
+   {
+    "stack": [
+     "?lime",
+     "peach",
+     "grape",
+     "lime",
+     "berry"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "berry",
+     "lime",
      "lemon",
      "berry"
+    ]
+   },
+   {
+    "stack": [
+     "lemon",
+     "lime",
+     "grape",
+     "peach",
+     "peach"
     ]
    },
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -8300,7 +8293,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -8765,63 +8758,66 @@
  },
  {
   "id": 152,
-  "capacity": 4,
-  "par": 18,
-  "seed": 169003,
+  "capacity": 5,
+  "par": 26,
+  "seed": 152501,
   "tubes": [
    {
     "stack": [
-     "peach",
      "?berry",
-     "?lime",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
-     "lemon",
      "lemon",
      "berry",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
-     "?grape",
-     "cola",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
-     "?berry",
-     "lime",
-     "lemon",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "?grape",
      "grape",
-     "lime",
      "peach"
     ]
    },
    {
     "stack": [
-     "?peach",
-     "?cola",
      "lime",
+     "?lemon",
+     "grape",
+     "lemon",
      "cola"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "lime",
+     "?peach",
+     "berry",
+     "berry",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "?cola",
+     "?peach",
+     "grape",
+     "peach",
+     "cola"
+    ]
+   },
+   {
+    "stack": [
+     "lime",
+     "lemon",
+     "berry",
+     "cola",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "lime",
+     "peach",
+     "lemon",
+     "cola"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -9087,62 +9083,68 @@
  },
  {
   "id": 157,
-  "capacity": 4,
-  "par": 19,
-  "seed": 125000,
+  "capacity": 5,
+  "par": 22,
+  "seed": 157656,
   "tubes": [
    {
     "stack": [
      "?grape",
      "cola",
-     "?peach",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "cola",
-     "lemon",
-     "?cola",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "peach",
-     "?lime",
      "lime",
+     "peach",
+     "lemon"
+    ]
+   },
+   {
+    "stack": [
+     "?lime",
+     "grape",
+     "lime",
+     "berry",
      "berry"
     ]
    },
    {
     "stack": [
-     "?peach",
-     "?grape",
-     "berry",
-     "grape"
+     "cola",
+     "grape",
+     "grape",
+     "lemon",
+     "cola"
     ]
    },
    {
     "stack": [
      "berry",
+     "?berry",
+     "peach",
+     "grape",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "?peach",
+     "lime",
+     "lemon",
+     "lime",
+     "lemon"
+    ]
+   },
+   {
+    "stack": [
+     "?peach",
      "cola",
      "berry",
-     "lime"
-    ]
-   },
-   {
-    "stack": [
-     "lemon",
-     "?lemon",
-     "grape",
+     "cola",
      "lemon"
     ]
    },
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -9272,7 +9274,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -9402,7 +9404,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -9669,56 +9671,62 @@
  },
  {
   "id": 166,
-  "capacity": 4,
-  "par": 19,
-  "seed": 156000,
+  "capacity": 5,
+  "par": 25,
+  "seed": 166500,
   "tubes": [
    {
     "stack": [
-     "berry",
-     "?lemon",
+     "?berry",
+     "?lime",
      "grape",
-     "grape"
+     "grape",
+     "cola"
     ]
    },
    {
     "stack": [
-     "?lemon",
-     "peach",
      "cola",
+     "berry",
+     "grape",
+     "peach",
      "berry"
     ]
    },
    {
     "stack": [
      "peach",
-     "?berry",
      "lime",
+     "lemon",
+     "berry",
      "lemon"
     ]
    },
    {
     "stack": [
-     "?peach",
      "cola",
+     "?lemon",
+     "peach",
+     "berry",
+     "peach"
+    ]
+   },
+   {
+    "stack": [
+     "?peach",
      "lemon",
+     "cola",
+     "lime",
      "lime"
     ]
    },
    {
     "stack": [
-     "lime",
+     "?cola",
      "grape",
      "lime",
-     "cola"
-    ]
-   },
-   {
-    "stack": [
-     "?berry",
-     "?peach",
-     "cola",
-     "grape"
+     "grape",
+     "lemon"
     ]
    },
    {
@@ -9786,7 +9794,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -10118,63 +10126,66 @@
  },
  {
   "id": 173,
-  "capacity": 4,
-  "par": 19,
-  "seed": 173000,
+  "capacity": 5,
+  "par": 25,
+  "seed": 173504,
   "tubes": [
    {
     "stack": [
-     "?berry",
-     "lemon",
+     "lime",
+     "?lemon",
      "grape",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
-     "lemon",
-     "berry",
-     "berry"
-    ]
-   },
-   {
-    "stack": [
      "peach",
-     "?grape",
-     "cola",
      "grape"
     ]
    },
    {
     "stack": [
-     "lime",
-     "?cola",
+     "?grape",
+     "?lime",
+     "berry",
      "peach",
-     "lemon"
+     "cola"
     ]
    },
    {
     "stack": [
      "?lime",
-     "berry",
-     "grape",
-     "peach"
+     "peach",
+     "cola",
+     "cola",
+     "lemon"
     ]
    },
    {
     "stack": [
-     "lime",
-     "lime",
-     "lemon",
-     "cola"
+     "?grape",
+     "berry",
+     "peach",
+     "peach",
+     "berry"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "lemon",
+     "?grape",
+     "berry",
+     "lemon",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "cola",
+     "lemon",
+     "cola",
+     "berry",
+     "lime"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -10300,7 +10311,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -10365,7 +10376,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -10557,7 +10568,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -10814,7 +10825,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {
@@ -10824,63 +10835,66 @@
  },
  {
   "id": 184,
-  "capacity": 4,
-  "par": 20,
-  "seed": 134003,
+  "capacity": 5,
+  "par": 23,
+  "seed": 184508,
   "tubes": [
    {
     "stack": [
+     "?lime",
+     "?berry",
+     "cola",
      "lime",
-     "peach",
-     "grape",
-     "berry"
+     "grape"
     ]
    },
    {
     "stack": [
-     "?lime",
+     "lime",
+     "?lemon",
      "lemon",
      "berry",
-     "cola"
+     "lime"
     ]
    },
    {
     "stack": [
-     "peach",
-     "berry",
      "cola",
+     "?cola",
+     "grape",
+     "peach",
+     "grape"
+    ]
+   },
+   {
+    "stack": [
+     "?grape",
+     "peach",
+     "lime",
+     "peach",
      "peach"
     ]
    },
    {
     "stack": [
-     "?lemon",
-     "lime",
-     "berry",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
-     "?lime",
-     "cola",
-     "grape",
-     "lemon"
-    ]
-   },
-   {
-    "stack": [
-     "?cola",
      "peach",
      "lemon",
-     "grape"
+     "berry",
+     "lemon",
+     "cola"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": [
+     "grape",
+     "cola",
+     "lemon",
+     "berry",
+     "berry"
+    ]
+   },
+   {
+    "stack": []
    },
    {
     "stack": []
@@ -11338,63 +11352,66 @@
  },
  {
   "id": 192,
-  "capacity": 4,
-  "par": 21,
-  "seed": 106001,
+  "capacity": 5,
+  "par": 26,
+  "seed": 192517,
   "tubes": [
    {
     "stack": [
-     "?lime",
-     "grape",
-     "peach",
-     "grape"
-    ]
-   },
-   {
-    "stack": [
      "?lemon",
-     "?berry",
-     "berry",
-     "peach"
-    ]
-   },
-   {
-    "stack": [
+     "cola",
      "lime",
      "cola",
+     "lime"
+    ]
+   },
+   {
+    "stack": [
+     "grape",
+     "?cola",
+     "lemon",
+     "cola",
+     "lemon"
+    ]
+   },
+   {
+    "stack": [
+     "?grape",
+     "peach",
+     "berry",
      "grape",
      "peach"
     ]
    },
    {
     "stack": [
+     "?grape",
+     "?peach",
+     "lime",
      "lemon",
-     "?cola",
-     "peach",
-     "grape"
+     "peach"
     ]
    },
    {
     "stack": [
-     "?cola",
-     "?lime",
+     "grape",
+     "peach",
      "lemon",
+     "berry",
      "berry"
     ]
    },
    {
     "stack": [
-     "cola",
      "berry",
+     "cola",
      "lime",
-     "lemon"
+     "berry",
+     "lime"
     ]
    },
    {
-    "stack": [],
-    "locked": {
-     "completeCount": 1
-    }
+    "stack": []
    },
    {
     "stack": []
@@ -11458,7 +11475,7 @@
    {
     "stack": [],
     "locked": {
-     "completeCount": 1
+     "completeCount": 2
     }
    },
    {

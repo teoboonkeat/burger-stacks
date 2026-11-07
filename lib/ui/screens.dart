@@ -3,9 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../app/app_state.dart';
+import '../app/chapters.dart';
+import '../app/rank.dart';
 import '../app/theme.dart';
+import '../game/bean_painter.dart';
 import '../levels/level.dart';
 import 'game_screen.dart';
+import 'road_screen.dart';
 import 'widgets.dart';
 
 class Services {
@@ -14,17 +18,39 @@ class Services {
   Services(this.state, this.levels);
 }
 
+/// Home: logo, stars and sweets, Play, Levels and Settings. From the first
+/// win a small jar chip shows the jar being filled (it opens the Pantry
+/// sheet); from rank 2 a rank badge sits beside the sweets.
 class HomeScreen extends StatelessWidget {
   final Services s;
   const HomeScreen(this.s, {super.key});
 
-  void _play(BuildContext context, int level) => Navigator.push(context,
-      MaterialPageRoute(builder: (_) => GameScreen(s, level)));
+  /// The jar chip shows once a scoop has been won.
+  bool get _chip => s.state.stars.isNotEmpty;
+
+  /// Leaving Home after the chip has shown its explainer line: the next
+  /// visit shows the jar's reward instead.
+  void _leave() {
+    if (_chip && !s.state.jarChipSeen) {
+      s.state.update((x) => x.jarChipSeen = true);
+    }
+  }
+
+  void _go(BuildContext context, Widget Function(BuildContext) page) {
+    _leave();
+    Navigator.push(context, MaterialPageRoute(builder: page));
+  }
+
+  void _pantry(BuildContext context) {
+    _leave();
+    showPantry(context, s);
+  }
 
   @override
   Widget build(BuildContext context) {
     final bw = min(S.homeButtonW,
         MediaQuery.sizeOf(context).width - 2 * S.screenMargin);
+    final tall = MediaQuery.sizeOf(context).height >= 720;
     return Scaffold(
       body: SafeArea(
         child: ListenableBuilder(
@@ -32,8 +58,8 @@ class HomeScreen extends StatelessWidget {
           builder: (context, _) => Center(
             child: SingleChildScrollView(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
-                const Jar(width: 150),
-                const SizedBox(height: 8),
+                Jar(width: tall ? 110 : 84),
+                const SizedBox(height: 4),
                 const Text('Jelly Beans',
                     style: TextStyle(
                         fontSize: 40, fontWeight: FontWeight.w900, color: C.accent)),
@@ -46,23 +72,30 @@ class HomeScreen extends StatelessWidget {
                   InfoChip(
                       leading: const SweetIcon(),
                       text: '${s.state.coins} sweets'),
+                  if (s.state.rank >= 2) ...[
+                    const SizedBox(width: 4),
+                    _RankBadge(s.state.rank, onTap: () => _pantry(context)),
+                  ],
                 ]),
-                const SizedBox(height: 32),
+                if (_chip) ...[
+                  const SizedBox(height: 12),
+                  JarChip(s: s, width: bw, onTap: () => _pantry(context)),
+                ],
+                SizedBox(height: _chip ? 16 : 24),
                 BigButton('Play · Scoop ${s.state.currentLevel}',
                     width: bw,
-                    onTap: () => _play(context, s.state.currentLevel)),
-                const SizedBox(height: 16),
+                    onTap: () => _go(context,
+                        (_) => GameScreen(s, s.state.currentLevel))),
+                const SizedBox(height: 12),
                 BigButton('Levels',
                     primary: false,
                     width: bw,
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => LevelListScreen(s)))),
-                const SizedBox(height: 16),
+                    onTap: () => _go(context, (_) => RoadScreen(s))),
+                const SizedBox(height: 12),
                 BigButton('Settings',
                     primary: false,
                     width: bw,
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => SettingsScreen(s)))),
+                    onTap: () => _go(context, (_) => SettingsScreen(s))),
                 const SizedBox(height: 12),
                 if (!s.state.removeAds)
                   TextButton(
@@ -73,6 +106,203 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Rank number beside the sweets (48 dp target); opens the Pantry.
+class _RankBadge extends StatelessWidget {
+  final int rank;
+  final VoidCallback onTap;
+  const _RankBadge(this.rank, {required this.onTap});
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: 'Rank $rank, ${Rank.title(rank)}',
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: SizedBox(
+            width: S.minTouch,
+            height: S.minTouch,
+            child: Center(child: ExcludeSemantics(child: RankDot(rank, size: 32))),
+          ),
+        ),
+      );
+}
+
+/// Home's jar chip: a small jar filling up, "Jar 1 · Berry 3 / 10" and a
+/// bar. The first time it shows, one line explains jars; after that the
+/// line says what sealing the jar pays. Tapping opens the Pantry.
+class JarChip extends StatelessWidget {
+  final Services s;
+  final double width;
+  final VoidCallback onTap;
+  const JarChip({super.key, required this.s, required this.width, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final st = s.state;
+    final jar = Jars.of(st.currentLevel);
+    final filled = Jars.filled(jar, st.stars);
+    final sealed = st.jarsSealed.contains(jar);
+    final colour = beanColors[Jars.flavour(jar)]!;
+    final line = !st.jarChipSeen
+        ? 'Win 10 scoops to fill and seal a jar'
+        : (sealed
+            ? 'Sealed · see your Pantry'
+            : 'Seal it at Lid scoop ${Jars.lid(jar)} · +${Jars.payFor(jar)}');
+    const small = TextStyle(fontSize: 13, fontWeight: FontWeight.w800);
+    return Semantics(
+      button: true,
+      label: '${Jars.name(jar)}, $filled of ${Jars.size} scoops. $line. Opens the Pantry',
+      child: ExcludeSemantics(
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: width,
+            constraints: const BoxConstraints(minHeight: S.minTouch),
+            padding: const EdgeInsets.fromLTRB(10, 8, 6, 8),
+            decoration: BoxDecoration(
+              color: C.panel,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: C.border, width: 2),
+              boxShadow: const [BoxShadow(color: C.border, offset: Offset(0, 3))],
+            ),
+            child: Row(children: [
+              MiniJar(jar: jar, filled: filled, sealed: sealed, size: 30),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(children: [
+                    Expanded(
+                        child: Text(Jars.name(jar),
+                            overflow: TextOverflow.ellipsis,
+                            style: small.copyWith(fontSize: 14, fontWeight: FontWeight.w900))),
+                    Text('$filled / ${Jars.size}', style: small.copyWith(color: C.text2)),
+                  ]),
+                  const SizedBox(height: 4),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: filled / Jars.size,
+                      minHeight: 6,
+                      backgroundColor: C.border,
+                      color: colour,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(line, style: small.copyWith(fontSize: 12, color: C.accentText)),
+                ]),
+              ),
+              const Icon(Icons.chevron_right_rounded, color: C.text2, size: 22),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The Pantry: rank, the jar being filled and what sealing it pays, and
+/// the shelf of every jar.
+Future<void> showPantry(BuildContext context, Services s) => showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: C.bg,
+      isScrollControlled: true,
+      showDragHandle: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (c) => SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: LayoutBuilder(
+            builder: (c, box) => Column(mainAxisSize: MainAxisSize.min, children: [
+              const Text('Pantry',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+              const SizedBox(height: 12),
+              RankBar(xp: s.state.xp),
+              const SizedBox(height: 14),
+              JarCard(s: s, width: box.maxWidth),
+            ]),
+          ),
+        ),
+      ),
+    );
+
+/// The Pantry's jar card: the jar being filled, how to seal it and what
+/// that pays, and the Pantry shelf of every jar.
+class JarCard extends StatelessWidget {
+  final Services s;
+  final double width;
+  const JarCard({super.key, required this.s, required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    final st = s.state;
+    final jars = Jars.count(s.levels.length);
+    final jar = Jars.of(st.currentLevel);
+    final sealed = st.jarsSealed.contains(jar);
+    final filled = Jars.filled(jar, st.stars);
+    final toLid = Jars.lid(jar) - st.currentLevel;
+    const small = TextStyle(fontSize: 13, fontWeight: FontWeight.w800);
+    return Container(
+      width: width,
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 10),
+      decoration: BoxDecoration(
+        color: C.panel,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: C.border, width: 2),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+        JarProgress(jar: jar, filled: filled),
+        const SizedBox(height: 8),
+        if (sealed)
+          Text('Sealed', style: small.copyWith(color: C.newBadge))
+        else ...[
+          Text.rich(TextSpan(children: [
+            TextSpan(text: 'Win Lid scoop ${Jars.lid(jar)} to seal it'),
+            TextSpan(
+                text: toLid == 0 ? ' · up next' : ' · $toLid to go',
+                style: const TextStyle(color: C.text2)),
+          ]), style: small),
+          const SizedBox(height: 6),
+          Wrap(spacing: 6, runSpacing: 4, children: [
+            RewardChip(
+                icon: const SweetIcon(width: 16),
+                text: '+${Jars.payFor(jar)} sweets',
+                gold: Jars.isGold(jar)),
+            const RewardChip(icon: extraTubeIcon, text: 'Extra tube'),
+          ]),
+        ],
+        const SizedBox(height: 12),
+        Row(children: [
+          const Expanded(child: Text('Pantry shelf', style: small)),
+          Text('${st.jarsSealed.length} / $jars sealed',
+              style: small.copyWith(color: C.text2)),
+        ]),
+        const SizedBox(height: 4),
+        PantryShelf(
+            jars: jars,
+            current: jar,
+            filled: filled,
+            sealed: st.jarsSealed,
+            goldRim: {
+              for (var j = 1; j <= jars; j++)
+                if (st.allSpooned(j)) j
+            },
+            width: width - 32),
+        const SizedBox(height: 4),
+        Row(children: [
+          const Icon(Icons.star_rounded, color: C.star, size: 16),
+          const SizedBox(width: 4),
+          Expanded(
+            child: Text('Every 5th jar is gold: +${Jars.goldPay} more',
+                style: small.copyWith(fontSize: 12, color: C.text2)),
+          ),
+        ]),
+      ]),
     );
   }
 }
@@ -92,104 +322,55 @@ Future<void> buyRemoveAds(BuildContext context, AppState st) async {
   if (ok == true) st.update((s) => s.removeAds = true);
 }
 
-/// Level grid geometry, shared by the grid and its initial scroll.
-class LevelGrid {
-  static const cols = 5, pad = 16.0, gap = 10.0;
-
-  /// Scroll offset that puts [level]'s row in the middle of a [viewH] high
-  /// grid that is [width] wide, clamped to the scrollable range.
-  static double offsetFor(int level, int count, double width, double viewH) {
-    final tile = (width - 2 * pad - (cols - 1) * gap) / cols;
-    final rowH = tile + gap;
-    final rows = (count / cols).ceil();
-    final content = 2 * pad + rows * rowH - gap;
-    final row = (level - 1) ~/ cols;
-    final want = pad + row * rowH - (viewH - tile) / 2;
-    return want.clamp(0.0, max(0.0, content - viewH));
-  }
-}
-
-class LevelListScreen extends StatelessWidget {
-  final Services s;
-  const LevelListScreen(this.s, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final st = s.state;
-    return Scaffold(
-      appBar: AppBar(title: const Text('Levels'), actions: [
-        ListenableBuilder(
-          listenable: st,
-          builder: (context, _) => InfoChip(
-              leading: const Icon(Icons.star_rounded, color: C.star, size: 20),
-              text: '${st.starTotal} / ${s.levels.length * 3}'),
-        ),
-        const SizedBox(width: 16),
-      ]),
-      body: ListenableBuilder(
-        listenable: st,
-        builder: (context, _) => Column(children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, box) => GridView.builder(
-                controller: ScrollController(
-                    initialScrollOffset: LevelGrid.offsetFor(st.currentLevel,
-                        s.levels.length, box.maxWidth, box.maxHeight)),
-                padding: const EdgeInsets.all(LevelGrid.pad),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: LevelGrid.cols,
-                    mainAxisSpacing: LevelGrid.gap,
-                    crossAxisSpacing: LevelGrid.gap),
-                itemCount: s.levels.length,
-                itemBuilder: (context, i) {
-                  final id = i + 1;
-                  return _LevelTile(
-                    id: id,
-                    open: st.isUnlocked(id),
-                    next: id == st.currentLevel && (st.stars[id] ?? 0) == 0,
-                    stars: st.stars[id] ?? 0,
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => GameScreen(s, id))),
-                  );
-                },
-              ),
-            ),
-          ),
-          BannerSlot(hidden: st.removeAds),
-        ]),
-      ),
-    );
-  }
-}
-
-class _LevelTile extends StatelessWidget {
+/// One scoop as a tile: number, stars, lock or play, the Lid label and
+/// the Master spoon. Used as the stops of the Candy Road.
+class LevelTile extends StatelessWidget {
   final int id, stars;
   final bool open, next;
+  /// Lid scoop: the jar's last scoop, gold-edged and labelled.
+  final bool lid;
+  /// Master spoon: null before the first clear, false while still to win
+  /// (not drawn on the road), true once won (a gold spoon on the tile).
+  final bool? spoon;
   final VoidCallback onTap;
-  const _LevelTile(
-      {required this.id,
+  const LevelTile(
+      {super.key,
+      required this.id,
       required this.open,
       required this.next,
       required this.stars,
-      required this.onTap});
+      required this.onTap,
+      this.lid = false,
+      this.spoon});
 
   @override
   Widget build(BuildContext context) {
     final bg = next ? C.primary : (open ? C.panel : C.lockedTile);
-    final edge = next ? C.primaryShadow : C.border;
-    return Semantics(
+    final edge = next ? C.primaryShadow : (lid ? C.star : C.border);
+    final kind = lid ? 'Lid scoop' : 'Scoop';
+    final spoonText = spoon == true ? ', gold spoon' : '';
+    final tile = Semantics(
       button: open,
-      label: open ? 'Scoop $id, $stars stars' : 'Scoop $id, locked',
+      label: open
+          ? '$kind $id, $stars stars$spoonText'
+          : '$kind $id, locked',
       child: GestureDetector(
         onTap: open ? onTap : null,
         child: Container(
           decoration: BoxDecoration(
             color: bg,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: edge, width: 2),
+            border: Border.all(color: edge, width: lid ? 3 : 2),
             boxShadow: open ? [BoxShadow(color: edge, offset: const Offset(0, 3))] : null,
           ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            if (lid)
+              Text('LID',
+                  style: TextStyle(
+                      fontSize: 11,
+                      height: 1,
+                      fontWeight: FontWeight.w900,
+                      color: next ? Colors.white : C.text2)),
             Text('$id',
                 style: TextStyle(
                     fontSize: 20,
@@ -207,6 +388,13 @@ class _LevelTile extends StatelessWidget {
         ),
       ),
     );
+    // Only won spoons show on the road; the ghost spoon stays in the
+    // jar label, so 50+ tiles are not cluttered.
+    if (spoon != true) return tile;
+    return Stack(fit: StackFit.expand, children: [
+      tile,
+      const Positioned(top: 5, right: 6, child: SpoonIcon(gold: true, size: 15)),
+    ]);
   }
 }
 
@@ -230,6 +418,12 @@ Future<void> _confirmReset(BuildContext context, AppState st) async {
     x.currentLevel = 1;
     x.stars = {};
     x.coins = 0;
+    x.jarsSealed = {};
+    x.boosterStock = {};
+    x.rankPaid = 1;
+    x.spoons = {};
+    x.roadSeen = 1;
+    x.jarChipSeen = false;
     x.unlockAll = false;
   });
 }

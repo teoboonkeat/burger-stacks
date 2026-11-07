@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../ads/ad_service.dart';
+import '../app/chapters.dart';
+import '../app/rank.dart';
+import '../app/rewards.dart';
 import '../app/sfx.dart';
 import '../app/shop.dart';
 import '../app/theme.dart';
@@ -28,6 +31,8 @@ class GameScreen extends StatefulWidget {
 extension on Level {
   bool get hasPouch => tubes.any((t) => t.stack.any((k) => k.startsWith('?')));
   bool get hasLock => tubes.any((t) => t.unlockAt != null);
+  bool get hasLock2 => tubes.any((t) => (t.unlockAt ?? 0) >= 2);
+  bool get tall => capacity > 4;
 }
 
 class _GameScreenState extends State<GameScreen> {
@@ -117,6 +122,9 @@ class _GameScreenState extends State<GameScreen> {
   CoachStep? _coach;
   final _nudge = ValueNotifier<int>(0);
   bool _goalChip = false;
+  /// "Win to seal Jar 5 · +200" on an unsealed Lid scoop, briefly.
+  bool _lidChip = false;
+  int _lidChipId = 0;
   bool _undoLessonDue = false;
 
   Set<Lesson> get _seen => widget.s.state.tutorialSeen;
@@ -125,12 +133,25 @@ class _GameScreenState extends State<GameScreen> {
     _queue
       ..clear()
       ..addAll(Tutorial.atStart(
-          LevelFacts(level, hasPouch: _lv.hasPouch, hasLock: _lv.hasLock),
+          LevelFacts(level,
+              hasPouch: _lv.hasPouch,
+              hasLock: _lv.hasLock,
+              hasLock2: _lv.hasLock2,
+              tall: _lv.tall),
           _seen,
           dragOn: widget.s.state.dragBeans));
     _lesson = null;
     _coach = null;
     _goalChip = false;
+    _lidChip = Jars.isLid(level) &&
+        !widget.s.state.jarsSealed.contains(Jars.of(level));
+    if (_lidChip) {
+      final id = ++_lidChipId;
+      // Hidden while a coach mark shows (see build).
+      Future.delayed(S.goalChip + const Duration(seconds: 1), () {
+        if (mounted && id == _lidChipId) setState(() => _lidChip = false);
+      });
+    }
     _undoLessonDue = Tutorial.showUndoAfterMove(level, _seen);
     game.allowTube = null;
     game.slowNextReveal = false;
@@ -210,6 +231,18 @@ class _GameScreenState extends State<GameScreen> {
   Rect? _guidedArea() {
     final r = _gameArea();
     return r == null ? null : Rect.fromLTRB(r.left, 0, r.right, r.bottom);
+  }
+
+  /// Every tube, caps included, plus a small margin: the board itself,
+  /// without the empty space around it.
+  Rect? _boardRect() {
+    Rect? r;
+    for (var i = 0; i < game.tubeComps.length; i++) {
+      final t = _tubeRect(i);
+      if (t == null) return null;
+      r = r == null ? t : r.expandToInclude(t);
+    }
+    return r?.inflate(4);
   }
 
   Rect? _tubeRect(int? i) {
@@ -353,6 +386,40 @@ class _GameScreenState extends State<GameScreen> {
           target: () => _tubeRect(t),
           tapToClose: true,
           above: false,
+          skippable: false,
+        );
+      case Lesson.lock2:
+        final t = _lockedTube();
+        if (t == null) return null;
+        return CoachStep(
+          text: 'New: Double lock',
+          sub: 'It opens once you seal ${game.board.tubes[t].unlockAt} tubes',
+          hint: 'Tap to continue',
+          target: () => _tubeRect(t),
+          tapToClose: true,
+          above: false,
+          skippable: false,
+        );
+      case Lesson.tall:
+        return CoachStep(
+          text: 'New: Tall tubes',
+          sub: 'Each tube holds ${game.board.capacity} beans',
+          hint: 'Tap to continue',
+          target: () => _tubeRect(0),
+          tapToClose: true,
+          above: false,
+          skippable: false,
+        );
+      case Lesson.bigKitchen:
+        return CoachStep(
+          text: 'Welcome to the Big Kitchen!',
+          sub: 'Six flavours and more pouches from here',
+          hint: 'Tap to continue',
+          // Just the tubes, with the bubble above them: below the board it
+          // would cover the boosters, and the whole game area cut through
+          // the HUD.
+          target: _boardRect,
+          tapToClose: true,
           skippable: false,
         );
       case Lesson.drop:
@@ -508,6 +575,12 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> _extra() async {
     if (extraUsed || showingResult) return;
+    // A free Extra tube from a sealed jar goes first, with no ad or price.
+    if (widget.s.state.useStock(Booster.extra)) {
+      game.addTube();
+      setState(() => extraUsed = true);
+      return;
+    }
     final pay = await _pay(Booster.extra);
     if (pay == null || !mounted) return;
     final ok = Shop.redeem(widget.s.state, Booster.extra, pay, () {
@@ -526,6 +599,7 @@ class _GameScreenState extends State<GameScreen> {
     final explainExtra = !extraUsed && Tutorial.showExtraInJam(_seen);
     if (explainExtra) widget.s.state.markSeen([Lesson.extra]);
     final free = undosLeft > 0;
+    final freeExtra = widget.s.state.stock(Booster.extra);
     final choice = await showModalBottomSheet<String>(
       context: context,
       isDismissible: false,
@@ -558,7 +632,9 @@ class _GameScreenState extends State<GameScreen> {
               ),
               const SizedBox(height: 16),
               if ((!free && _priceIfAffordable(Booster.undo) != null) ||
-                  (!extraUsed && _priceIfAffordable(Booster.extra) != null))
+                  (!extraUsed &&
+                      freeExtra == 0 &&
+                      _priceIfAffordable(Booster.extra) != null))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: InfoChip(
@@ -574,8 +650,8 @@ class _GameScreenState extends State<GameScreen> {
               if (!extraUsed) ...[
                 const SizedBox(height: 12),
                 BigButton(
-                  'Extra tube',
-                  reward: true,
+                  freeExtra > 0 ? 'Extra tube ($freeExtra free)' : 'Extra tube',
+                  reward: freeExtra == 0,
                   price: _priceIfAffordable(Booster.extra),
                   onTap: () => Navigator.pop(c, 'extra'),
                 ),
@@ -631,8 +707,13 @@ class _GameScreenState extends State<GameScreen> {
     final wonTubes = [for (final t in game.board.tubes) t.copy()];
     final lv = _lv;
     final stars = starsFor(wonMoves, lv.par);
-    final beans = sweetsFor(stars);
-    widget.s.state.completeLevel(level, stars, beans, widget.s.levels.length);
+    final best = widget.s.state.stars[level] ?? 0;
+    final hadSpoon = widget.s.state.spoons.contains(level);
+    // Any help counts against the spoon, the free undo included.
+    final helped = undosUsed > 0 || peekUsed || extraUsed;
+    final report = widget.s.state.completeLevel(
+        level, stars, widget.s.levels.length,
+        helped: helped);
     game.confetti();
     HapticFeedback.heavyImpact();
     // Let the confetti play before the card covers it.
@@ -655,7 +736,14 @@ class _GameScreenState extends State<GameScreen> {
             stars: stars,
             moves: wonMoves,
             par: lv.par,
-            beans: beans,
+            best: best,
+            spoonNote: Spoons.note(
+                best: best,
+                stars: stars,
+                helped: helped,
+                earned: report.spoon,
+                had: hadSpoon),
+            report: report,
             tubes: wonTubes,
             ads: ads,
           ),
@@ -689,6 +777,7 @@ class _GameScreenState extends State<GameScreen> {
     final hasPouchNow = _hasPouchNow;
     final showBasic = Boosters.basic(level);
     final showPeek = Boosters.peek(level, lv.hasPouch);
+    final freeExtra = widget.s.state.stock(Booster.extra);
     final coach = _coach;
     return Scaffold(
       body: SafeArea(
@@ -703,14 +792,15 @@ class _GameScreenState extends State<GameScreen> {
                     children: [
                       IconButton(
                         tooltip: 'Back',
-                        onPressed: () => Navigator.pop(context),
+                        // Off once won, so the celebration is not skipped.
+                        onPressed: showingResult ? null : () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back_rounded, color: C.text),
                       ),
                       Expanded(
                         child: Column(
                           children: [
                             Text(
-                              'Scoop $level',
+                              Jars.isLid(level) ? 'Lid scoop $level' : 'Scoop $level',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w900,
@@ -753,6 +843,28 @@ class _GameScreenState extends State<GameScreen> {
                                 leading: Icon(Icons.flag_rounded,
                                     color: C.accentText, size: 18),
                                 text: 'Goal: one flavour per tube',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Lid scoop: what winning it seals, for a few seconds.
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 6,
+                        child: IgnorePointer(
+                          child: AnimatedOpacity(
+                            opacity: _lidChip && _coach == null ? 1 : 0,
+                            duration: const Duration(milliseconds: 400),
+                            child: Center(
+                              child: InfoChip(
+                                leading: MiniJar(
+                                    jar: Jars.of(level),
+                                    filled: Jars.size - 1,
+                                    size: 16),
+                                text: 'Win to seal Jar ${Jars.of(level)}'
+                                    ' · +${Jars.payFor(Jars.of(level))}',
                               ),
                             ),
                           ),
@@ -826,8 +938,9 @@ class _GameScreenState extends State<GameScreen> {
                       if (showBasic)
                         _Booster(
                           icon: Icons.add_box_outlined,
-                          label: 'Extra tube',
-                          ad: true,
+                          label: freeExtra > 0 ? 'Extra tube ($freeExtra)' : 'Extra tube',
+                          ad: freeExtra == 0,
+                          free: freeExtra > 0,
                           price: _priceIfAffordable(Booster.extra),
                           onTap: extraUsed || showingResult ? null : _extra,
                         ),
@@ -889,6 +1002,8 @@ class _Booster extends StatelessWidget {
   /// Sweets price shown next to the AD badge when affordable.
   final int? price;
   final bool isNew;
+  /// A free one from the stock is waiting: green FREE badge.
+  final bool free;
   final VoidCallback? onTap;
   const _Booster({
     super.key,
@@ -897,6 +1012,7 @@ class _Booster extends StatelessWidget {
     required this.ad,
     this.price,
     this.isNew = false,
+    this.free = false,
     this.onTap,
   });
 
@@ -931,6 +1047,21 @@ class _Booster extends StatelessWidget {
             ),
             // Badges sit on the top edge, clear of the icon.
             if (ad) Positioned(right: -8, top: -14, child: PayBadge(price: price)),
+            if (free)
+              Positioned(
+                right: -8,
+                top: -14,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                      color: C.newBadge,
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: Colors.white, width: 1.5)),
+                  child: const Text('FREE',
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 11, fontWeight: FontWeight.w900)),
+                ),
+              ),
             if (isNew)
               Positioned(
                 left: -8,
@@ -953,7 +1084,13 @@ class _Booster extends StatelessWidget {
 
 class SweetScreen extends StatefulWidget {
   final Services s;
-  final int level, stars, moves, par, beans;
+  final int level, stars, moves, par;
+  /// Best stars on this scoop before this win (0 = first win).
+  final int best;
+  /// What the win paid; [WinReport.pay] is what the ×2 ad doubles.
+  final WinReport report;
+  /// Line about the Master spoon ([Spoons.note]), if any.
+  final String? spoonNote;
   final List<Tube> tubes;
   final AdService ads;
   const SweetScreen({
@@ -963,7 +1100,9 @@ class SweetScreen extends StatefulWidget {
     required this.stars,
     required this.moves,
     required this.par,
-    required this.beans,
+    required this.best,
+    required this.report,
+    this.spoonNote,
     required this.tubes,
     required this.ads,
   });
@@ -995,10 +1134,52 @@ Future<Pay?> choosePayment(BuildContext context,
       ),
     );
 
+/// Chips for what a win paid besides the win itself: the Lid scoop bonus
+/// (doubled with the win by ×[mult]), the jar seal and its Extra tube, the
+/// rank gift and the gold spoon.
+List<Widget> rewardChips(WinReport r, int mult) => [
+      if (r.lidBonus > 0)
+        RewardChip(
+            icon: const SweetIcon(width: 16),
+            text: '+${r.lidBonus * mult} Lid scoop'),
+      if (r.sealed case final jar?) ...[
+        RewardChip(
+            icon: const SweetIcon(width: 16),
+            text: '+${r.sealPay} jar sealed',
+            gold: Jars.isGold(jar)),
+        const RewardChip(icon: extraTubeIcon, text: 'Extra tube'),
+      ],
+      if (r.rankUp case final rank?)
+        RewardChip(icon: RankDot(rank, size: 17), text: '+${r.rankPay} rank $rank'),
+      if (r.spoon)
+        RewardChip(
+            icon: const SpoonIcon(gold: true),
+            text: r.spoonJar != null
+                ? '+${r.spoonPay} all 10 spoons'
+                : '+${r.spoonPay} gold spoon',
+            gold: true),
+    ];
+
+/// Line under the sweets: what ★★★ would pay on a first win, or how a
+/// replay was paid ([winPay]). Null when there is nothing to add.
+String? payNote(int stars, int best) {
+  if (best == 0) {
+    return stars < 3
+        ? 'A ★★★ win pays ${sweetsFor(3)} instead of ${sweetsFor(stars)}'
+        : null;
+  }
+  if (stars > best) {
+    final n = stars - best;
+    return 'Best was ${'★' * best} · +${winPay(stars, best)} '
+        'for the new star${n == 1 ? '' : 's'}';
+  }
+  return best < 3
+      ? 'Replays pay for new stars · ★★★ pays +${winPay(3, best)}'
+      : 'Replays pay for new stars only';
+}
+
 /// Result line under the jar. No "par": at or under the goal it simply
 /// shows the three stars; over it, how many moves ★★★ needs.
-/// Sweets for a win: 10 plus 5 per star (15 / 20 / 25).
-int sweetsFor(int stars) => 10 + stars * 5;
 
 String resultLine(int moves, int par) => moves > par
     ? 'Done in $moves moves · ★★★ needs $par or fewer'
@@ -1007,10 +1188,52 @@ String resultLine(int moves, int par) => moves > par
 class _SweetScreenState extends State<SweetScreen> {
   bool doubled = false;
 
+  /// Celebrations shown over the card one after another (jar sealed, then
+  /// rank up), each briefly; a tap skips to the next.
+  late final List<Widget> _cards = [
+    if (widget.report.sealed case final jar?)
+      SealCard(jar: jar, pay: widget.report.sealPay),
+    if (widget.report.rankUp case final rank?)
+      RankUpCard(rank: rank, pay: widget.report.rankPay),
+  ];
+  int _card = 0;
+
+  int get beans => widget.report.pay;
+
+  @override
+  void initState() {
+    super.initState();
+    _timeCard();
+  }
+
+  void _timeCard() {
+    if (_card >= _cards.length) return;
+    final shown = _card;
+    Future.delayed(S.sealShown, () {
+      if (mounted && _card == shown) _nextCard();
+    });
+  }
+
+  /// The card overlay keeps swallowing taps for a moment after the last
+  /// card, so a player tapping through the cards does not hit Next scoop
+  /// before seeing the result.
+  late bool _shield = _cards.isNotEmpty;
+
+  void _nextCard() {
+    if (_card >= _cards.length) return;
+    setState(() => _card++);
+    _timeCard();
+    if (_card == _cards.length) {
+      Future.delayed(S.cardGrace, () {
+        if (mounted) setState(() => _shield = false);
+      });
+    }
+  }
+
   Future<void> _double() async {
     if (doubled) return;
     if (await widget.ads.showRewarded(context, '2x sweets')) {
-      widget.s.state.addCoins(widget.beans);
+      widget.s.state.addCoins(beans);
       if (mounted) setState(() => doubled = true);
     }
   }
@@ -1022,6 +1245,10 @@ class _SweetScreenState extends State<SweetScreen> {
         if (t.sealed) t.stack.first.type,
     ];
     final over = widget.moves > widget.par;
+    final note = payNote(widget.stars, widget.best);
+    final r = widget.report;
+    final mult = doubled ? 2 : 1;
+    final chips = rewardChips(r, mult);
     return Scaffold(
       backgroundColor: C.resultScrim,
       body: SafeArea(
@@ -1051,19 +1278,23 @@ class _SweetScreenState extends State<SweetScreen> {
                           border: Border.all(color: C.border, width: 3),
                         ),
                         child: Stack(
+                          // The celebration cards reach past the bottom
+                          // edge to cover the Next button's shadow.
+                          clipBehavior: Clip.none,
                           children: [
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text(
+                                Text(
                                   'Sweet!',
                                   style: TextStyle(
-                                    fontSize: 36,
+                                    fontSize: compact ? 30 : 36,
                                     fontWeight: FontWeight.w900,
                                     color: C.accent,
                                   ),
                                 ),
-                                Stars(widget.stars, size: compact ? 40 : 48),
+                                Stars(widget.stars,
+                                    size: compact ? (chips.isEmpty ? 40 : 34) : 48),
                                 const SizedBox(height: 8),
                                 Flexible(
                                   child: FittedBox(
@@ -1085,29 +1316,98 @@ class _SweetScreenState extends State<SweetScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '+${widget.beans * (doubled ? 2 : 1)} sweets',
+                                      '+${(beans - r.lidBonus) * mult} sweets',
                                       style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
-                                    _DoubleChip(
-                                      done: doubled,
-                                      onTap: doubled ? null : _double,
-                                    ),
+                                    // ×2 doubles what this win paid, so a
+                                    // replay that paid nothing has no ad.
+                                    if (beans > 0) ...[
+                                      const SizedBox(width: 8),
+                                      _DoubleChip(
+                                        done: doubled,
+                                        onTap: doubled ? null : _double,
+                                      ),
+                                    ],
                                   ],
                                 ),
-                                if (over) ...[
+                                // Every other reward this win paid, as
+                                // chips, and the total.
+                                if (chips.isNotEmpty) ...[
+                                  const SizedBox(height: 6),
+                                  Wrap(
+                                    alignment: WrapAlignment.center,
+                                    spacing: 6,
+                                    runSpacing: 4,
+                                    children: chips,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Total +${r.total + (doubled ? beans : 0)} sweets',
+                                    style: const TextStyle(
+                                      color: C.text2,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                                // A hint only; short screens skip it when
+                                // reward chips need the room.
+                                if (widget.spoonNote case final sn?
+                                    when !r.spoon &&
+                                        !(compact && chips.isNotEmpty))
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const SpoonIcon(gold: false),
+                                        const SizedBox(width: 6),
+                                        Flexible(
+                                          child: Text(
+                                            sn,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: C.text2,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                // Short screens with reward chips: the Retry
+                                // button already points at ★★★.
+                                if (note != null &&
+                                    !(compact && chips.isNotEmpty && over)) ...[
                                   const SizedBox(height: 2),
                                   Text(
-                                    'A ★★★ win pays ${sweetsFor(3)} instead of ${sweetsFor(widget.stars)}',
+                                    note,
+                                    textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: C.accent,
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ],
+                                SizedBox(height: gap),
+                                // Short screens: a sealed jar is already in
+                                // the chips; its full bar would squeeze the
+                                // jar picture.
+                                if (!(compact && r.sealed != null)) ...[
+                                  JarProgress(
+                                    jar: Jars.of(widget.level),
+                                    filled: Jars.filled(
+                                        Jars.of(widget.level), widget.s.state.stars),
+                                    compact: true,
+                                  ),
+                                  SizedBox(height: compact ? 6 : 10),
+                                ],
+                                RankBar(
+                                    xp: widget.s.state.xp, gain: widget.report.xp),
                                 SizedBox(height: compact ? 10 : 16),
                                 BigButton(
                                   'Next scoop',
@@ -1132,6 +1432,32 @@ class _SweetScreenState extends State<SweetScreen> {
                                 onTap: () => Navigator.pop(context, 'home'),
                               ),
                             ),
+                            if (_cards.isNotEmpty)
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                right: 0,
+                                bottom: -8,
+                                child: IgnorePointer(
+                                  ignoring: !_shield,
+                                  child: AnimatedOpacity(
+                                    opacity: _card < _cards.length ? 1 : 0,
+                                    duration: S.fade,
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: _nextCard,
+                                      child: AnimatedSwitcher(
+                                        duration: S.fade,
+                                        child: KeyedSubtree(
+                                          key: ValueKey(_card),
+                                          child: _cards[
+                                              _card.clamp(0, _cards.length - 1)],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -1146,6 +1472,93 @@ class _SweetScreenState extends State<SweetScreen> {
       ),
     );
   }
+}
+
+/// Short celebration over the result card when a Lid scoop seals a jar:
+/// a full jar, what sealing paid, and what the Extra tube is for.
+class SealCard extends StatelessWidget {
+  final int jar, pay;
+  const SealCard({super.key, required this.jar, required this.pay});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        color: C.bg,
+        alignment: Alignment.center,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('Jar sealed!',
+              style: TextStyle(
+                  fontSize: 32, fontWeight: FontWeight.w900, color: C.accent)),
+          const SizedBox(height: 8),
+          // Packed to the shoulder, and poured quickly enough to finish
+          // while the card shows.
+          Jar(
+              tubes: List.filled(Jars.size + 4, Jars.flavour(jar)),
+              width: 120,
+              pourTime: S.sealPour),
+          const SizedBox(height: 8),
+          Text(Jars.name(jar),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 6),
+          Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 4, children: [
+            RewardChip(
+                icon: const SweetIcon(width: 16),
+                text: '+$pay sweets',
+                gold: Jars.isGold(jar)),
+            const RewardChip(icon: extraTubeIcon, text: '1 free Extra tube'),
+          ]),
+          const SizedBox(height: 4),
+          Text(
+              Jars.isGold(jar)
+                  ? 'A gold jar! The Extra tube waits for when you get stuck'
+                  : 'The Extra tube waits for when you get stuck',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: C.text2, fontSize: 13, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
+          const Text('Tap to continue',
+              style: TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+        ]),
+      );
+}
+
+/// Rank-up celebration over the result card: the new rank, its title and
+/// the gift.
+class RankUpCard extends StatelessWidget {
+  final int rank, pay;
+  const RankUpCard({super.key, required this.rank, required this.pay});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        color: C.bg,
+        alignment: Alignment.center,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('RANK UP',
+              style: TextStyle(
+                  fontSize: 15,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w900,
+                  color: C.text2)),
+          const SizedBox(height: 8),
+          RankDot(rank, size: 72),
+          const SizedBox(height: 8),
+          Text(Rank.title(rank),
+              style: const TextStyle(
+                  fontSize: 24, fontWeight: FontWeight.w900, color: C.accent)),
+          const SizedBox(height: 6),
+          RewardChip(icon: const SweetIcon(width: 16), text: '+$pay sweets'),
+          const SizedBox(height: 4),
+          Text(
+              rank < Rank.top
+                  ? 'Next title at rank ${rank + 1}: ${Rank.title(rank + 1)}'
+                  : 'Top rank!',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: C.text2, fontSize: 13, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
+          const Text('Tap to continue',
+              style: TextStyle(color: C.text2, fontWeight: FontWeight.w700)),
+        ]),
+      );
 }
 
 /// "AD ×2" reward chip next to the beans; 48 dp tall touch target.

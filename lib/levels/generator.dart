@@ -6,8 +6,10 @@ import 'level.dart';
 
 class Tier {
   final int ingredients, spare, minPouch, maxPouch, locked;
+  /// Sealed tubes a locked spare needs before it opens (2 = double lock).
+  final int lockNeed;
   const Tier(this.ingredients, this.spare, this.minPouch, this.maxPouch,
-      this.locked);
+      this.locked, {this.lockNeed = 1});
 }
 
 /// Difficulty curve from the spec's progression table.
@@ -32,9 +34,11 @@ String? hintFor(int id) => switch (id) {
       _ => null,
     };
 
-Level? generateLevel(int id, int seed, {int capacity = 4}) {
+/// A board for scoop [id]; [tier] overrides the curve ([tierFor]), e.g.
+/// for the twist boards made by tool/twists.dart.
+Level? generateLevel(int id, int seed, {int capacity = 4, Tier? tier}) {
   final r = Random(seed);
-  final t = tierFor(id, r);
+  final t = tier ?? tierFor(id, r);
   final kinds = Ingredient.values.toList()..shuffle(r);
   final used = kinds.take(t.ingredients).toList();
   final pieces = [for (final k in used) for (var i = 0; i < capacity; i++) k]
@@ -64,7 +68,7 @@ Level? generateLevel(int id, int seed, {int capacity = 4}) {
           '${hidden.contains((p, i)) ? '?' : ''}${filled[p][i].name}'
       ]),
     for (var s = 0; s < t.spare; s++)
-      TubeSpec(const [], unlockAt: s < t.locked ? 1 : null),
+      TubeSpec(const [], unlockAt: s < t.locked ? t.lockNeed : null),
   ];
   final draft =
       Level(id: id, capacity: capacity, par: 0, seed: seed, tubes: tubes);

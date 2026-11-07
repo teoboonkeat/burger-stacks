@@ -13,6 +13,8 @@ import '../logic/board.dart';
 class CoachStep {
   final String text;
   final String? sub;
+  /// Small last line on its own ("Tap to continue"), under [sub].
+  final String? hint;
   /// Spotlight hole; null for no hole.
   final Rect? Function() target;
   /// Dim everything but the hole.
@@ -36,6 +38,7 @@ class CoachStep {
   const CoachStep({
     required this.text,
     this.sub,
+    this.hint,
     required this.target,
     this.dim = true,
     this.tapToClose = false,
@@ -212,6 +215,7 @@ class _CoachOverlayState extends State<CoachOverlay>
               child: _Bubble(
                 text: step.text,
                 sub: step.sub,
+                hint: step.hint,
                 onSkip: step.skippable ? widget.onSkip : null,
               ),
             ),
@@ -241,9 +245,9 @@ Offset _arc(Offset a, Offset b, double u) {
 
 class _Bubble extends StatelessWidget {
   final String text;
-  final String? sub;
+  final String? sub, hint;
   final VoidCallback? onSkip;
-  const _Bubble({required this.text, this.sub, this.onSkip});
+  const _Bubble({required this.text, this.sub, this.hint, this.onSkip});
 
   @override
   Widget build(BuildContext context) => Stack(clipBehavior: Clip.none, children: [
@@ -267,6 +271,13 @@ class _Bubble extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 13, fontWeight: FontWeight.w700, color: C.text2)),
+            ],
+            if (hint != null) ...[
+              const SizedBox(height: 4),
+              Text(hint!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w800, color: C.text2)),
             ],
           ]),
         ),

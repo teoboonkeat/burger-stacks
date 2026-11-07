@@ -12,9 +12,10 @@ tutorial and simulated ads/IAP. The code map is in `README.md`.
 
 ## Branches
 
-- `main` is the source of truth. Start new work from it.
-- `claude/eloquent-lamport-nsm5ki` was the cloud dev branch and is merged into
-  `main` (same commit). You can delete it or keep using it.
+- `main` is the source of truth and the GitHub default branch. Start new
+  work from it.
+- `claude/eloquent-lamport-nsm5ki` was the cloud dev branch. It is behind
+  `main` now; delete it rather than building on it.
 - Every push to any branch builds a release APK in GitHub Actions
   (`.github/workflows/build-apk.yml`) and publishes it as a `build-N`
   prerelease. Only the newest 3 are kept.
@@ -48,7 +49,7 @@ flutter build web --release
 flutter build apk --release
 ```
 
-All 49 tests should pass. `flutter run` targets a connected phone or emulator,
+All tests should pass, and `flutter analyze` should be clean. `flutter run` targets a connected phone or emulator,
 or Chrome with `-d chrome`.
 
 ## Continue in a Claude Code cloud session
@@ -78,14 +79,54 @@ committed in `.claude/`.
   - ★★ when moves ≤ max(floor(par × 1.2), par + 1).
   - Otherwise ★.
 - **Undo** refunds the move it undoes.
-- **Sweets per win** = 10 + 5 × stars.
+- **Sweets per win** (P5, `lib/app/rewards.dart`): the first win pays
+  10 + 5 × stars. A replay pays +5 per star above the scoop's best, else 0.
+  The ×2 ad doubles only what the win paid.
 - **Tutorial lessons:**
   - Level 1: tap.
   - Level 2: drag and undo.
   - Level 4: groups.
   - Level 11: pouches and Peek.
   - Level 21: locked tube.
+  - Level 41: double lock. Level 61: tall tubes. Level 101: Big Kitchen.
+    These twist lessons show the first time a player meets the twist, even
+    on an old save.
 - **Rush levels** are every 10th level from 40 to 100.
+
+## Progression (built 2026-11-06)
+
+The owner chose the designer's recommended bundle: P5, P1a, P6a, P8, P10
+and P7, built in that order (one commit each). Rules:
+
+- **Bean Jars** (P1a, `lib/app/chapters.dart`): 20 jars of 10 scoops.
+  The 10th scoop is the Lid scoop (+10 on its first win). Winning it seals
+  the jar: +50 sweets, +150 more on every 5th (gold) jar, and one free
+  Extra tube in `boosterStock`, used before any ad or price.
+- **Twists** (P6a): double lock from 41, tall 5-bean tubes from 61, the Big
+  Kitchen at 101 (101–103 are lock-free breathers), both twists together
+  from 141. See the level data caveat below.
+- **Rank** (P8, `lib/app/rank.dart`): XP = 10 per first clear + 5 per
+  star + 30 per sealed jar + 10 per gold spoon, worked out from the save.
+  Rank n needs 15n(n+1)/2 XP; 25 ranks; +25 sweets per rank gained. P2 is
+  not built (P8 replaces it).
+- **Master spoons** (P10, `Spoons` in `lib/app/rewards.dart`): ★★★ on a
+  replay with no Undo (the free one counts), Peek or Extra tube. +10 sweets;
+  all 10 in a jar pay +50 and gold-rim the jar on the shelf.
+- **Candy Road** (P7, `lib/ui/road_screen.dart`): the Levels screen.
+  Signposts sit 10 stops before each twist (`RoadLayout.signs`).
+- **Home and Pantry** (UI review, option J2): a new save sees only the logo,
+  star and sweets counts, Play, Levels, Settings and Remove ads. From the first win a jar chip shows the current
+  jar; tapping it (or the rank badge, from rank 2) opens the Pantry sheet
+  with rank, jar goal and the shelf. Result card shows each extra reward as
+  a chip plus a total.
+
+New save keys (defaults keep old saves working): `jarsSealed` (old saves:
+every jar whose Lid scoop is won, no back-pay), `boosterStock`,
+`rankPaid` (old saves: their current rank, no back-pay), `spoons`
+(starts empty), `roadSeen`, `jarChipSeen` (one-time chip explainer).
+
+`test/result_layout_test.dart` renders the busiest result card at 360×640
+with real Roboto and fails on overflow. Run it after changing that card.
 
 ## ⚠️ Level data caveat
 
@@ -110,7 +151,25 @@ would bring the spikes back. Before you regenerate, port the rules into
 (The commit message says "57 levels / 50 unlocked". The real numbers are 50
 levels changed and 43 locks removed.)
 
-## Open decisions (waiting on the owner)
+The P6a twists were then applied on top with `dart run tool/twists.dart`,
+which edits `levels.json` in place and is safe to rerun. It keeps a change
+only if `tool/sim.dart` (a simulated player calibrated against
+`docs/game-design/sim.csv`) wins the new board about as often as the old
+one. Regenerating with `tool/generate_levels.dart` would lose both the
+hand-tuning and the twists; if you ever do, run `tool/twists.dart` after it.
+
+## Open decisions
+
+Decided 2026-11-06: build the recommended bundle, using the designer's
+recommended answer wherever a question was open. That means P5 (not P5b);
+free Extra tubes as jar rewards; no catch-up gift for existing players
+(past jars sealed silently, rank starts where it is); jars of 10; Lid
+scoops on 101–200 keep the normal layout; re-tuning 41–200 is fine (stars
+stay); P8 instead of P2; the free undo breaks the spoon.
+
+Still open: a sweets sink (P9 or P3, next per the designer), one calendar
+habit (P4 or P11) with P13a, whether P6b and P13b are in scope, the undo
+price balance and the final app name. The original questions follow.
 
 The game-designer's proposal is at
 https://claude.ai/artifact/HK3jTbyrASDKteY8D43Ndo. The feedback behind it was
