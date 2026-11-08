@@ -62,6 +62,10 @@ class S {
   /// Jar sealed card: the full jar pours in this fast (the card shows for
   /// [sealShown]).
   static const sealPour = Duration(milliseconds: 900);
+  /// A jar or rank bar filling from its old value to its new one.
+  static const fill = Duration(milliseconds: 800);
+  /// Pause before a bar fills, so the player sees where it starts.
+  static const fillPause = Duration(milliseconds: 250);
 }
 
 const _titleStyle =

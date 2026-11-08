@@ -119,6 +119,11 @@ and P7, built in that order (one commit each). Rules:
   jar; tapping it (or the rank badge, from rank 2) opens the Pantry sheet
   with rank, jar goal and the shelf. Result card shows each extra reward as
   a chip plus a total.
+- **Explanations and fills:** the Pantry explains jars and rank ("How jars
+  work", "How rank works"), built from the reward constants. Players see
+  "points", not "XP" (code still says xp). On the result card the jar and
+  rank bars fill from old to new value (tap settles them) and open the
+  matching explanation; the Home jar chip fills after a win.
 
 New save keys (defaults keep old saves working): `jarsSealed` (old saves:
 every jar whose Lid scoop is won, no back-pay), `boosterStock`,

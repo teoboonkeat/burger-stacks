@@ -386,20 +386,29 @@ class _BeanIconPainter extends CustomPainter {
 
 /// Bean Jars progress: "Jar 6 · Lime", scoops filled out of 10 and a bar
 /// in the jar's flavour. [compact] is the one-line version for the result
-/// card.
+/// card. [shown] draws the bar part-way (an animation from the old count);
+/// the count shows it rounded. [info] adds a small ⓘ: the row explains
+/// itself when tapped.
 class JarProgress extends StatelessWidget {
   final int jar, filled;
-  final bool compact;
+  final bool compact, info;
+  final double? shown;
   const JarProgress(
-      {super.key, required this.jar, required this.filled, this.compact = false});
+      {super.key,
+      required this.jar,
+      required this.filled,
+      this.compact = false,
+      this.info = false,
+      this.shown});
 
   @override
   Widget build(BuildContext context) {
     final colour = beanColors[Jars.flavour(jar)]!;
+    final now = shown ?? filled.toDouble();
     final bar = ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: LinearProgressIndicator(
-        value: filled / Jars.size,
+        value: now / Jars.size,
         minHeight: compact ? 8 : 12,
         backgroundColor: C.border,
         color: colour,
@@ -414,11 +423,12 @@ class JarProgress extends StatelessWidget {
                 letterSpacing: .5,
                 color: C.text)),
       ),
-      Text('$filled / ${Jars.size} scoops',
+      Text('${now.round()} / ${Jars.size} scoops',
           style: TextStyle(
               fontSize: compact ? 13 : 15,
               fontWeight: FontWeight.w800,
               color: C.text2)),
+      if (info) const InfoMark(),
     ]);
     return Semantics(
       label: '${Jars.name(jar)}, $filled of ${Jars.size} scoops',
@@ -429,6 +439,17 @@ class JarProgress extends StatelessWidget {
       ]),
     );
   }
+}
+
+/// Small ⓘ at the end of a row that explains itself when tapped.
+class InfoMark extends StatelessWidget {
+  const InfoMark({super.key});
+
+  @override
+  Widget build(BuildContext context) => const Padding(
+        padding: EdgeInsets.only(left: 6),
+        child: Icon(Icons.info_outline_rounded, size: 17, color: C.text2),
+      );
 }
 
 /// One shelf jar drawn in [cell] (a square; the lid rises into its top).
@@ -513,7 +534,9 @@ Path _starPath(Offset c, double r) {
 
 /// One small jar filling up: the jar in progress on Home's jar chip.
 class MiniJar extends StatelessWidget {
-  final int jar, filled;
+  final int jar;
+  /// Scoops in the jar; fractional while it fills.
+  final num filled;
   final bool sealed;
   final double size;
   const MiniJar(
@@ -530,7 +553,8 @@ class MiniJar extends StatelessWidget {
 }
 
 class _MiniJarPainter extends CustomPainter {
-  final int jar, filled;
+  final int jar;
+  final num filled;
   final bool sealed;
   _MiniJarPainter(this.jar, this.filled, this.sealed);
 
@@ -649,22 +673,30 @@ class RankDot extends StatelessWidget {
       );
 }
 
-/// Confectioner rank: badge with the rank number, title and a thin XP bar
-/// towards the next rank, with how much XP the next title needs. [gain]
-/// shows "+N XP" from the last win instead.
+/// Confectioner rank: badge with the rank number, title and a thin bar of
+/// rank points towards the next rank, with how many points the next title
+/// needs. [gain] shows "+N points" from the last win instead. [shown] draws
+/// the bar at a part-way point total (an animation from the old total:
+/// crossing a rank fills the bar, then it restarts in the new rank). [info]
+/// adds a small ⓘ: the row explains itself when tapped.
+///
+/// Players see "points", not "XP": the word needs no explaining.
 class RankBar extends StatelessWidget {
   final int xp;
   final int? gain;
-  const RankBar({super.key, required this.xp, this.gain});
+  final double? shown;
+  final bool info;
+  const RankBar({super.key, required this.xp, this.gain, this.shown, this.info = false});
 
   @override
   Widget build(BuildContext context) {
-    final rank = Rank.of(xp);
+    final now = shown ?? xp.toDouble();
+    final rank = Rank.of(now.floor());
     final top = rank >= Rank.top;
     final from = Rank.threshold(rank), to = Rank.threshold(rank + 1);
     final right = gain != null
-        ? '+$gain XP'
-        : (top ? 'Top rank' : '${to - xp} XP to ${Rank.title(rank + 1)}');
+        ? '+$gain points'
+        : (top ? 'Top rank' : '${to - now.round()} points to ${Rank.title(rank + 1)}');
     return Semantics(
       label: 'Rank $rank, ${Rank.title(rank)}, $right',
       child: ExcludeSemantics(
@@ -690,7 +722,7 @@ class RankBar extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
-                  value: top ? 1 : (xp - from) / (to - from),
+                  value: top ? 1 : ((now - from) / (to - from)).clamp(0.0, 1.0),
                   minHeight: 6,
                   backgroundColor: C.border,
                   color: C.star,
@@ -698,6 +730,7 @@ class RankBar extends StatelessWidget {
               ),
             ]),
           ),
+          if (info) const InfoMark(),
         ]),
       ),
     );

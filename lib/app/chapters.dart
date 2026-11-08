@@ -10,8 +10,10 @@ class Jars {
   /// Sealing a jar pays this many sweets, plus one free Extra tube.
   static const sealPay = 50;
 
-  /// Every 5th jar is a gold jar and pays this on top of [sealPay].
+  /// Every [goldEvery]th jar is a gold jar and pays this on top of
+  /// [sealPay].
   static const goldPay = 150;
+  static const goldEvery = 5;
 
   /// First win of a Lid scoop pays this on top of the normal win.
   static const lidBonus = 10;
@@ -28,7 +30,7 @@ class Jars {
 
   static bool isLid(int level) => level % size == 0;
 
-  static bool isGold(int jar) => jar % 5 == 0;
+  static bool isGold(int jar) => jar % goldEvery == 0;
 
   /// Sweets for sealing [jar]: 50, or 200 for a gold jar.
   static int payFor(int jar) => sealPay + (isGold(jar) ? goldPay : 0);
