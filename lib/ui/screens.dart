@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../app/app_state.dart';
 import '../app/chapters.dart';
 import '../app/rank.dart';
+import '../app/rewards.dart';
 import '../app/theme.dart';
 import '../game/bean_painter.dart';
 import '../levels/level.dart';
@@ -135,21 +136,85 @@ class _RankBadge extends StatelessWidget {
 /// Home's jar chip: a small jar filling up, "Jar 1 · Berry 3 / 10" and a
 /// bar. The first time it shows, one line explains jars; after that the
 /// line says what sealing the jar pays. Tapping opens the Pantry.
-class JarChip extends StatelessWidget {
+class JarChip extends StatefulWidget {
   final Services s;
   final double width;
   final VoidCallback onTap;
   const JarChip({super.key, required this.s, required this.width, required this.onTap});
 
   @override
+  State<JarChip> createState() => _JarChipState();
+}
+
+/// The chip remembers the fill it last showed. Home stays built under the
+/// game, so a win updates it while hidden; once Home is the top route
+/// again, the jar and bar fill from the old count to the new one.
+class _JarChipState extends State<JarChip> with SingleTickerProviderStateMixin {
+  late final _anim = AnimationController(vsync: this, duration: S.fill);
+  int _jar = 0;
+  double _from = 0, _to = 0;
+  bool _pending = false;
+
+  double get _shown =>
+      _from + (_to - _from) * Curves.easeOutCubic.transform(_anim.value);
+
+  @override
+  void initState() {
+    super.initState();
+    _anim.value = 1;
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final st = s.state;
+    final st = widget.s.state;
     final jar = Jars.of(st.currentLevel);
     final filled = Jars.filled(jar, st.stars);
+    final visible = ModalRoute.of(context)?.isCurrent ?? true;
+    if (_jar == 0) {
+      // First build: shown as it is, or, when the chip first appears
+      // under the game (after the first win), filled from empty.
+      _jar = jar;
+      _from = _to = visible ? filled.toDouble() : 0;
+    } else if (jar != _jar) {
+      // A new jar (the last one was sealed): no fill animation.
+      _jar = jar;
+      _from = _to = filled.toDouble();
+    }
+    if (visible && _to != filled && !_pending) {
+      _pending = true;
+      final from = _shown, to = filled.toDouble();
+      final still = MediaQuery.of(context).disableAnimations;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _pending = false;
+        setState(() {
+          _from = from;
+          _to = to;
+          _anim.value = still ? 1 : 0;
+        });
+        // A short pause first, so the player sees Home before it fills.
+        if (!still) {
+          Future.delayed(S.fillPause, () {
+            if (mounted) _anim.forward(from: 0);
+          });
+        }
+      });
+    }
+    return AnimatedBuilder(
+        animation: _anim, builder: (context, _) => _chip(st, jar, filled, _shown));
+  }
+
+  Widget _chip(AppState st, int jar, int filled, double shown) {
     final sealed = st.jarsSealed.contains(jar);
     final colour = beanColors[Jars.flavour(jar)]!;
     final line = !st.jarChipSeen
-        ? 'Win 10 scoops to fill and seal a jar'
+        ? 'Win ${Jars.size} scoops to fill and seal a jar'
         : (sealed
             ? 'Sealed · see your Pantry'
             : 'Seal it at Lid scoop ${Jars.lid(jar)} · +${Jars.payFor(jar)}');
@@ -159,9 +224,9 @@ class JarChip extends StatelessWidget {
       label: '${Jars.name(jar)}, $filled of ${Jars.size} scoops. $line. Opens the Pantry',
       child: ExcludeSemantics(
         child: GestureDetector(
-          onTap: onTap,
+          onTap: widget.onTap,
           child: Container(
-            width: width,
+            width: widget.width,
             constraints: const BoxConstraints(minHeight: S.minTouch),
             padding: const EdgeInsets.fromLTRB(10, 8, 6, 8),
             decoration: BoxDecoration(
@@ -171,7 +236,7 @@ class JarChip extends StatelessWidget {
               boxShadow: const [BoxShadow(color: C.border, offset: Offset(0, 3))],
             ),
             child: Row(children: [
-              MiniJar(jar: jar, filled: filled, sealed: sealed, size: 30),
+              MiniJar(jar: jar, filled: shown, sealed: sealed, size: 30),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -180,13 +245,14 @@ class JarChip extends StatelessWidget {
                         child: Text(Jars.name(jar),
                             overflow: TextOverflow.ellipsis,
                             style: small.copyWith(fontSize: 14, fontWeight: FontWeight.w900))),
-                    Text('$filled / ${Jars.size}', style: small.copyWith(color: C.text2)),
+                    Text('${shown.round()} / ${Jars.size}',
+                        style: small.copyWith(color: C.text2)),
                   ]),
                   const SizedBox(height: 4),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
-                      value: filled / Jars.size,
+                      value: shown / Jars.size,
                       minHeight: 6,
                       backgroundColor: C.border,
                       color: colour,
@@ -205,9 +271,11 @@ class JarChip extends StatelessWidget {
   }
 }
 
-/// The Pantry: rank, the jar being filled and what sealing it pays, and
-/// the shelf of every jar.
-Future<void> showPantry(BuildContext context, Services s) => showModalBottomSheet<void>(
+/// A bottom sheet in the Pantry's style: drag handle, a title, and
+/// [children] scrolling under it.
+Future<void> _sheet(BuildContext context, String title,
+        List<Widget> Function(double width) children) =>
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: C.bg,
       isScrollControlled: true,
@@ -219,17 +287,135 @@ Future<void> showPantry(BuildContext context, Services s) => showModalBottomShee
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: LayoutBuilder(
             builder: (c, box) => Column(mainAxisSize: MainAxisSize.min, children: [
-              const Text('Pantry',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
+              Text(title,
+                  style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w900)),
               const SizedBox(height: 12),
-              RankBar(xp: s.state.xp),
-              const SizedBox(height: 14),
-              JarCard(s: s, width: box.maxWidth),
+              ...children(box.maxWidth),
             ]),
           ),
         ),
       ),
     );
+
+/// The Pantry: the jar being filled and the shelf of every jar, then the
+/// rank, each with how it works.
+Future<void> showPantry(BuildContext context, Services s) =>
+    _sheet(context, 'Pantry', (w) => [
+          JarCard(s: s, width: w),
+          const SizedBox(height: 10),
+          const JarHowTo(),
+          const SizedBox(height: 18),
+          RankBar(xp: s.state.xp),
+          const SizedBox(height: 10),
+          const RankHowTo(),
+        ]);
+
+/// How jars work, from the result card's jar row: [jar] and its scoops.
+Future<void> showJarHelp(BuildContext context, Services s, int jar) =>
+    _sheet(context, 'Bean jars', (w) => [
+          JarProgress(jar: jar, filled: Jars.filled(jar, s.state.stars)),
+          const SizedBox(height: 12),
+          const JarHowTo(),
+        ]);
+
+/// How rank works, from the result card's rank row.
+Future<void> showRankHelp(BuildContext context, Services s) =>
+    _sheet(context, 'Rank', (w) => [
+          RankBar(xp: s.state.xp),
+          const SizedBox(height: 12),
+          const RankHowTo(),
+        ]);
+
+/// "How it works" panel: a heading and short lines, each led by what it
+/// pays ("+50") or a small icon.
+class _HowTo extends StatelessWidget {
+  final String title;
+  final List<(Widget, String)> lines;
+  const _HowTo(this.title, this.lines);
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+        decoration: BoxDecoration(
+          color: C.panel,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: C.border, width: 2),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900)),
+          for (final (lead, text) in lines)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                SizedBox(width: 40, child: lead),
+                Expanded(child: Text(text, style: _howText)),
+              ]),
+            ),
+        ]),
+      );
+}
+
+const _howText =
+    TextStyle(fontSize: 13, height: 1.3, fontWeight: FontWeight.w700, color: C.text);
+
+/// Amount at the start of a how-it-works line ("+50").
+Widget _pay(int n) => Text('+$n',
+    style: const TextStyle(
+        fontSize: 13, height: 1.3, fontWeight: FontWeight.w900, color: C.accentText));
+
+Widget _icon(Widget w) =>
+    Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(top: 1), child: w));
+
+/// How jars work, with the numbers from [Jars].
+class JarHowTo extends StatelessWidget {
+  const JarHowTo({super.key});
+
+  @override
+  Widget build(BuildContext context) => _HowTo('How jars work', [
+        (
+          _icon(const MiniJar(jar: 1, filled: 4, size: 15)),
+          'Each new scoop you win adds one to your jar.'
+        ),
+        (
+          _pay(Jars.sealPay),
+          'Win the ${Jars.size}th scoop, the Lid scoop, to seal the jar: '
+              '+${Jars.sealPay} sweets and a free Extra tube.'
+        ),
+        (
+          _icon(extraTubeIcon),
+          'An Extra tube gives you an empty tube when you are stuck.'
+        ),
+        (
+          _pay(Jars.goldPay),
+          'Every ${Jars.goldEvery}th jar is gold: +${Jars.goldPay} sweets more.'
+        ),
+      ]);
+}
+
+/// How rank works, with the numbers from [Rank] and [Spoons].
+class RankHowTo extends StatelessWidget {
+  const RankHowTo({super.key});
+
+  @override
+  Widget build(BuildContext context) => _HowTo('How rank works', [
+        (_pay(Rank.xpClear), 'points for each new scoop you win'),
+        (_pay(Rank.xpStar), 'points for each star (your best on each scoop)'),
+        (_pay(Rank.xpJar), 'points for each jar you seal'),
+        (_pay(Rank.xpSpoon), 'points for each gold spoon'),
+        (
+          _icon(const SpoonIcon(gold: true)),
+          'A gold spoon: win a scoop again with ★★★ and no Undo, Peek or '
+              'Extra tube (+${Spoons.pay} sweets).'
+        ),
+        (
+          _icon(const RankDot(2, size: 18)),
+          'Enough points and you rank up: a new title and '
+              '+${Rank.gift} sweets.'
+        ),
+      ]);
+}
 
 /// The Pantry's jar card: the jar being filled, how to seal it and what
 /// that pays, and the Pantry shelf of every jar.
@@ -293,15 +479,6 @@ class JarCard extends StatelessWidget {
                 if (st.allSpooned(j)) j
             },
             width: width - 32),
-        const SizedBox(height: 4),
-        Row(children: [
-          const Icon(Icons.star_rounded, color: C.star, size: 16),
-          const SizedBox(width: 4),
-          Expanded(
-            child: Text('Every 5th jar is gold: +${Jars.goldPay} more',
-                style: small.copyWith(fontSize: 12, color: C.text2)),
-          ),
-        ]),
       ]),
     );
   }

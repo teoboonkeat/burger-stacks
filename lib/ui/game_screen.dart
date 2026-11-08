@@ -1185,8 +1185,48 @@ String resultLine(int moves, int par) => moves > par
     ? 'Done in $moves moves · ★★★ needs $par or fewer'
     : 'Done in $moves moves · ★★★';
 
-class _SweetScreenState extends State<SweetScreen> {
+class _SweetScreenState extends State<SweetScreen>
+    with SingleTickerProviderStateMixin {
   bool doubled = false;
+
+  /// The jar and rank bars fill from where they were before this win, after
+  /// the celebration cards: the jar first, the rank overlapping it. A tap
+  /// anywhere on the card settles them at once. Buttons work throughout.
+  late final _fill = AnimationController(
+      vsync: this, duration: S.fill * 1.6, value: 0);
+  late final _jarT = CurvedAnimation(
+      parent: _fill, curve: const Interval(0, .6, curve: Curves.easeOutCubic));
+  late final _rankT = CurvedAnimation(
+      parent: _fill, curve: const Interval(.35, 1, curve: Curves.easeOutCubic));
+  late final _totalT = CurvedAnimation(
+      parent: _fill, curve: const Interval(0, .8, curve: Curves.easeOut));
+
+  /// Starts the fill after a short pause (unless a tap settled it first).
+  void _startFill() {
+    Future.delayed(S.fillPause, () {
+      if (!mounted || _fill.value > 0) return;
+      if (MediaQuery.of(context).disableAnimations) {
+        _fill.value = 1;
+      } else {
+        _fill.forward();
+      }
+    });
+  }
+
+  /// A tap while the bars fill settles them. Taps that skip the
+  /// celebration cards come before the fill and do not count.
+  void _settle() {
+    if (_fill.isAnimating) _fill.value = 1;
+  }
+
+  @override
+  void dispose() {
+    _jarT.dispose();
+    _rankT.dispose();
+    _totalT.dispose();
+    _fill.dispose();
+    super.dispose();
+  }
 
   /// Celebrations shown over the card one after another (jar sealed, then
   /// rank up), each briefly; a tap skips to the next.
@@ -1204,6 +1244,12 @@ class _SweetScreenState extends State<SweetScreen> {
   void initState() {
     super.initState();
     _timeCard();
+    // No cards: fill once the card has slid up.
+    if (_cards.isEmpty) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) _startFill();
+      });
+    }
   }
 
   void _timeCard() {
@@ -1224,6 +1270,7 @@ class _SweetScreenState extends State<SweetScreen> {
     setState(() => _card++);
     _timeCard();
     if (_card == _cards.length) {
+      _startFill();
       Future.delayed(S.cardGrace, () {
         if (mounted) setState(() => _shield = false);
       });
@@ -1249,6 +1296,10 @@ class _SweetScreenState extends State<SweetScreen> {
     final r = widget.report;
     final mult = doubled ? 2 : 1;
     final chips = rewardChips(r, mult);
+    final jarNow = Jars.filled(Jars.of(widget.level), widget.s.state.stars);
+    // A first win adds this scoop to its jar.
+    final jarBefore = (jarNow - (widget.best == 0 ? 1 : 0)).toDouble();
+    final xpNow = widget.s.state.xp;
     return Scaffold(
       backgroundColor: C.resultScrim,
       body: SafeArea(
@@ -1277,7 +1328,10 @@ class _SweetScreenState extends State<SweetScreen> {
                           borderRadius: BorderRadius.circular(24),
                           border: Border.all(color: C.border, width: 3),
                         ),
-                        child: Stack(
+                        // Any tap settles the filling bars.
+                        child: Listener(
+                          onPointerDown: (_) => _settle(),
+                          child: Stack(
                           // The celebration cards reach past the bottom
                           // edge to cover the Next button's shadow.
                           clipBehavior: Clip.none,
@@ -1344,12 +1398,16 @@ class _SweetScreenState extends State<SweetScreen> {
                                     children: chips,
                                   ),
                                   const SizedBox(height: 4),
-                                  Text(
-                                    'Total +${r.total + (doubled ? beans : 0)} sweets',
-                                    style: const TextStyle(
-                                      color: C.text2,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w800,
+                                  // Counts up with the bars.
+                                  AnimatedBuilder(
+                                    animation: _totalT,
+                                    builder: (context, _) => Text(
+                                      'Total +${((r.total + (doubled ? beans : 0)) * _totalT.value).round()} sweets',
+                                      style: const TextStyle(
+                                        color: C.text2,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w800,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -1398,16 +1456,41 @@ class _SweetScreenState extends State<SweetScreen> {
                                 // the chips; its full bar would squeeze the
                                 // jar picture.
                                 if (!(compact && r.sealed != null)) ...[
-                                  JarProgress(
-                                    jar: Jars.of(widget.level),
-                                    filled: Jars.filled(
-                                        Jars.of(widget.level), widget.s.state.stars),
-                                    compact: true,
+                                  // Tap: how jars work.
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () => showJarHelp(
+                                        context, widget.s, Jars.of(widget.level)),
+                                    child: AnimatedBuilder(
+                                      animation: _jarT,
+                                      builder: (context, _) => JarProgress(
+                                        jar: Jars.of(widget.level),
+                                        filled: jarNow,
+                                        shown: jarBefore +
+                                            (jarNow - jarBefore) * _jarT.value,
+                                        compact: true,
+                                        info: true,
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(height: compact ? 6 : 10),
                                 ],
-                                RankBar(
-                                    xp: widget.s.state.xp, gain: widget.report.xp),
+                                // Tap: how rank works. Crossing a rank
+                                // fills the bar, then it restarts in the
+                                // new rank.
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () => showRankHelp(context, widget.s),
+                                  child: AnimatedBuilder(
+                                    animation: _rankT,
+                                    builder: (context, _) => RankBar(
+                                      xp: xpNow,
+                                      gain: (r.xp * _rankT.value).round(),
+                                      shown: xpNow - r.xp + r.xp * _rankT.value,
+                                      info: true,
+                                    ),
+                                  ),
+                                ),
                                 SizedBox(height: compact ? 10 : 16),
                                 BigButton(
                                   'Next scoop',
@@ -1459,6 +1542,7 @@ class _SweetScreenState extends State<SweetScreen> {
                                 ),
                               ),
                           ],
+                        ),
                         ),
                       ),
                     ),

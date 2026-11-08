@@ -96,6 +96,11 @@ void main() {
     await t.pump(const Duration(milliseconds: 300));
     expect(find.text('RANK UP'), findsOneWidget);
     await t.tap(find.text('RANK UP'));
+    // After the cards the bars fill and the total counts up.
+    await t.pump(S.fade * 2);
+    await t.pump(S.fillPause);
+    await t.pump(S.fill * .5);
+    expect(find.text('Total +105 sweets'), findsNothing);
     await t.pumpAndSettle();
     expect(find.text('Next scoop'), findsOneWidget);
     expect(find.text('Retry for ★★★'), findsOneWidget);
@@ -108,8 +113,55 @@ void main() {
     // The chips must not squeeze the jar picture to nothing.
     expect(t.getRect(find.byType(Jar).first).height, greaterThan(60));
     expect(t.takeException(), isNull);
+    // The rank row explains itself.
+    await t.tap(find.byType(RankBar));
+    await t.pumpAndSettle();
+    expect(find.text('How rank works'), findsOneWidget);
+    expect(t.takeException(), isNull);
     // Let the celebration timers run out.
     await t.pump(S.sealShown * 2);
+  });
+
+  // A plain first win: the jar row fills from 4 to 5 scoops, a tap settles
+  // it at once, and tapping the row explains jars.
+  testWidgets('result card: jar row fills, settles on tap, explains jars',
+      (t) async {
+    if (!roboto) return markTestSkipped('Roboto not found');
+    SharedPreferences.setMockInitialValues({
+      'stars': [for (var l = 1; l <= 5; l++) '$l:3'],
+      'currentLevel': 6,
+    });
+    final st = AppState();
+    await st.load();
+    t.view.physicalSize = const Size(360, 640);
+    t.view.devicePixelRatio = 1;
+    addTearDown(t.view.reset);
+    await t.pumpWidget(MaterialApp(
+      home: SweetScreen(
+        s: Services(st, const []),
+        level: 5,
+        stars: 3,
+        moves: 6,
+        par: 6,
+        best: 0,
+        report: const WinReport(pay: 25, xp: 25),
+        tubes: const [],
+        ads: AdService(st),
+      ),
+    ));
+    await t.pump(const Duration(milliseconds: 300));
+    // Before the fill: the jar shows its old count.
+    expect(find.text('4 / 10 scoops'), findsOneWidget);
+    await t.pump(S.fillPause + S.fill * .2);
+    // A tap anywhere settles the bars.
+    await t.tap(find.text('Sweet!'));
+    await t.pump();
+    expect(find.text('5 / 10 scoops'), findsOneWidget);
+    expect(find.text('+25 points'), findsOneWidget);
+    await t.tap(find.byType(JarProgress));
+    await t.pumpAndSettle();
+    expect(find.text('How jars work'), findsOneWidget);
+    expect(t.takeException(), isNull);
   });
   /// 200 placeholder scoops: Home and the Pantry only count them.
   final levels = [
@@ -158,6 +210,12 @@ void main() {
     expect(find.text('Pantry'), findsOneWidget);
     expect(find.byType(PantryShelf), findsOneWidget);
     expect(find.text('Win Lid scoop 60 to seal it · 2 to go'), findsOneWidget);
+    // How jars and rank work, in plain words.
+    expect(find.text('How jars work'), findsOneWidget);
+    await t.scrollUntilVisible(find.text('How rank works'), 200,
+        scrollable: find.descendant(
+            of: find.byType(BottomSheet), matching: find.byType(Scrollable)));
+    expect(find.text('How rank works'), findsOneWidget);
     expect(t.takeException(), isNull);
     // Closed, the chip now shows the reward instead of the explainer.
     Navigator.of(t.element(find.text('Pantry'))).pop();
